@@ -1,0 +1,13 @@
+<div class="left-justified">
+  {% if title != "Home" %}
+  <h3>{{ title }}</h3>
+  {% endif %}
+  <form method="post" action={{ path }}>
+      {{ form.hidden_tag() }}
+      <table>
+          <tbody class="{{ form_type if form_type }}">
+            {% include "/components/form_fields.html" %}
+          </tbody>
+      </table>
+  </form>
+</div>

@@ -1,0 +1,111 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Google Calendar API",
+    "version": "1.0.0",
+    "description": "Custom GPT agent integration for Google Calendar API"
+  },
+  "paths": {
+    "/events/{eventId}": {
+      "get": {
+        "summary": "Get Event",
+        "operationId": "get_event",
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the event to retrieve",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "summary": {
+                      "type": "string"
+                    },
+                    "start": {
+                      "type": "object",
+                      "properties": {
+                        "dateTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "timeZone": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "end": {
+                      "type": "object",
+                      "properties": {
+                        "dateTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "timeZone": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "timezone": {
+                      "type": "string"
+                    },
+                    "location": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "organizer": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string"
+                        },
+                        "displayName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "attendees": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "email": {
+                            "type": "string"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          },
+                          "responseStatus": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "recurrence": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

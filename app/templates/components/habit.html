@@ -1,0 +1,14 @@
+<div class="habit">
+    <div class="horizontally-centered-content">
+        <p><span class="habit-bold">{{habit.name}}</span> - {{habit.duration_min}} min near {{habit.ideal_start.strftime('%-I:%M %p')}}</p>
+        <div class="horizontal-button-container">
+            <form class="horizontally-centered-content" method="get" action="/updateHabit/{{habit.id}}">
+                <button>Edit</button>
+            </form>
+            
+            <form class="horizontally-centered-content" method="get" action="/deleteHabit/{{habit.id}}">
+                <button>Delete</button>
+            </form>
+        </div>
+    </div>
+</div>

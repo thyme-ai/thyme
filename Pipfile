@@ -1,0 +1,28 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "*"
+flask-sqlalchemy = "*"
+flask-wtf = "*"
+google-api-python-client = "*"
+google-auth-httplib2 = "*"
+google-auth-oauthlib= "*"
+jinja2 = "*"
+jsonref = "*"
+openai = "*"
+psycopg2-binary = "*"
+python-dotenv = "*"
+requests = "*"
+tenacity = "*"
+termcolor = "*"
+wtforms = "*"
+install = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"
+python_full_version = "3.12.2"

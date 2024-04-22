@@ -1,0 +1,214 @@
+:root {
+    --thyme-black: #202123;
+    --thyme-charcoal: #343541;
+    --thyme-light-grey: #565869;
+    --thyme-lighter-grey: #ABABAB;
+    --thyme-white: #FFFFFF;
+
+    --thyme-font-large: 75;
+    --thyme-font-medium: 35;
+    --thyme-font-small: 25;
+    --thyme-font-smallest: 18;
+}
+
+* {
+    font-family: "Inter", sans-serif;
+    font-weight: 300;
+    font-size: var(--thyme-font-smallest);
+    color: var(--thyme-white);
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    background-color: var(--thyme-charcoal);
+    color: var(--thyme-white);
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-content: center;
+}
+
+h1, h2,
+.home-secondary-title-italicized
+ {
+    font-family: "ABeeZee", sans-serif;
+    font-weight: 400;
+    color: var(--thyme-lighter-grey);
+}
+
+h1 {
+    font-size: var(--thyme-font-large);
+}
+
+h2 {
+    font-size: var(--thyme-font-medium);
+}
+
+h3 {
+    font-size: var(--thyme-font-small);
+}
+
+button,
+#submit {
+    background-color: var(--thyme-white);
+    color: var(--thyme-black);
+    width: fit-content;
+    border: none;
+    padding-inline: 15px;
+    padding-block: 10px;
+    border-radius: 25px;
+    margin-inline: 20px;
+}
+
+header {
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    justify-items: center;
+    align-items: center;
+    padding: 10px;
+}
+
+textarea, input {
+    color: var(--thyme-black);
+}
+
+
+/*---------------------*/
+/* Classes
+/*---------------------*/
+.answer {
+    width: 80%
+}
+
+.centered {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chat {
+    width: 80vh;
+    height: 75vh;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.chat-answer {
+    max-width: 80vh;
+    height: 75vh;
+    color: var(--thyme-white);
+    font-size: var(--thyme-font-smallest);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-thyme-placeholder {
+    font-size: var(--thyme-font-large);
+}
+
+.form-field-label {
+    color: var(--thyme-white);
+    padding-inline: 15px;
+    padding-block: 10px;
+}
+
+.habit {
+    padding-block: 2px;
+    width: 80%;
+}
+
+.habit-bold {
+    font-weight: 500;
+}
+
+.icon {
+    width: 20px;
+    padding-inline: 5px;
+}
+
+.home-secondary-title-italicized {
+    font-style: italic;
+}
+
+.horizontally-centered-content,
+.horizontal-button-container,
+.icon-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    padding-inline: 5px;
+    margin-inline: 5px;
+}
+
+.fa {
+    color: var(--thyme-lighter-grey);
+    margin: 10px;
+}
+
+.one-line-form {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.header-thyme-button,
+.transparent-icon-button {
+    background-color: transparent;
+}
+
+.header-right-buttons {
+    margin-right: 40px;
+}
+
+.header-thyme-button {
+    line-height: 5px;
+    margin-left: 40px;
+}
+
+.header-thyme-text {
+    font-size: var(--thyme-font-medium);
+}
+
+.home-titles {
+    margin: 100px;
+}
+
+.home-main-title {
+    font-size: var(--thyme-font-large);
+}
+
+.home-secondary-title,
+.home-secondary-title-italicized,
+.icon-button {
+    margin: 0px;
+    font-size: var(--thyme-font-medium);
+}
+
+.icon-button {
+    font-size: 20px;
+    border-radius: 30px;
+    padding: 20px;
+    margin: 40px;
+}
+
+.left-justified {
+    margin: 10px;
+    padding: 10px;
+    padding-left: 100px;
+}
+
+i,
+button:hover, 
+a:hover,
+#submit:hover {
+    font-weight: 500;
+}

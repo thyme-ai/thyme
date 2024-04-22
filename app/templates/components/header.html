@@ -1,0 +1,28 @@
+<header class="horizontally-centered-content">
+    <a method="post" href="{{ url_for('home.assistant') }}">
+        <button class="header-thyme-button">
+            <h2>Thyme</h2>
+        </button>
+    </a>
+
+    <div class="horizontally-centered-content header-right-buttons">
+
+        <a href="https://calendar.google.com/" target="_blank">
+            <button class="transparent-icon-button">
+                <i class="fa fa-calendar" style="font-size: 30px;"></i>
+        </a>
+
+        <a href="{{ url_for('home.preferences') }}">
+            <button class="transparent-icon-button">
+                <i class="fa fa-user" style="font-size: 30px;"></i>
+        </a>
+
+        <a href="{{ url_for('session.logout') }}">
+            <button class="transparent-icon-button">
+                <i class="fa fa-sign-out" style="font-size: 30px;"></i>
+        </a>
+
+    </div>
+   
+</header>
+

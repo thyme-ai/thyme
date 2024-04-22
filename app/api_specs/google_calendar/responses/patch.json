@@ -1,0 +1,104 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Google Calendar API",
+      "version": "v3"
+    },
+    "paths": {
+      "/calendar/v3/events/{eventId}": {
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "patch": {
+          "summary": "Update Event",
+          "operationId": "update_event",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "summary": {
+                      "type": "string"
+                    },
+                    "start": {
+                      "type": "object",
+                      "properties": {
+                        "dateTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "timeZone": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "end": {
+                      "type": "object",
+                      "properties": {
+                        "dateTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "timeZone": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "timezone": {
+                      "type": "string"
+                    },
+                    "location": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "organizer": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "attendees": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "email": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "recurrence": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful update of event."
+            }
+          }
+        }
+      }
+    }
+  }
+  

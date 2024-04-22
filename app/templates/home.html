@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="centered">
+    <div class="chat centered">
+        {% if answer %}
+        <p class="chat-answer">{{ answer }}</p>
+        {% else %}
+        <h1 class="chat-answer chat-thyme-placeholder">Thyme</h1>
+        {% endif %}
+        {% include "/components/form_component.html" %}
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

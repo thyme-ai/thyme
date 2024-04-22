@@ -1,0 +1,21 @@
+<html>
+  <head>
+    {% if title %}
+      <title>{{ title }} - Thyme</title>
+    {% else %}
+      <title>Welcome to Thyme</title>
+    {% endif %}
+    <link rel="icon" type="image/jpg" href="{{ url_for('static', filename='/images/thyme_icon.jpg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+      {% include "components/header.html"%}
+      {% block content %}
+      {% endblock %}  
+  </body>
+</html>
