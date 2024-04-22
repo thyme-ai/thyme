@@ -20,6 +20,7 @@ tenacity = "*"
 termcolor = "*"
 wtforms = "*"
 install = "*"
+heroku = "*"
 
 [dev-packages]
 
