@@ -35,7 +35,7 @@ Thyme can **think of creative ideas**.
 3) Pipenv ```pip install pipenv```    
 
 4) Create a Virtual Environment (replace <<version_name>> with version of python you installed above) -  
-```pipenv install --python "$PYENV_ROOT/versions/«version_name»/bin/python"```
+```pipenv install --python "$PYENV_ROOT/versions/3.12.2/bin/python"```
 
 5) Install all the dependencies for the Python App  
 ```pipenv install --python "$PYENV_ROOT/shims/python" psycopg2-binary Flask-SQLAlchemy alembic Flask-Migrate Flask python-dotenv Flask-WTF wtforms Jinja2```

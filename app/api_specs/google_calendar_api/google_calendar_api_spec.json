@@ -1,156 +1,59 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "title": "Google Calendar API",
-      "version": "1.0.0",
-      "description": "Custom GPT agent integration for Google Calendar API"
-    },
-    "servers": [
-      {
-        "url": "https://www.googleapis.com/calendar/v3/calendars/primary"
-      }
-    ],
-    "paths": {
-      "/events/{eventId}": {
-        "delete": {
-          "summary": "Delete Event",
-          "operationId": "delete_event",
-          "parameters": [
-            {
-              "name": "eventId",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "204": {
-              "description": "Event deleted successfully"
-            },
-            "404": {
-              "description": "Event not found"
-            },
-            "410": {
-              "description": "Event already deleted"
-            }
-          }
-        },
-        "get": {
-          "summary": "Get Event",
-          "operationId": "get_event",
-          "parameters": [
-            {
-              "name": "eventId",
-              "in": "path",
-              "required": true,
-              "description": "ID of the event to retrieve",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successful response",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "summary": {
-                        "type": "string"
-                      },
-                      "start": {
-                        "type": "object",
-                        "properties": {
-                          "dateTime": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "timeZone": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "end": {
-                        "type": "object",
-                        "properties": {
-                          "dateTime": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "timeZone": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "timezone": {
-                        "type": "string"
-                      },
-                      "location": {
-                        "type": "string"
-                      },
-                      "description": {
-                        "type": "string"
-                      },
-                      "organizer": {
-                        "type": "object",
-                        "properties": {
-                          "email": {
-                            "type": "string"
-                          },
-                          "displayName": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "attendees": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "email": {
-                              "type": "string"
-                            },
-                            "displayName": {
-                              "type": "string"
-                            },
-                            "responseStatus": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      },
-                      "recurrence": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "patch": {
-          "summary": "Update Event",
-          "operationId": "update_event",
-          "parameters": [
-            {
-              "name": "eventId",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "requestBody": {
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Google Calendar API",
+    "version": "1.0.0",
+    "description": "Custom GPT agent integration for Google Calendar API"
+  },
+  "servers": [
+    {
+      "url": "https://www.googleapis.com/calendar/v3/calendars/primary"
+    }
+  ],
+  "paths": {
+    "/events/{eventId}": {
+      "delete": {
+        "summary": "Delete Event",
+        "operationId": "delete_event",
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "path",
             "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Event deleted successfully"
+          },
+          "404": {
+            "description": "Event not found"
+          },
+          "410": {
+            "description": "Event already deleted"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get Event",
+        "operationId": "get_event",
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the event to retrieve",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "schema": {
@@ -197,6 +100,9 @@
                       "properties": {
                         "email": {
                           "type": "string"
+                        },
+                        "displayName": {
+                          "type": "string"
                         }
                       }
                     },
@@ -206,6 +112,12 @@
                         "type": "object",
                         "properties": {
                           "email": {
+                            "type": "string"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          },
+                          "responseStatus": {
                             "type": "string"
                           }
                         }
@@ -221,126 +133,227 @@
                 }
               }
             }
-          },
-          "responses": {
-            "200": {
-              "description": "Successful update of event."
-            }
           }
         }
       },
-      "/events": {
-        "get": {
-          "summary": "List events",
-          "operationId": "list_events",
-          "parameters": [
-            {
-              "name": "eventTypes",
-              "in": "query",
-              "description": "Filters events by type",
-              "required": false,
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "maxResults",
-              "in": "query",
-              "description": "Maximum number of events returned",
-              "required": false,
-              "schema": {
-                "type": "integer"
-              }
-            },
-            {
-              "name": "orderby",
-              "in": "query",
-              "description": "Order of events",
-              "required": false,
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "q",
-              "in": "query",
-              "description": "Search query",
-              "required": false,
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "timeMin",
-              "in": "query",
-              "description": "Minimum start time",
-              "required": false,
-              "schema": {
-                "type": "string",
-                "format": "date-time"
-              }
-            },
-            {
-              "name": "timeMax",
-              "in": "query",
-              "description": "Maximum end time",
-              "required": false,
-              "schema": {
-                "type": "string",
-                "format": "date-time"
-              }
+      "patch": {
+        "summary": "Update Event",
+        "operationId": "update_event",
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successful response",
-              "content": {
-                "application/json": {
-                  "schema": {
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "summary": {
+                    "type": "string"
+                  },
+                  "start": {
                     "type": "object",
                     "properties": {
+                      "dateTime": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "timeZone": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "end": {
+                    "type": "object",
+                    "properties": {
+                      "dateTime": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "timeZone": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "timezone": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "organizer": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "attendees": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "recurrence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful update of event."
+          }
+        }
+      }
+    },
+    "/events": {
+      "get": {
+        "summary": "List events",
+        "operationId": "list_events",
+        "parameters": [
+          {
+            "name": "eventTypes",
+            "in": "query",
+            "description": "Filters events by type",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "maxResults",
+            "in": "query",
+            "description": "Maximum number of events returned",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "orderby",
+            "in": "query",
+            "description": "Order of events",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Search query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timeMin",
+            "in": "query",
+            "description": "Minimum start time",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "timeMax",
+            "in": "query",
+            "description": "Maximum end time",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
                       "items": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "summary": {
-                              "type": "string"
-                            },
-                            "start": {
-                              "type": "object",
-                              "properties": {
-                                "dateTime": {
-                                  "type": "string",
-                                  "format": "date-time"
-                                },
-                                "timeZone": {
-                                  "type": "string"
-                                }
+                        "type": "object",
+                        "properties": {
+                          "summary": {
+                            "type": "string"
+                          },
+                          "start": {
+                            "type": "object",
+                            "properties": {
+                              "dateTime": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "timeZone": {
+                                "type": "string"
                               }
-                            },
-                            "end": {
-                              "type": "object",
-                              "properties": {
-                                "dateTime": {
-                                  "type": "string",
-                                  "format": "date-time"
-                                },
-                                "timeZone": {
-                                  "type": "string"
-                                }
+                            }
+                          },
+                          "end": {
+                            "type": "object",
+                            "properties": {
+                              "dateTime": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "timeZone": {
+                                "type": "string"
                               }
-                            },
-                            "timezone": {
-                              "type": "string"
-                            },
-                            "location": {
-                              "type": "string"
-                            },
-                            "description": {
-                              "type": "string"
-                            },
-                            "organizer": {
+                            }
+                          },
+                          "timezone": {
+                            "type": "string"
+                          },
+                          "location": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "organizer": {
+                            "type": "object",
+                            "properties": {
+                              "email": {
+                                "type": "string"
+                              },
+                              "displayName": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "attendees": {
+                            "type": "array",
+                            "items": {
                               "type": "object",
                               "properties": {
                                 "email": {
@@ -350,26 +363,12 @@
                                   "type": "string"
                                 }
                               }
-                            },
-                            "attendees": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "email": {
-                                    "type": "string"
-                                  },
-                                  "displayName": {
-                                    "type": "string"
-                                  }
-                                }
-                              }
-                            },
-                            "recurrence": {
-                              "type": "array",
-                              "items": {
-                                "type": "string"
-                              }
+                            }
+                          },
+                          "recurrence": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
                             }
                           }
                         }
@@ -380,62 +379,76 @@
               }
             }
           }
-        },
-        "post": {
-          "summary": "Insert Event",
-          "operationId": "insert_event",
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "summary": {
-                      "type": "string"
-                    },
-                    "start": {
-                      "type": "object",
-                      "properties": {
-                        "dateTime": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "timeZone": {
-                          "type": "string"
-                        }
+        }
+      },
+      "post": {
+        "summary": "Insert Event",
+        "operationId": "insert_event",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "summary": {
+                    "type": "string"
+                  },
+                  "start": {
+                    "type": "object",
+                    "properties": {
+                      "dateTime": {
+                        "type": "string",
+                        "format": "date-time"
                       },
-                      "required": [
-                        "dateTime",
-                        "timeZone"
-                      ]
+                      "timeZone": {
+                        "type": "string"
+                      }
                     },
-                    "end": {
-                      "type": "object",
-                      "properties": {
-                        "dateTime": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "timeZone": {
-                          "type": "string"
-                        }
+                    "required": [
+                      "dateTime",
+                      "timeZone"
+                    ]
+                  },
+                  "end": {
+                    "type": "object",
+                    "properties": {
+                      "dateTime": {
+                        "type": "string",
+                        "format": "date-time"
                       },
-                      "required": [
-                        "dateTime",
-                        "timeZone"
-                      ]
+                      "timeZone": {
+                        "type": "string"
+                      }
                     },
-                    "timezone": {
-                      "type": "string"
+                    "required": [
+                      "dateTime",
+                      "timeZone"
+                    ]
+                  },
+                  "timezone": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "organizer": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string"
+                      }
                     },
-                    "location": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "organizer": {
+                    "required": [
+                      "email"
+                    ]
+                  },
+                  "attendees": {
+                    "type": "array",
+                    "items": {
                       "type": "object",
                       "properties": {
                         "email": {
@@ -445,46 +458,32 @@
                       "required": [
                         "email"
                       ]
-                    },
-                    "attendees": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "email": {
-                            "type": "string"
-                          }
-                        },
-                        "required": [
-                          "email"
-                        ]
-                      }
-                    },
-                    "recurrence": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
                     }
                   },
-                  "required": [
-                    "summary",
-                    "start",
-                    "end",
-                    "timezone",
-                    "organizer"
-                  ]
-                }
+                  "recurrence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "summary",
+                  "start",
+                  "end",
+                  "timezone",
+                  "organizer"
+                ]
               }
             }
-          },
-          "responses": {
-            "200": {
-              "description": "Event Inserted Successfully"
-            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Event Inserted Successfully"
           }
         }
       }
     }
   }
-  
+}
