@@ -9,15 +9,19 @@ Here is the documentation:
 - Google Calendar API Events GET endpoint - https://developers.google.com/calendar/api/v3/reference/events/get
 
 The only properties that I care about for each event are: 
+- {id}
+- {htmlLink}
 - {summary}
+- {description}
+
 - {start}
 - {end}
 - {timezone}
+- {recurrence}
+
 - {location}
-- {description}
 - {organizer}
 - {attendees}
-- {recurrence}
 
 Remove any comments.
 Add a property called {operationId} to each endpoint equal to the {summary} of the endpoint in snake case. 

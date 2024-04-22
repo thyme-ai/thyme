@@ -10,14 +10,16 @@ Here is the documentation:
 
 The only properties that I want to be able to edit in an event are:
 - {summary}
+- {description}
+
 - {start}
 - {end}
 - {timezone}
+- {recurrence}
+
 - {location}
-- {description}
 - {organizer}
 - {attendees}
-- {recurrence}
 
 Remove any comments.
 Add a property called {operationId} to each endpoint equal to the {summary} of the endpoint in snake case. 

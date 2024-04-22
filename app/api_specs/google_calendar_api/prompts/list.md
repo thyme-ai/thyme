@@ -10,15 +10,19 @@ Here is the documentation:
 - Google Calendar API Events LIST endpoint - https://developers.google.com/calendar/api/v3/reference/events/list
 
 The only properties that I care about for each event are: 
+- {id}
+- {htmlLink}
 - {summary}
+- {description}
+
 - {start}
 - {end}
 - {timezone}
+- {recurrence}
+
 - {location}
-- {description}
 - {organizer}
 - {attendees}
-- {recurrence}
 
 I'd like to be able to search for events based on the following optional query
 parameters
