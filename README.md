@@ -14,7 +14,7 @@ Thyme can help you **schedule events**.
 
 Thyme can **answer questions**.    
     
-<img width="900" alt="Answer Questions" src="https://github.com/thyme-ai/thyme/assets/17794659/0ca19938-3a79-4519-bded-94f63ad89d5b">
+<img width="400" alt="Answer Questions" src="https://github.com/thyme-ai/thyme/assets/17794659/0ca19938-3a79-4519-bded-94f63ad89d5b">
 
 
 Thyme can **think of creative ideas**.    
