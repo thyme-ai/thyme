@@ -5,20 +5,22 @@ Thyme is a personal assistant that helps you run your day and get things done fa
 1) **Chat Interface** to make it easy to manage your calendar & get helpful information via a chat interface
 2) **Event Suggestions** to give you helpful suggestions for creative ideas when you're short on time for planning an event
 3) **Habit Scheduling** to make it easy to meet your work-life balance goals throughout the week         
+
     
-Thyme can help you **schedule events**.      
-<img width="900" alt="Schedule Events" src="https://github.com/thyme-ai/thyme/assets/17794659/18ee21a1-a59b-46e8-b943-dc15447b5b07">
+Thyme can help you **schedule events**.    
     
+<img width="900" alt="Schedule Events" src="https://github.com/thyme-ai/thyme/assets/17794659/c5a23638-ecab-4b4d-b8f2-29213b0515cb">
+
 
 Thyme can **answer questions**.    
-<img width="729" alt="Answer Questions" src="https://github.com/thyme-ai/thyme/assets/17794659/57aa57c1-ec53-48b3-8dd0-01cf139ed0c9">
-
-Thyme can **think of creative ideas**.         
     
-<img width="1777" alt="Suggest Ideas for Events - 1" src="https://github.com/thyme-ai/thyme/assets/17794659/fc62910b-726e-417d-b3f0-80266687d74b">
+<img width="900" alt="Answer Questions" src="https://github.com/thyme-ai/thyme/assets/17794659/0ca19938-3a79-4519-bded-94f63ad89d5b">
 
+
+Thyme can **think of creative ideas**.    
     
-<img width="1742" alt="Suggest Ideas for Events - 2" src="https://github.com/thyme-ai/thyme/assets/17794659/5c77d035-52f0-401c-9bcd-a23c3ce080ad">
+<img width="900" alt="Suggest Ideas for Events" src="https://github.com/thyme-ai/thyme/assets/17794659/757c2008-5125-45e2-a8ab-bf705d6754ac">
+
 
 # For Developers:
 ## Setup 
@@ -72,7 +74,7 @@ you should see output showing that the thyme user & database were created
 
 3) Start the server: 
 ```pipenv run flask run```
-Then click on the link that says something like "Running on http://{some numbers}"
+Then click on the link that says something like "Running on http://"...
 
 4) If prompted to log into Google Calendar, follow the prompts
 (note that only emails that were added by the Thyme Google Organization to the Google Cloud console
