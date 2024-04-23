@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+{% include "/components/headers/logged_out.html" %}
 <div class="centered">
     <div class="centered home-titles">
         <h1 class="home-main-title">Meet Thyme</h1>
         <h2 class="home-secondary-title">The personal assistant for <span class="home-secondary-title-italicized">everyone.</span></h2>
-        {% include "/components/continue_with_google_button.html" %}
+        {% include "/components/buttons/continue_with_google.html" %}
     </div>
     
 </div>

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<div>
+{% include "/components/headers/logged_in.html" %}
     <div class="left-justified">
         <h2>Profile</h2>
         <h3>Daily Schedule</h3>        
@@ -11,10 +11,7 @@
         <a href="{{ url_for('home.updatePreferences') }}">
             <button>Update</button>
         </a>
-    </div>
-   <div class="left-justified">
-    <h3>My Habits</h3>
-    <div>
+        <h3>My Habits</h3>
         <h4>Personal</h4>        
         <ul>
             {% for habit in habits %}
@@ -23,8 +20,6 @@
             {% endif %}
             {% endfor %}
         </ul>
-    </div>
-    <div>
         <h4>Work</h4>        
         <ul>
             {% for habit in habits %}
@@ -33,10 +28,9 @@
             {% endif %}
             {% endfor %}
         </ul>
+        <a href="{{ url_for('home.addHabit') }}">
+            <button>Add Habit</button>
+        </a> 
+        {% include "/components/buttons/add_habits_to_google_calendar.html" %}    
     </div>
-    <a href="{{ url_for('home.addHabit') }}">
-        <button>Add Habit</button>
-    </a> 
-   </div>
-</div>
 {% endblock %}

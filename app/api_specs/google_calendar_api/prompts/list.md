@@ -26,6 +26,7 @@ The only properties that I care about for each event are:
 
 I'd like to be able to search for events based on the following optional query
 parameters
+- {eventTypes}
 - {maxResults}
 - {orderby}
 - {q}
