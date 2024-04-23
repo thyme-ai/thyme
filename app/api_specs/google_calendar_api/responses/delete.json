@@ -1,43 +1,43 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "title": "Custom GPT Google Calendar API",
-      "version": "1.0.0",
-      "description": "Custom GPT agent for Google Calendar API"
-    },
-    "servers": [
-      {
-        "url": "https://www.googleapis.com/calendar/v3/calendars/primary/"
-      }
-    ],
-    "paths": {
-      "/events/{eventId}": {
-        "delete": {
-          "summary": "Delete Event",
-          "operationId": "delete_event",
-          "parameters": [
-            {
-              "name": "eventId",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Google Calendar API",
+    "description": "API for managing Google Calendar events",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://www.googleapis.com/calendar/v3/calendars/primary/events"
+    }
+  ],
+  "paths": {
+    "/{eventId}": {
+      "delete": {
+        "summary": "Delete Event",
+        "operationId": "delete_event",
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the event to delete",
+            "schema": {
+              "type": "string"
             }
-          ],
-          "responses": {
-            "204": {
-              "description": "Event deleted successfully"
-            },
-            "404": {
-              "description": "Event not found"
-            },
-            "410": {
-              "description": "Event already deleted"
-            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Event deleted successfully"
+          },
+          "404": {
+            "description": "Event not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
     }
   }
-  
+}

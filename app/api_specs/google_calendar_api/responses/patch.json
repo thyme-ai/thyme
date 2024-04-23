@@ -1,104 +1,149 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "title": "Google Calendar API",
-      "version": "v3"
-    },
-    "paths": {
-      "/calendar/v3/events/{eventId}": {
-        "parameters": [
-          {
-            "name": "eventId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Google Calendar API",
+    "description": "Customized OpenAPI specification for Google Calendar API Events Resource",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/v3/calendars/primary/events/{eventId}": {
+      "parameters": [
+        {
+          "name": "eventId",
+          "in": "path",
+          "description": "ID of the event",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "patch": {
+        "summary": "Update an Event",
+        "operationId": "update_event",
+        "description": "Updates an event. This method supports patch semantics.",
+        "requestBody": {
+          "description": "An update to an event",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "summary": {
+                    "type": "string",
+                    "description": "Title of the event"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of the event"
+                  },
+                  "start": {
+                    "type": "object",
+                    "properties": {
+                      "dateTime": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The starting date and time of the event"
+                      },
+                      "timeZone": {
+                        "type": "string",
+                        "description": "The time zone of the event start"
+                      }
+                    }
+                  },
+                  "end": {
+                    "type": "object",
+                    "properties": {
+                      "dateTime": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The ending date and time of the event"
+                      },
+                      "timeZone": {
+                        "type": "string",
+                        "description": "The time zone of the event end"
+                      }
+                    }
+                  },
+                  "timeZone": {
+                    "type": "string",
+                    "description": "The time zone of the event"
+                  },
+                  "recurrence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "List of RRULE, RDATE and EXDATE lines for a recurring event"
+                  },
+                  "location": {
+                    "type": "string",
+                    "description": "Location of the event"
+                  },
+                  "organizer": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string"
+                      },
+                      "displayName": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "The organizer of the event"
+                  },
+                  "attendees": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string"
+                        },
+                        "displayName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "description": "Attendees of the event"
+                  }
+                }
+              }
             }
           }
-        ],
-        "patch": {
-          "summary": "Update Event",
-          "operationId": "update_event",
-          "requestBody": {
-            "required": true,
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response. Returns the updated event.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "summary": {
-                      "type": "string"
+                    "kind": {
+                      "type": "string",
+                      "description": "Type of the resource. This is always 'calendar#event'."
                     },
-                    "start": {
-                      "type": "object",
-                      "properties": {
-                        "dateTime": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "timeZone": {
-                          "type": "string"
-                        }
-                      }
+                    "etag": {
+                      "type": "string",
+                      "description": "ETag of the resource."
                     },
-                    "end": {
-                      "type": "object",
-                      "properties": {
-                        "dateTime": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "timeZone": {
-                          "type": "string"
-                        }
-                      }
+                    "id": {
+                      "type": "string",
+                      "description": "ID of the event."
                     },
-                    "timezone": {
-                      "type": "string"
-                    },
-                    "location": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "organizer": {
-                      "type": "object",
-                      "properties": {
-                        "email": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "attendees": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "email": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    },
-                    "recurrence": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
+                    "status": {
+                      "type": "string",
+                      "description": "Status of the event. Possible values are 'confirmed', 'tentative', and 'cancelled'."
                     }
                   }
                 }
               }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Successful update of event."
             }
           }
         }
       }
     }
   }
-  
+}

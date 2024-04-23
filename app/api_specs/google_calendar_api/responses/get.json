@@ -3,24 +3,28 @@
   "info": {
     "title": "Google Calendar API",
     "version": "1.0.0",
-    "description": "Custom GPT agent integration for Google Calendar API"
+    "description": "Custom GPT Agent API Specification for Google Calendar"
   },
+  "servers": [
+    {
+      "url": "https://www.googleapis.com/calendar/v3/calendars/primary"
+    }
+  ],
   "paths": {
     "/events/{eventId}": {
+      "parameters": [
+        {
+          "name": "eventId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
       "get": {
         "summary": "Get Event",
         "operationId": "get_event",
-        "parameters": [
-          {
-            "name": "eventId",
-            "in": "path",
-            "required": true,
-            "description": "ID of the event to retrieve",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -29,7 +33,16 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "htmlLink": {
+                      "type": "string"
+                    },
                     "summary": {
+                      "type": "string"
+                    },
+                    "description": {
                       "type": "string"
                     },
                     "start": {
@@ -59,10 +72,13 @@
                     "timezone": {
                       "type": "string"
                     },
-                    "location": {
-                      "type": "string"
+                    "recurrence": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
-                    "description": {
+                    "location": {
                       "type": "string"
                     },
                     "organizer": {
@@ -86,17 +102,8 @@
                           },
                           "displayName": {
                             "type": "string"
-                          },
-                          "responseStatus": {
-                            "type": "string"
                           }
                         }
-                      }
-                    },
-                    "recurrence": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
                       }
                     }
                   }
