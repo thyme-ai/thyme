@@ -1,1 +1,1 @@
-web: gunicorn app:thyme
+web: gunicorn app:app
