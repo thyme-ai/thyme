@@ -1,13 +1,17 @@
+I'm working on making an OpenAPI function specification for the DELETE, GET, INSERT, LIST, and PATCH endpoints of the Google Calendar API. I want to expose these API endpoints to help an AI agent manipulate a Google Calendar.
+
+Please combine the following function specifications into a single function specification and output the result in the JSON OpenAPI 3 format, and provide the whole output JSON.
+
 {
   "openapi": "3.0.0",
   "info": {
     "title": "Google Calendar API",
-    "version": "1.0.0",
-    "description": "Custom GPT Agent API Specification for Google Calendar"
+    "description": "API for managing Google Calendar events",
+    "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "https://www.googleapis.com/calendar/v3/calendars/primary"
+      "url": "https://www.googleapis.com/calendar/v3/calendars/primary/events"
     }
   ],
   "paths": {
@@ -37,7 +41,35 @@
             "description": "Internal server error"
           }
         }
-      },
+      }
+    }
+  }
+}
+
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Google Calendar API",
+    "version": "1.0.0",
+    "description": "Custom GPT Agent API Specification for Google Calendar"
+  },
+  "servers": [
+    {
+      "url": "https://www.googleapis.com/calendar/v3/calendars/primary"
+    }
+  ],
+  "paths": {
+    "/events/{eventId}": {
+      "parameters": [
+        {
+          "name": "eventId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
       "get": {
         "summary": "Get Event",
         "operationId": "get_event",
@@ -118,15 +150,6 @@
                           },
                           "displayName": {
                             "type": "string"
-                          },
-                          "organizer": {
-                            "type": "boolean"
-                          },
-                          "self": {
-                            "type": "boolean"
-                          },
-                          "responseStatus": {
-                            "type": "string"
                           }
                         }
                       }
@@ -137,134 +160,145 @@
             }
           }
         }
-      },
-      "patch": {
-        "summary": "Update an Event",
-        "operationId": "update_event",
-        "description": "Updates an event. This method supports patch semantics.",
+      }
+    }
+  }
+}
+
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Google Calendar API",
+    "version": "v3"
+  },
+  "paths": {
+    "/events/insert": {
+      "post": {
+        "summary": "Insert Event",
+        "operationId": "insert_event",
+        "description": "Creates a new event.",
         "requestBody": {
-          "description": "An update to an event",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "summary": {
-                    "type": "string",
-                    "description": "Title of the event"
-                  },
-                  "description": {
-                    "type": "string",
-                    "description": "Description of the event"
-                  },
-                  "start": {
-                    "type": "object",
-                    "properties": {
-                      "dateTime": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The starting date and time of the event"
-                      },
-                      "timeZone": {
-                        "type": "string",
-                        "description": "The time zone of the event start"
-                      }
-                    }
-                  },
-                  "end": {
-                    "type": "object",
-                    "properties": {
-                      "dateTime": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The ending date and time of the event"
-                      },
-                      "timeZone": {
-                        "type": "string",
-                        "description": "The time zone of the event end"
-                      }
-                    }
-                  },
-                  "timeZone": {
-                    "type": "string",
-                    "description": "The time zone of the event"
-                  },
-                  "recurrence": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "List of RRULE, RDATE and EXDATE lines for a recurring event"
-                  },
-                  "location": {
-                    "type": "string",
-                    "description": "Location of the event"
-                  },
-                  "organizer": {
-                    "type": "object",
-                    "properties": {
-                      "email": {
-                        "type": "string"
-                      },
-                      "displayName": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "The organizer of the event"
-                  },
-                  "attendees": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "email": {
-                          "type": "string"
-                        },
-                        "displayName": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "description": "Attendees of the event"
-                  }
-                }
+                "$ref": "#/components/schemas/Event"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Successful response. Returns the updated event.",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "kind": {
-                      "type": "string",
-                      "description": "Type of the resource. This is always 'calendar#event'."
-                    },
-                    "etag": {
-                      "type": "string",
-                      "description": "ETag of the resource."
-                    },
-                    "id": {
-                      "type": "string",
-                      "description": "ID of the event."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "Status of the event. Possible values are 'confirmed', 'tentative', and 'cancelled'."
-                    }
-                  }
+                  "$ref": "#/components/schemas/Event"
                 }
               }
             }
           }
         }
       }
-    },
+    }
+  },
+  "components": {
+    "schemas": {
+      "Event": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the event."
+          },
+          "htmlLink": {
+            "type": "string",
+            "description": "URL link to the Google Calendar event."
+          },
+          "summary": {
+            "type": "string",
+            "description": "Title of the event."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the event."
+          },
+          "start": {
+            "$ref": "#/components/schemas/DateTime",
+            "description": "The start time of the event."
+          },
+          "end": {
+            "$ref": "#/components/schemas/DateTime",
+            "description": "The end time of the event."
+          },
+          "timezone": {
+            "type": "string",
+            "description": "The time zone of the event."
+          },
+          "recurrence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of RRULE, RDATE, and EXDATE lines for a recurring event."
+          },
+          "location": {
+            "type": "string",
+            "description": "The location of the event."
+          },
+          "organizer": {
+            "$ref": "#/components/schemas/Person",
+            "description": "The organizer of the event."
+          },
+          "attendees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Person"
+            },
+            "description": "List of attendees for the event."
+          }
+        }
+      },
+      "DateTime": {
+        "type": "object",
+        "properties": {
+          "dateTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date and time of the event."
+          },
+          "timeZone": {
+            "type": "string",
+            "description": "The time zone of the event."
+          }
+        }
+      },
+      "Person": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email address of the person."
+          }
+        }
+      }
+    }
+  }
+}
+
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Google Calendar API",
+    "description": "Custom API specification for interacting with Google Calendar events.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://www.googleapis.com/calendar/v3/calendars/primary/"
+    }
+  ],
+  "paths": {
     "/events": {
       "get": {
         "summary": "List events",
@@ -434,130 +468,153 @@
           }
         }
       }
-    },
-    "/events/insert": {
-      "post": {
-        "summary": "Insert Event",
-        "operationId": "insert_event",
-        "description": "Creates a new event.",
+    }
+  }
+}
+
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Google Calendar API",
+    "description": "Customized OpenAPI specification for Google Calendar API Events Resource",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/v3/calendars/primary/events/{eventId}": {
+      "parameters": [
+        {
+          "name": "eventId",
+          "in": "path",
+          "description": "ID of the event",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "patch": {
+        "summary": "Update an Event",
+        "operationId": "update_event",
+        "description": "Updates an event. This method supports patch semantics.",
         "requestBody": {
+          "description": "An update to an event",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Event"
+                "type": "object",
+                "properties": {
+                  "summary": {
+                    "type": "string",
+                    "description": "Title of the event"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of the event"
+                  },
+                  "start": {
+                    "type": "object",
+                    "properties": {
+                      "dateTime": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The starting date and time of the event"
+                      },
+                      "timeZone": {
+                        "type": "string",
+                        "description": "The time zone of the event start"
+                      }
+                    }
+                  },
+                  "end": {
+                    "type": "object",
+                    "properties": {
+                      "dateTime": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The ending date and time of the event"
+                      },
+                      "timeZone": {
+                        "type": "string",
+                        "description": "The time zone of the event end"
+                      }
+                    }
+                  },
+                  "timeZone": {
+                    "type": "string",
+                    "description": "The time zone of the event"
+                  },
+                  "recurrence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "List of RRULE, RDATE and EXDATE lines for a recurring event"
+                  },
+                  "location": {
+                    "type": "string",
+                    "description": "Location of the event"
+                  },
+                  "organizer": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string"
+                      },
+                      "displayName": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "The organizer of the event"
+                  },
+                  "attendees": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string"
+                        },
+                        "displayName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "description": "Attendees of the event"
+                  }
+                }
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful response. Returns the updated event.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Event"
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "description": "Type of the resource. This is always 'calendar#event'."
+                    },
+                    "etag": {
+                      "type": "string",
+                      "description": "ETag of the resource."
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "ID of the event."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Status of the event. Possible values are 'confirmed', 'tentative', and 'cancelled'."
+                    }
+                  }
                 }
               }
             }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Event": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Unique identifier for the event."
-          },
-          "htmlLink": {
-            "type": "string",
-            "description": "URL link to the Google Calendar event."
-          },
-          "summary": {
-            "type": "string",
-            "description": "Title of the event."
-          },
-          "description": {
-            "type": "string",
-            "description": "Description of the event."
-          },
-          "start": {
-            "$ref": "#/components/schemas/DateTime",
-            "description": "The start time of the event."
-          },
-          "end": {
-            "$ref": "#/components/schemas/DateTime",
-            "description": "The end time of the event."
-          },
-          "timezone": {
-            "type": "string",
-            "description": "The time zone of the event."
-          },
-          "recurrence": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "List of RRULE, RDATE, and EXDATE lines for a recurring event."
-          },
-          "location": {
-            "type": "string",
-            "description": "The location of the event."
-          },
-          "organizer": {
-            "$ref": "#/components/schemas/Person",
-            "description": "The organizer of the event."
-          },
-          "attendees": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Person"
-            },
-            "description": "List of attendees for the event."
-          }
-        }
-      },
-      "DateTime": {
-        "type": "object",
-        "properties": {
-          "dateTime": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The date and time of the event."
-          },
-          "timeZone": {
-            "type": "string",
-            "description": "The time zone of the event."
-          }
-        }
-      },
-      "Person": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "description": "Email address of the person."
-          },
-          "displayName": {
-            "type": "string",
-            "description": "Display name of the person."
-          },
-          "organizer": {
-            "type": "boolean",
-            "description": "Indicates if the person is the organizer of the event."
-          },
-          "self": {
-            "type": "boolean",
-            "description": "Indicates if the person is the authenticated user."
-          },
-          "responseStatus": {
-            "type": "string",
-            "description": "Status of the person's participation in the event."
           }
         }
       }

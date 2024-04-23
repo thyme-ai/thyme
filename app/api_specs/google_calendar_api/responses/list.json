@@ -2,6 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Google Calendar API",
+    "description": "Custom API specification for interacting with Google Calendar events.",
     "version": "1.0.0"
   },
   "servers": [
@@ -14,11 +15,12 @@
       "get": {
         "summary": "List events",
         "operationId": "list_events",
+        "description": "Returns events on the user's primary calendar.",
         "parameters": [
           {
             "name": "eventTypes",
             "in": "query",
-            "description": "Filters events by type",
+            "description": "Type of events to be returned.",
             "required": false,
             "schema": {
               "type": "string"
@@ -27,16 +29,17 @@
           {
             "name": "maxResults",
             "in": "query",
-            "description": "Maximum number of events returned",
+            "description": "Maximum number of events to return.",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int32"
             }
           },
           {
             "name": "orderby",
             "in": "query",
-            "description": "Order of events",
+            "description": "Field by which to sort the list of events.",
             "required": false,
             "schema": {
               "type": "string"
@@ -45,7 +48,7 @@
           {
             "name": "q",
             "in": "query",
-            "description": "Search query",
+            "description": "Search keywords.",
             "required": false,
             "schema": {
               "type": "string"
@@ -54,7 +57,7 @@
           {
             "name": "timeMin",
             "in": "query",
-            "description": "Minimum start time",
+            "description": "Minimum start time of events to return (exclusive).",
             "required": false,
             "schema": {
               "type": "string",
@@ -64,7 +67,7 @@
           {
             "name": "timeMax",
             "in": "query",
-            "description": "Maximum end time",
+            "description": "Maximum end time of events to return (exclusive).",
             "required": false,
             "schema": {
               "type": "string",
@@ -85,15 +88,88 @@
                       "items": {
                         "type": "object",
                         "properties": {
-                          "summary": { "type": "string" },
-                          "start": { "type": "object" },
-                          "end": { "type": "object" },
-                          "timezone": { "type": "string" },
-                          "location": { "type": "string" },
-                          "description": { "type": "string" },
-                          "organizer": { "type": "object" },
-                          "attendees": { "type": "array" },
-                          "recurrence": { "type": "array" }
+                          "id": {
+                            "type": "string"
+                          },
+                          "htmlLink": {
+                            "type": "string"
+                          },
+                          "summary": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "start": {
+                            "type": "object",
+                            "properties": {
+                              "dateTime": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "timeZone": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "end": {
+                            "type": "object",
+                            "properties": {
+                              "dateTime": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "timeZone": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "timezone": {
+                            "type": "string"
+                          },
+                          "recurrence": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "location": {
+                            "type": "string"
+                          },
+                          "organizer": {
+                            "type": "object",
+                            "properties": {
+                              "email": {
+                                "type": "string"
+                              },
+                              "displayName": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "attendees": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "email": {
+                                  "type": "string"
+                                },
+                                "displayName": {
+                                  "type": "string"
+                                },
+                                "organizer": {
+                                  "type": "boolean"
+                                },
+                                "self": {
+                                  "type": "boolean"
+                                },
+                                "responseStatus": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
                         }
                       }
                     }

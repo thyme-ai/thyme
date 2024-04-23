@@ -1,39 +1,20 @@
-from datetime import datetime, timezone, timedelta
 from googleapiclient.discovery import build
 import json
 from openai import OpenAI
 from tenacity import retry, wait_random_exponential, stop_after_attempt
 from app.functions.get_gcal_functions_from_openai_spec import get_gcal_functions_from_openai_spec
 from app.functions.pretty_print_conversation import pretty_print_conversation
+from app.api_specs.openai_api.openai_prompt import openai_prompt
+import datetime 
+from datetime import datetime 
 
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 CALENDAR_ID = 'primary'
 GPT_MODEL = "gpt-3.5-turbo"
 TOOLS = get_gcal_functions_from_openai_spec()
-PST_HOURS_FROM_UTC = -7
-timezone_pst = timezone(timedelta(hours=PST_HOURS_FROM_UTC))
-now = datetime.now(timezone_pst)
+APOLOGY_STRING = "Sorry, I'm not able to do that yet."
 
-system_message = f"""
-You are a helpful assistant. 
-
-Assume that today is {now} and that the timezone is {timezone_pst}
-
-Respond to the following prompt.
-If the prompt does not contain calendar-related tasks, just respond normally
-and format the text so that it is easy to read. 
-
-If the prompt contains calendar-related tasks, respond to the following prompt
-by using function_call and then summarize actions. 
-
-If you are making a call to the "create_event" function, make the event summary 
-start with an emogee that describes the event.
-
-If the prompt contains a request for ideas or suggestions, 
-add your suggestions to the description of the event as a numbered list.
-
-Ask for clarification if a user request is ambiguous.
-"""
+system_message = openai_prompt
 
 client = OpenAI()
 
@@ -97,7 +78,6 @@ def execute_function_call(message, creds):
     # if function_name == 'delete_event':
     #     args = json.loads(args_json).get('parameters')
     
-
     crud_function = function_name_to_function.get(function_name)
     return crud_function(service, args)
 
@@ -106,7 +86,15 @@ def execute_function_call(message, creds):
 # ----------------
 def insert_event(service, args):
     event = service.events().insert(calendarId=CALENDAR_ID, body=args).execute()
-    return f"I created your event called {event.get("summary")}. Find it here - {event.get("htmlLink")} "
+
+    if event:
+        return f"I created your event called {event.get("summary")}"
+    else:
+         return f"""
+        {APOLOGY_STRING} Try saying something like this : 
+        "Add an event to my calendar called *name of event* on *date* at *time* for *duration*
+         that repeats *frequency of repeats*
+        """
 
 
 def list_events(service, args):
@@ -114,24 +102,37 @@ def list_events(service, args):
     for key in args.keys():
         params[key] = args.get(key)
     events = service.events().list(**params).execute()['items']
-    event_summaries = (", ").join(map(lambda e: f"{e.get('summary')}", events))
-    return event_summaries
+
+    if events:
+        print('EVENTS', events)
+        intro = "Here's a summary of the events I found:"
+        event_summaries = []
+
+        for event in events:
+            summary = event.get('summary')
+            start = event.get('start')
+            dt_str = start.get('dateTime')
+            dt_object = datetime.fromisoformat(dt_str)
+            date = dt_object.date()
+            time = dt_object.time()
+            event_summaries.append(f"{summary} on {date} at {time}")
+        return f"{intro} + {(", ").join(event_summaries)}"
+    
+    return f"""
+        {APOLOGY_STRING} Try saying: "What's on my calendar today?" or 
+        "Give me a list of events on my calendar called..."
+        """
 
 def delete_event(service, eventId):
-#    event = get_event(service, eventId)
-#    service.events().delete(calendarId='primary', eventId=eventId).execute()
-#    return f"I deleted your event called {event['summary']}"
-    pass
+      return APOLOGY_STRING
 
 
 def get_event(service, eventId):
-    # event = service.events().get(calendarId='primary', eventId=eventId).execute()
-    # return f"{event['summary']}"
-    pass
+    return APOLOGY_STRING
 
 
 def update_event(service, args):
-   pass
+    return APOLOGY_STRING
 
 
 function_name_to_function = {
