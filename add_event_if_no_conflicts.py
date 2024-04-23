@@ -1,5 +1,7 @@
 # ------------------------------------------------
-# The following code was written by Yousef Nami
+# The following code was written by Yousef Nami,
+# except where it says "added by fwesparza"
+# Thank you Yousef!
 # ------------------------------------------------
 # - Github - https://github.com/namiyousef
 # - LinkedIn - https://www.linkedin.com/in/namiyousef96/?originalSubdomain=uk
