@@ -3,7 +3,6 @@ from sqlalchemy.schema import ForeignKey
 
 db = SQLAlchemy()
 
-
 habits_per_user = db.Table(
     "habits_per_user",
     db.Model.metadata,
