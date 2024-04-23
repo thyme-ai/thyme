@@ -39,14 +39,16 @@ def assistant():
             return render_template("home.html", title="Home", form=form, form_type="one-line-form", answer=answer)
     return redirect(url_for("session.logout"))
 
-      
-   
 
 @bp.route("/preferences", methods=["GET", "POST"])
 def preferences():
-    user = getUser()
-    habits = getHabits()
-    return render_template("preferences.html", title="Preferences", habits=habits, user=user)
+    if os.path.exists("token.json"):
+        creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+        if creds and creds.valid:
+            user = getUser()
+            habits = getHabits()
+            return render_template("preferences.html", title="Preferences", habits=habits, user=user)
+    return redirect(url_for("home.index"))
 
 # ---------------
 # HABITS
@@ -72,11 +74,33 @@ def updateHabit(habit_id):
     return render_template("/components/form.html", title=habit.name, form=form)
 
 
-
 @bp.route("/deleteHabit/<habit_id>", methods=["GET", "DELETE"])
 def deleteHabit(habit_id):
     handleDeleteHabit(habit_id)
     return redirect(url_for("home.preferences"))
+
+
+@bp.route("/addHabitsToCalendar", methods=["GET", "POST"])
+def addHabitsToCalendar():
+    if os.path.exists("token.json"):
+        creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+        form=AskQuestionForm()
+        if creds and creds.valid:
+            habits = getHabits()
+            habit_strings = map(lambda habit: f"called {habit.name} for {habit.duration_min} min at {habit.ideal_start.strftime('%-I:%M %p')}", habits)
+            answer_strings = map(lambda habit: f"{habit.name}", habits)
+
+            for habit_string in habit_strings:
+                prompt = f"Add an event to my calendar that repeats every weekday {habit_string}"
+                answer_question(prompt, creds) 
+            
+            answer = f"""
+            I added these habits to your calendar: {(", ").join(answer_strings)}. 
+            You might need to refresh Google Calendar to see them. """
+            return render_template("home.html", title="Home", form=form, form_type="one-line-form", answer=answer)
+
+    return redirect(url_for("session.logout"))
+
 
 
 # ---------------
