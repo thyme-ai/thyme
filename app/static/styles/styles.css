@@ -79,7 +79,7 @@ textarea, input {
 }
 
 textarea {
-    width: 300px;
+    width: 500px;
     background-color: var(--thyme-text-area);
 }
 
