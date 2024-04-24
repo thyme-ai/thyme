@@ -36,7 +36,7 @@ def assistant():
             if form.validate_on_submit():
                 prompt = form.question.data
                 answer = answer_question(prompt, creds)            
-            return render_template("home.html", title="Home", form=form, form_type="one-line-form", answer=answer)
+            return render_template("home.html", title="Home", form=form, form_type="one-line-form", justified_type="centered", answer=answer)
     return redirect(url_for("session.logout"))
 
 
@@ -60,7 +60,7 @@ def addHabit():
     if form.validate_on_submit():
        handleAddHabit(form)
        return redirect(url_for("home.preferences"))
-    return render_template("/components/form.html", title="Add Habit", form=form)
+    return render_template("/components/form.html", title="Add Habit", form=form, justified_type="left-justified")
 
 
 @bp.route("/updateHabit/<habit_id>", methods=["GET", "POST"])
@@ -71,7 +71,7 @@ def updateHabit(habit_id):
     if form.validate_on_submit():
         handleUpdateHabit(form, habit_id)
         return redirect(url_for("home.preferences"))
-    return render_template("/components/form.html", title=habit.name, form=form)
+    return render_template("/components/form.html", title=habit.name,  form=form, justified_type="left-justified")
 
 
 @bp.route("/deleteHabit/<habit_id>", methods=["GET", "DELETE"])
@@ -97,7 +97,7 @@ def addHabitsToCalendar():
             answer = f"""
             I added these habits to your calendar: {(", ").join(answer_strings)}. 
             You might need to refresh Google Calendar to see them. """
-            return render_template("home.html", title="Home", form=form, form_type="one-line-form", answer=answer)
+            return render_template("home.html", title="Home", form=form, form_type="one-line-form", justified_type="centered", answer=answer)
 
     return redirect(url_for("session.logout"))
 
@@ -113,7 +113,7 @@ def updatePreferences():
     if form.validate_on_submit():
        handleUpdatePreferences(form)
        return redirect(url_for("home.preferences"))
-    return render_template("/components/form.html", title="Update Daily Schedule", form=form)
+    return render_template("/components/form.html", title="Update Daily Schedule",  form=form, justified_type="left-justified")
 
 # ---------------
 # EVENT HANDLERS

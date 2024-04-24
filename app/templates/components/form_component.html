@@ -1,6 +1,6 @@
-<div class="left-justified">
+<div class="{{justified_type}}">
   {% if title != "Home" %}
-  <h3>{{ title }}</h3>
+  <h1>{{ title }}</h1>
   {% endif %}
   <form method="post" action={{ path }}>
       {{ form.hidden_tag() }}

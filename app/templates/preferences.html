@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-{% include "/components/headers/logged_in.html" %}
+{% include "components/headers/logged_in.html" %}
     <div class="left-justified">
-        <h2>Profile</h2>
+        <h1>Profile</h1>
         <h3>Daily Schedule</h3>        
         <ul>
             <li>Wake Time: {{user.wake_time.strftime('%-I:%M %p')}}</li>
