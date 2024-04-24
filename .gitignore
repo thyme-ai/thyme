@@ -1,7 +1,7 @@
 # Google Calendar API 
 calendar_id.txt
 client_secret.json
-credentials.json
+google-credentials.json
 token.json
 token.pickle
 

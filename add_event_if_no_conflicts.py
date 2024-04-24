@@ -27,7 +27,7 @@ from googleapiclient.errors import HttpError
 # )
 
 GOOGLE_OAUTH_TOKEN = "token.json"
-GOOGLE_OAUTH_CREDENTIAL_FILE = "credentials.json"
+GOOGLE_OAUTH_CREDENTIAL_FILE = "google-credentials.json"
 
 SCOPES = [
     "https://www.googleapis.com/auth/calendar",         # edit calendar
