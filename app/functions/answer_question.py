@@ -92,8 +92,7 @@ def insert_event(service, args):
     else:
          return f"""
         {APOLOGY_STRING} Try saying something like this : 
-        "Add an event to my calendar called *name of event* on *date* at *time* for *duration*
-         that repeats *frequency of repeats*
+        "Add a _____ hour long event to my calendar called _____ on _____.
         """
 
 
@@ -120,7 +119,7 @@ def list_events(service, args):
     
     return f"""
         {APOLOGY_STRING} Try saying: "What's on my calendar today?" or 
-        "Give me a list of events on my calendar called..."
+        "Give me a list of events on my calendar called _____"
         """
 
 def delete_event(service, eventId):
