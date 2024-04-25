@@ -1,21 +1,11 @@
 # Thyme
-Thyme is a personal assistant that helps you run your day and get things done faster, so you can spend more time doing the things you love.
+Meet Thyme, the most personal, useful, and private AI assistant. Thyme creates the perfect day for you, learns over time, and anticipates your needs. Like & Subscribe to stay up to date with Thyme & get access to our beta release in May 2024!
 
-## Features 
-1) **Chat Interface** to make it easy to manage your calendar via a chat interface
-2) **Event Suggestions** to give you helpful suggestions for creative ideas for events
-3) **Habit Scheduling** to make it easy to meet your work-life balance goals throughout the week
+## Demo Video
+Watch our demo video on the Thyme YouTube channel - https://www.youtube.com/@thyme-ai
 
-#### Thyme can help you schedule events,   
-<img width="600" alt="Schedule Events" src="https://github.com/thyme-ai/thyme/assets/17794659/c5a23638-ecab-4b4d-b8f2-29213b0515cb">
 
-#### answer questions,  
-<img width="300" alt="Answer Questions" src="https://github.com/thyme-ai/thyme/assets/17794659/0ca19938-3a79-4519-bded-94f63ad89d5b">
-
-#### and help you think of creative ideas.
-<img width="600" alt="Suggest Ideas for Events" src="https://github.com/thyme-ai/thyme/assets/17794659/757c2008-5125-45e2-a8ab-bf705d6754ac">
-
-## Tutorials Used
+## Tutorials
   - **Google Calendar API** 
     - Getting Started - [HERE](https://developers.google.com/calendar/api/quickstart/python)
   - **Open AI API**
@@ -24,7 +14,7 @@ Thyme is a personal assistant that helps you run your day and get things done fa
     - How to Call Functions with Chat Models - [HERE](https://cookbook.openai.com/examples/how_to_call_functions_with_chat_models)
      - Guide to Prompt Engineering - [HERE](https://platform.openai.com/docs/guides/prompt-engineering)
 
-## APIs, Libraries, & Frameworks Used 
+## APIs, Libraries, & Frameworks 
 ### APIs
 - **Google**
     - Google Calendar API
