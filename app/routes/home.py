@@ -22,7 +22,7 @@ def index():
 # ------------------------------
 # HOME
 # ------------------------------
-@bp.route('/assistant')
+@bp.route('/assistant', methods=["GET", "POST"])
 def assistant():
   creds = check_for_credentials()
   answer = None
