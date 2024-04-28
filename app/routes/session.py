@@ -2,6 +2,7 @@ from flask import Blueprint, redirect, request, session, url_for
 from os import environ
 from dotenv import load_dotenv
 import json
+import requests
 import google_auth_oauthlib.flow
 from app.functions.helpers import credentials_to_dict
 
@@ -31,10 +32,7 @@ def login():
       )
 
   session['state'] = state 
-  print('------------------')
-  print('AUTH URL', authorization_url)
   return redirect(authorization_url)
-  # return redirect(url_for('home.assistant'))
 
 
 # ----------------
@@ -57,6 +55,11 @@ def oauth2callback():
   # Store credentials in the session (TODO: Replace with saving to database)
   credentials = flow.credentials
   session['credentials'] = credentials_to_dict(credentials)
+
+  # Store email in the session
+  session = flow.authorized_session()
+  email = session.get('https://www.googleapis.com/oauth2/v3/userinfo')
+  session['email'] = email
   return redirect(url_for('home.assistant'))
 
 
@@ -67,4 +70,5 @@ def oauth2callback():
 def logout():
   if 'credentials' in session:
     del session['credentials']
+    del session['email']
   return redirect(url_for("home.index"))
