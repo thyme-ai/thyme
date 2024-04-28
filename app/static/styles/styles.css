@@ -74,8 +74,12 @@ header {
     padding: 10px;
 }
 
-textarea, input {
+textarea {
     color: var(--thyme-white);
+}
+
+input {
+    color: var(--thyme-black);
 }
 
 textarea {

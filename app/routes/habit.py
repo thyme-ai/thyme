@@ -1,7 +1,7 @@
 from app.models import db, Habit
 from app.forms import AddHabitForm, AskQuestionForm, UpdateHabitForm
 from app.functions.answer_question import answer_question
-from app.functions.helpers import check_for_credentials, get_habit, get_habits, get_user_id
+from app.functions.helpers import check_for_credentials, get_habit, get_habits, get_user_id_or_create_new_user
 from flask import Blueprint, redirect, url_for, render_template
 
 bp = Blueprint("habit", __name__, url_prefix="/habit")
@@ -68,7 +68,7 @@ def handle_add_habit(form):
        duration_min = form.duration_min.data,
        ideal_start = form.ideal_start.data,
        personal = form.personal.data,
-       user_id = get_user_id()
+       user_id = get_user_id_or_create_new_user()
        )
     db.session.add(habit)
     db.session.commit()

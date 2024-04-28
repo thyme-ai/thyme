@@ -5,6 +5,7 @@ import json
 import requests
 import google_auth_oauthlib.flow
 from app.functions.helpers import credentials_to_dict
+from google.auth.transport.requests import AuthorizedSession
 
 bp = Blueprint("session", __name__, url_prefix="/session")
 
@@ -42,7 +43,7 @@ def login():
 def oauth2callback():
   # Specify the state when creating the flow in the callback so that it can
   # verified in the authorization server response.
-  state = session['state']
+  # state = session['state']
 
   # flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(GOOGLE_CLIENT_SECRETS_JSON, scopes=SCOPES, state=state)
   flow = google_auth_oauthlib.flow.Flow.from_client_config(client_config=GOOGLE_CLIENT_CONFIG, scopes=SCOPES )
@@ -57,8 +58,14 @@ def oauth2callback():
   session['credentials'] = credentials_to_dict(credentials)
 
   # Store email in the session
-  session = flow.authorized_session()
-  email = session.get('https://www.googleapis.com/oauth2/v3/userinfo')
+  authorized_session = AuthorizedSession(credentials)
+  user_info = authorized_session.request(
+    'GET',
+    'https://www.googleapis.com/oauth2/v3/userinfo'
+    ).json()
+  email = user_info['email']
+  print('--------------')
+  print('EMAIL', email)
   session['email'] = email
   return redirect(url_for('home.assistant'))
 
@@ -70,5 +77,4 @@ def oauth2callback():
 def logout():
   if 'credentials' in session:
     del session['credentials']
-    del session['email']
   return redirect(url_for("home.index"))

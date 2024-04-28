@@ -26,7 +26,7 @@ class Habit(db.Model):
     __tablename__ = "habits"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30), unique=True)
+    name = db.Column(db.String(30))
     duration_min = db.Column(db.Integer, nullable=True)
     ideal_start = db.Column(db.Time, nullable=True)
     personal = db.Column(db.Boolean, nullable=False)

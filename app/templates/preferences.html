@@ -5,6 +5,7 @@
         <h1>Profile</h1>
         <h3>Daily Schedule</h3>        
         <ul>
+            <li>Email: {{ user.gmail }}</li>
             <li>Wake Time: {{user.wake_time.strftime('%-I:%M %p')}}</li>
             <li>Sleep Time: {{user.sleep_time.strftime('%-I:%M %p')}}</li>
         </ul>
