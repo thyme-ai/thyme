@@ -1,47 +1,70 @@
-from flask import Blueprint, redirect, url_for, render_template
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.oauth2.credentials import Credentials
-import os.path
+from flask import Blueprint, redirect, request, session, url_for
+from os import environ
+from dotenv import load_dotenv
+import json
+import google_auth_oauthlib.flow
+from app.functions.helpers import credentials_to_dict
 
 bp = Blueprint("session", __name__, url_prefix="/session")
-SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
-@bp.route("/login", methods=["GET", "POST"])
+SCOPES = [
+    "https://www.googleapis.com/auth/calendar",         # edit calendar
+    "https://www.googleapis.com/auth/userinfo.email",   # get email 
+    "https://www.googleapis.com/auth/calendar.readonly" # get timezone
+]
+
+load_dotenv()
+GOOGLE_CLIENT_CONFIG = json.loads(environ.get('GOOGLE_CLIENT_CONFIG'))
+
+
+# ----------------
+# LOGIN
+# ----------------
+@bp.route('/login', methods=["GET", "POST"])
 def login():
-    creds = None
-    # The file token.json stores the user's access and refresh tokens, and is
-    # created automatically when the authorization flow completes for the first
-    # time.
-    if os.path.exists("token.json"):
-      creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+  flow = google_auth_oauthlib.flow.Flow.from_client_config(client_config=GOOGLE_CLIENT_CONFIG, scopes=SCOPES )
+  flow.redirect_uri = url_for('session.oauth2callback', _external=True)
 
-    # If there are no (valid) credentials available or they expired, let the user log in.
-    if not creds or not creds.valid:
-      # If the credentials have expired, also let the user log in 
-      if creds and creds.expired and creds.refresh_token:
-        creds.refresh()
-      # else, get user credentials 
-      else:
-        flow = InstalledAppFlow.from_client_secrets_file("google-credentials.json", SCOPES)
-        creds = flow.run_local_server(port=0)
-    # Save the credentials for the next run
-      with open("token.json", "w") as token:
-        token.write(creds.to_json())
+  authorization_url, state = flow.authorization_url(
+      access_type='offline',        # Enable offline access so you can refresh access token without re-prompting user for permission.
+      include_granted_scopes='true' # Enable incremental authorizations
+      )
 
-      return redirect(url_for("home.assistant"))
-    
+  session['state'] = state 
+  print('------------------')
+  print('AUTH URL', authorization_url)
+  return redirect(authorization_url)
+  # return redirect(url_for('home.assistant'))
 
-@bp.route("/logout", methods=["GET", "POST"])
+
+# ----------------
+# OATH2 CALLBACK
+# ----------------
+@bp.route('/oauth2callback', methods=["GET", "POST"])
+def oauth2callback():
+  # Specify the state when creating the flow in the callback so that it can
+  # verified in the authorization server response.
+  state = session['state']
+
+  # flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(GOOGLE_CLIENT_SECRETS_JSON, scopes=SCOPES, state=state)
+  flow = google_auth_oauthlib.flow.Flow.from_client_config(client_config=GOOGLE_CLIENT_CONFIG, scopes=SCOPES )
+  flow.redirect_uri = url_for('session.oauth2callback', _external=True)
+
+  # Use the authorization server's response to fetch the OAuth 2.0 tokens.
+  authorization_response = request.url
+  flow.fetch_token(authorization_response=authorization_response)
+
+  # Store credentials in the session (TODO: Replace with saving to database)
+  credentials = flow.credentials
+  session['credentials'] = credentials_to_dict(credentials)
+  return redirect(url_for('home.assistant'))
+
+
+# ----------------
+# LOGOUT
+# ----------------
+@bp.route('/logout, ', methods=["GET", "POST"])
 def logout():
-  # Get the path to the token.json file
-  token_file_path = os.path.join(os.getcwd(), "token.json")
-
-  # Check if the file exists
-  if os.path.exists(token_file_path):
-      # Delete the file
-      os.remove(token_file_path)
-      print("The token.json file has been removed.")
-  else:
-      print("The token.json file does not exist.")
-
+  if 'credentials' in session:
+    del session['credentials']
   return redirect(url_for("home.index"))

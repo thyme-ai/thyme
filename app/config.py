@@ -2,5 +2,7 @@ from os import environ
 
 class Configuration:
     SECRET_KEY = environ.get('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = environ.get("DATABASE_URL")
+    SQLALCHEMY_DATABASE_URI = environ.get('DATABASE_URL')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    GOOGLE_CLIENT_CONFIG= environ.get('GOOGLE_CLIENT_CONFIG')
+    OAUTHLIB_INSECURE_TRANSPORT = environ.get('OAUTHLIB_INSECURE_TRANSPORT')
