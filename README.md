@@ -1,11 +1,4 @@
-# Thyme
-Meet Thyme, the most personal, useful, and private AI assistant. Thyme creates the perfect day for you, learns over time, and anticipates your needs. Like & Subscribe to stay up to date with Thyme & get access to our beta release in May 2024!
-
-## Demo Video
-Watch our demo video on the Thyme YouTube channel - https://www.youtube.com/@thyme-ai
-
-
-## Tutorials
+## Tutorials Used
   - **Google Calendar API** 
     - Getting Started - [HERE](https://developers.google.com/calendar/api/quickstart/python)
   - **Open AI API**
@@ -71,7 +64,7 @@ Watch our demo video on the Thyme YouTube channel - https://www.youtube.com/@thy
 ```FLASK_APP=thyme.py```    
 
 
-### Running the App
+### Running the App Locally
 1) Create the PostgreSQL database:
 cd into the 'thyme' directory
 ```psql```    
@@ -95,3 +88,16 @@ Then click on the link that says something like "Running on http://"...
 4) If prompted to log into Google Calendar, follow the prompts
 (note that only google accounts that have been added by Thyme as test users in Google Cloud console can access the 
 Thyme app. Email [hello@thyme.company](hello@thyme.company) if you'd like to be added as a test user.)
+
+
+### Running the App on a Web Server using Heroku
+1) Create the heroku app 
+2) create Procfile (with no extension) with contents ```web: gunicorn app:app```
+3) add "Heroku Postgres" server in heroku as an "add-on"
+4) Make sure "DATABASE_URL" config var (sort of like an env var) matches the DATABASE_URL of the Heroku Postgres Database (click on the database and navigate to settings, Database Credentials ) 
+5) push the local thyme database to Heroku
+```heroku pg:push mylocaldb DATABASE_URL --app example-app```
+```heroku pg:push thyme DATABASE_URL --app thyme-ai```
+6) For errors use the comamnd: 
+```heroku logs --tail -a thyme-ai```
+7) update config file by un-commenting text that adjusts URI so that Heroku can work with Postgres
