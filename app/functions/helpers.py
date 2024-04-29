@@ -28,13 +28,11 @@ def get_habit(habit_id):
 
 def get_habits():
     user_id = get_user_id_or_create_new_user()
-    print('USER ID BEFORE GETTING HABITS ----', user_id)
     habits = db.session.execute(
             db.select(Habit)
             .where(Habit.user_id == user_id)
             .order_by(Habit.name)
             ).scalars().all()
-    print('HABITS------', habits)
     return habits
 
 
@@ -60,7 +58,6 @@ def get_user_by_email(email):
 
 
 def create_user():
-    print('NEW USER CREATED------------')
     user = User(
        gmail = session['email'],
        wake_time = time(hour=7, minute=0),

@@ -6,6 +6,7 @@ import requests
 import google_auth_oauthlib.flow
 from app.functions.helpers import credentials_to_dict
 from google.auth.transport.requests import AuthorizedSession
+import google.oauth2.credentials
 
 bp = Blueprint("session", __name__, url_prefix="/session")
 
@@ -59,13 +60,13 @@ def oauth2callback():
 
   # Store email in the session
   authorized_session = AuthorizedSession(credentials)
+
   user_info = authorized_session.request(
     'GET',
     'https://www.googleapis.com/oauth2/v3/userinfo'
     ).json()
+  
   email = user_info['email']
-  print('--------------')
-  print('EMAIL', email)
   session['email'] = email
   return redirect(url_for('home.assistant'))
 
@@ -73,8 +74,15 @@ def oauth2callback():
 # ----------------
 # LOGOUT
 # ----------------
-@bp.route('/logout, ', methods=["GET", "POST"])
+@bp.route('/logout')
 def logout():
+  credentials = google.oauth2.credentials.Credentials(**session['credentials'])
+  requests.post('https://oauth2.googleapis.com/revoke',
+      params={'token': credentials.token},
+      headers = {'content-type': 'application/x-www-form-urlencoded'})
+  
   if 'credentials' in session:
     del session['credentials']
+    del session['email']
+
   return redirect(url_for("home.index"))
