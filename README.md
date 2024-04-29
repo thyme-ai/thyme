@@ -7,7 +7,7 @@
     - How to Call Functions with Chat Models - [HERE](https://cookbook.openai.com/examples/how_to_call_functions_with_chat_models)
      - Guide to Prompt Engineering - [HERE](https://platform.openai.com/docs/guides/prompt-engineering)
 
-## APIs, Libraries, & Frameworks Used 
+## APIs, Libraries, & Frameworks 
 ### APIs
 - **Google**
     - Google Calendar API
