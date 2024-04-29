@@ -245,6 +245,20 @@ textarea {
     margin-top: 60px;
 }
 
+.invite-to-beta-testing {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
+}
+
+.invite-to-beta-testing > p {
+    color: var(--thyme-lighter-grey);
+    padding: 0px;
+    margin: 5px;
+}
+
 .left-justified {
     margin: 10px;
     padding: 10px;
