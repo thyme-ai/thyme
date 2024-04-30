@@ -222,7 +222,6 @@ textarea {
 .home-main-title {
     color: var(--thyme-lighter-grey);
     font-size: var(--thyme-font-largest);
-    line-height: 30px;
     margin-top: 140px;
 }
 

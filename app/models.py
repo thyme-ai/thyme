@@ -13,9 +13,15 @@ habits_per_user = db.Table(
 
 class User(db.Model):
     __tablename__ = "users"
-
     id = db.Column(db.Integer, primary_key=True)
-    gmail = db.Column(db.String(30), unique=True)
+    email = db.Column(db.String(30), unique=True)
+
+    first_name = db.Column(db.String(30))
+    last_name = db.Column(db.String(30))
+
+    profile_picture = db.Column(db.String(2000))
+    timezone = db.Column(db.String(30))
+
     wake_time = db.Column(db.Time, nullable=False)
     sleep_time = db.Column(db.Time, nullable=False)
 
@@ -33,4 +39,3 @@ class Habit(db.Model):
 
     user_id = db.Column(db.Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     user = db.relationship("User")
-
