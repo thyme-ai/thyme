@@ -22,10 +22,10 @@ def index():
 # ------------------------------
 # HOME
 # ------------------------------
-@bp.route('/assistant', methods=["GET", "POST"])
-def assistant():
+@bp.route('/assistant/', methods=["GET", "POST"])
+@bp.route('/assistant/<answer>', methods=["GET", "POST"])
+def assistant(answer = None):
   creds = check_for_credentials()
-  answer = None
   form = AskQuestionForm()
   if form.validate_on_submit():
     prompt = form.question.data
