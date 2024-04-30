@@ -11,9 +11,10 @@ import google.oauth2.credentials
 bp = Blueprint("session", __name__, url_prefix="/session")
 
 SCOPES = [
-    "https://www.googleapis.com/auth/calendar",         # edit calendar
-    "https://www.googleapis.com/auth/userinfo.email",   # get email 
-    "https://www.googleapis.com/auth/calendar.readonly" # get timezone
+    "https://www.googleapis.com/auth/calendar.events",  # edit events in all your calendars (you cant edit/share/delete calendars)
+    "https://www.googleapis.com/auth/userinfo.email",   # get user's email address
+    "https://www.googleapis.com/auth/userinfo.profile",   # get user's email address
+    "https://www.googleapis.com/auth/calendar.readonly" # get calendar settings (including)
 ]
 
 load_dotenv()
@@ -42,12 +43,11 @@ def login():
 # ----------------
 @bp.route('/oauth2callback', methods=["GET", "POST"])
 def oauth2callback():
-  # Specify the state when creating the flow in the callback so that it can
-  # verified in the authorization server response.
+  # Specify state when creating flow in the callback so it can be verified in authorization server response.
   # state = session['state']
 
-  # flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(GOOGLE_CLIENT_SECRETS_JSON, scopes=SCOPES, state=state)
-  flow = google_auth_oauthlib.flow.Flow.from_client_config(client_config=GOOGLE_CLIENT_CONFIG, scopes=SCOPES )
+  # flow = google_auth_oauthlib.flow.Flow.from_client_config(client_config=GOOGLE_CLIENT_CONFIG, scopes=SCOPES, state=state )
+  flow = google_auth_oauthlib.flow.Flow.from_client_config(client_config=GOOGLE_CLIENT_CONFIG, scopes=SCOPES)
   flow.redirect_uri = url_for('session.oauth2callback', _external=True)
 
   # Use the authorization server's response to fetch the OAuth 2.0 tokens.
@@ -56,18 +56,19 @@ def oauth2callback():
 
   # Store credentials in the session (TODO: Replace with saving to database)
   credentials = flow.credentials
-  session['credentials'] = credentials_to_dict(credentials)
 
-  # Store email in the session
-  authorized_session = AuthorizedSession(credentials)
+  # get user info 
+  user_info = AuthorizedSession(credentials).get('https://www.googleapis.com/oauth2/v3/userinfo').json()
+  profile = AuthorizedSession(credentials).get('https://www.googleapis.com/oauth2/v3/userinfo#profile').json()
+  timezone = AuthorizedSession(credentials).get('https://www.googleapis.com/calendar/v3/users/me/settings/timezone').json()
 
-  user_info = authorized_session.request(
-    'GET',
-    'https://www.googleapis.com/oauth2/v3/userinfo'
-    ).json()
-  
-  email = user_info['email']
-  session['email'] = email
+  session["credentials"] = credentials_to_dict(credentials)
+  session["email"] = user_info['email']
+  session["first_name"] = profile['given_name']
+  session["last_name"] = profile['family_name']
+  session["profile_picture"] = profile['picture']
+  session["timezone"] = timezone['value']
+
   return redirect(url_for('home.assistant'))
 
 
@@ -84,5 +85,6 @@ def logout():
   if 'credentials' in session:
     del session['credentials']
     del session['email']
+    del session['timezone']
 
   return redirect(url_for("home.index"))

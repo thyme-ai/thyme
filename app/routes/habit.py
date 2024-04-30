@@ -1,6 +1,6 @@
 from app.models import db, Habit
-from app.forms import AddHabitForm, AskQuestionForm, UpdateHabitForm
-from app.functions.answer_question import answer_question
+from app.forms import AddHabitForm, UpdateHabitForm
+from app.functions.openai_api.answer_question import answer_question
 from app.functions.helpers import check_for_credentials, get_habit, get_habits, get_user_id_or_create_new_user
 from flask import Blueprint, redirect, url_for, render_template
 
@@ -43,7 +43,6 @@ def delete(habit_id):
 # ------------------------
 @bp.route("/addHabitsToCalendar", methods=["GET", "POST"])
 def addHabitsToCalendar():
-        form=AskQuestionForm()
         creds = check_for_credentials()
         habits = get_habits()
         habit_strings = map(lambda habit: f"called {habit.name} for {habit.duration_min} min at {habit.ideal_start.strftime('%-I:%M %p')}", habits)
@@ -56,7 +55,6 @@ def addHabitsToCalendar():
         answer = f"""
         I added these habits to your calendar: {(", ").join(answer_strings)}. 
         You might need to refresh Google Calendar to see them. """
-        # return render_template("home.html", title="Home", form=form, form_type="one-line-form", justified_type="centered", answer=answer)
         return redirect(url_for("home.assistant", answer=answer))
 
 # ------------------------

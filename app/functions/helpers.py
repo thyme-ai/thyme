@@ -3,6 +3,9 @@ from flask import redirect, session, url_for
 import google.oauth2.credentials
 from datetime import time
 
+# ------------------
+# CREDENTIALS
+# ------------------
 def check_for_credentials():
     if 'credentials' not in session:
         return redirect(url_for("session.login"))
@@ -18,7 +21,9 @@ def credentials_to_dict(credentials):
           'client_secret': credentials.client_secret,
           'scopes': credentials.scopes}
 
-
+# ------------------
+# HABITS
+# ------------------
 def get_habit(habit_id):
     return db.session.execute(
         db.select(Habit)
@@ -36,6 +41,32 @@ def get_habits():
     return habits
 
 
+# ------------------
+# USERS
+# ------------------
+def create_user():
+    user = User(
+       email = session['email'],
+       first_name = session['first_name'],
+       last_name = session['last_name'],
+       profile_picture = session['profile_picture'],
+       timezone = session['timezone'],
+       wake_time = time(hour=7, minute=0),
+       sleep_time = time(hour=22, minute=0),
+       )
+    db.session.add(user)
+    db.session.commit()
+    return user
+
+
+def get_user_by_email(email):
+   return db.one_or_404(db.select(User).filter_by(email=email))
+
+
+def get_user_by_id(id):
+   return db.one_or_404(db.select(User).filter_by(id=id))
+
+
 def get_user_or_create_new_user():
     email = session['email']
     try:
@@ -50,19 +81,6 @@ def get_user_id_or_create_new_user():
    return user.id
 
 
-def get_user_by_email(email):
-    user = db.one_or_404(
-        db.select(User)
-        .filter_by(gmail=email))
-    return user
 
 
-def create_user():
-    user = User(
-       gmail = session['email'],
-       wake_time = time(hour=7, minute=0),
-       sleep_time = time(hour=7, minute=0),
-       )
-    db.session.add(user)
-    db.session.commit()
-    return user
+

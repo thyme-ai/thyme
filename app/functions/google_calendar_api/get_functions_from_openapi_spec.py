@@ -1,6 +1,6 @@
 import jsonref
 
-def get_gcal_functions_from_openai_spec():
+def get_functions_from_openapi_spec():
     with open('./app/api_specs/google_calendar_api/google_calendar_api_spec.json', 'r') as f:
         openapi_spec_for_gcal = jsonref.loads(f.read()) 
 

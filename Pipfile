@@ -21,6 +21,7 @@ requests = "*"
 tenacity = "*"
 termcolor = "*"
 wtforms = "*"
+pytz = "*"
 
 [dev-packages]
 
