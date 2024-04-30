@@ -56,8 +56,8 @@ def addHabitsToCalendar():
         answer = f"""
         I added these habits to your calendar: {(", ").join(answer_strings)}. 
         You might need to refresh Google Calendar to see them. """
-        return render_template("home.html", title="Home", form=form, form_type="one-line-form", justified_type="centered", answer=answer)
-
+        # return render_template("home.html", title="Home", form=form, form_type="one-line-form", justified_type="centered", answer=answer)
+        return redirect(url_for("home.assistant", answer=answer))
 
 # ------------------------
 # EVENT HANDLERS
