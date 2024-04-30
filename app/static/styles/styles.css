@@ -21,9 +21,10 @@
     color: var(--thyme-white);
 }
 
+html,
 body {
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background-color: var(--thyme-charcoal);
     color: var(--thyme-white);
     display: flex;
@@ -64,7 +65,7 @@ button,
 }
 
 header {
-    width: 100%;
+    width: 100vw;
     margin: 0;
     display: flex;
     flex-direction: row;
@@ -92,18 +93,18 @@ textarea {
 /* Classes
 /*---------------------*/
 .answer {
-    width: 80%
+    width: 80vw
 }
 
 .centered {
-    width: 100%;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .chat {
-    width: 95vh;
+    width: 95vw;
     height: 75vh;
     flex-direction: column;
     justify-content: end;
@@ -214,6 +215,7 @@ textarea {
 }
 
 .home-titles {
+    width: 100vw;
     margin: 100px;
 }
 
