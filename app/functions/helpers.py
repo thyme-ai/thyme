@@ -44,13 +44,13 @@ def get_habits():
 # ------------------
 # USERS
 # ------------------
-def create_user():
+def create_user(email, first_name, last_name, profile_picture, timezone):
     user = User(
-       email = session['email'],
-       first_name = session['first_name'],
-       last_name = session['last_name'],
-       profile_picture = session['profile_picture'],
-       timezone = session['timezone'],
+       email = email,
+       first_name = first_name,
+       last_name = last_name,
+       profile_picture = profile_picture,
+       timezone = timezone,
        wake_time = time(hour=7, minute=0),
        sleep_time = time(hour=22, minute=0),
        )
@@ -61,10 +61,6 @@ def create_user():
 
 def get_user_by_email(email):
    return db.one_or_404(db.select(User).filter_by(email=email))
-
-
-def get_user_by_id(id):
-   return db.one_or_404(db.select(User).filter_by(id=id))
 
 
 def get_user_or_create_new_user():

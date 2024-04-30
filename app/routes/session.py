@@ -7,6 +7,7 @@ import google_auth_oauthlib.flow
 from app.functions.helpers import credentials_to_dict
 from google.auth.transport.requests import AuthorizedSession
 import google.oauth2.credentials
+from app.functions.helpers import create_user, get_user_by_email
 
 bp = Blueprint("session", __name__, url_prefix="/session")
 
@@ -56,18 +57,27 @@ def oauth2callback():
 
   # Store credentials in the session (TODO: Replace with saving to database)
   credentials = flow.credentials
-
-  # get user info 
-  user_info = AuthorizedSession(credentials).get('https://www.googleapis.com/oauth2/v3/userinfo').json()
-  profile = AuthorizedSession(credentials).get('https://www.googleapis.com/oauth2/v3/userinfo#profile').json()
-  timezone = AuthorizedSession(credentials).get('https://www.googleapis.com/calendar/v3/users/me/settings/timezone').json()
-
   session["credentials"] = credentials_to_dict(credentials)
-  session["email"] = user_info['email']
-  session["first_name"] = profile['given_name']
-  session["last_name"] = profile['family_name']
-  session["profile_picture"] = profile['picture']
-  session["timezone"] = timezone['value']
+
+  # get users email
+  user_info = AuthorizedSession(credentials).get('https://www.googleapis.com/oauth2/v3/userinfo').json()
+  email = user_info['email']
+  session['email'] = email
+
+  # get user
+  try: 
+    get_user_by_email(email)
+  except:
+    # if user doesn't exist yet, get rest of user info & create user 
+    profile = AuthorizedSession(credentials).get('https://www.googleapis.com/oauth2/v3/userinfo#profile').json()
+    timezone_object = AuthorizedSession(credentials).get('https://www.googleapis.com/calendar/v3/users/me/settings/timezone').json()
+    
+    first_name = profile['given_name']
+    last_name = profile['family_name']
+    profile_picture = profile['picture']
+    timezone = timezone_object['value']
+
+    create_user(email, first_name, last_name, profile_picture, timezone)
 
   return redirect(url_for('home.assistant'))
 
@@ -85,6 +95,5 @@ def logout():
   if 'credentials' in session:
     del session['credentials']
     del session['email']
-    del session['timezone']
 
   return redirect(url_for("home.index"))
