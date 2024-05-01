@@ -57,6 +57,7 @@ def addHabitsToCalendar():
         You might need to refresh Google Calendar to see them. """
         return redirect(url_for("home.assistant", answer=answer))
 
+
 # ------------------------
 # EVENT HANDLERS
 # ------------------------

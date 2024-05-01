@@ -1,16 +1,12 @@
-from datetime import datetime, timezone, timedelta
-from app.functions.google_calendar_api.get_hours_from_utc_from_timezone_name import get_hours_from_utc_from_timezone_name
+from app.functions.google_calendar_api.get_users_current_timestamp_and_timezone import get_users_current_timestamp_and_timezone
 
 def get_openai_prompt_header(user):
-    timezone_name = user.timezone
-    hours_from_utc = get_hours_from_utc_from_timezone_name(timezone_name)
-    timezone_user = timezone(timedelta(hours=hours_from_utc))
-    now = datetime.now(timezone_user)
+    now = get_users_current_timestamp_and_timezone(user)
 
     header = f"""
     You are a helpful assistant. 
 
-    Assume that today is {now} and that the timezone is {timezone_user}
+    Assume that today is {now} and the timezone is {user.timezone}
 
     Respond to the following prompt.
     If the prompt does not contain calendar-related tasks, just respond normally
