@@ -4,6 +4,8 @@ from app.functions.openai_api.answer_question import answer_question
 from flask import Blueprint, redirect, url_for, render_template
 from flask import Blueprint, redirect, session, url_for, render_template
 from app.functions.helpers import check_for_credentials, get_habits, get_user_or_create_new_user
+from app.functions.google_calendar_api.get_free_times import get_free_times
+from app.functions.google_calendar_api.get_users_current_timestamp_and_timezone import get_users_current_timestamp_and_timezone
 
 bp = Blueprint("home", __name__, url_prefix="/")
 
@@ -32,13 +34,21 @@ def assistant(answer = None):
   return render_template("home.html", title="Home", form=form, form_type="one-line-form", justified_type="centered", answer=answer)
 
 
-# --------------------
+
 # PREFERENCES
 # --------------------
 @bp.route("/preferences", methods=["GET", "POST"])
 def preferences():
     user = get_user_or_create_new_user()
     habits = get_habits()
+
+    # --------------------
+    # TEST 
+    # --------------------
+    # now = str(get_users_current_timestamp_and_timezone(user))
+    # free_times = get_free_times(now)
+    # print('FREE TIMES----------', free_times)
+
     return render_template("preferences.html", title="Preferences", habits=habits, user=user)
 
 
