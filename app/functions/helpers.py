@@ -1,7 +1,7 @@
 from app.models import db, User, Habit
 from flask import redirect, session, url_for
 import google.oauth2.credentials
-from datetime import time
+from datetime import datetime, time
 
 # ------------------
 # CREDENTIALS
@@ -77,6 +77,18 @@ def get_user_id_or_create_new_user():
    return user.id
 
 
+# ------------------
+# TIME
+# ------------------
+def get_easy_read_time(datetime_str):
+    # Define the format string to match the input datetime string
+    input_format_str = "%Y-%m-%dT%H:%M:%S%z"
 
+    # Parse the string into a datetime object
+    datetime_obj = datetime.strptime(datetime_str, input_format_str)
 
+    # Format the datetime object into the desired string format
+    output_format_str = "%I:%M %p on %m/%d/%Y"
+    formatted_datetime_str = datetime_obj.strftime(output_format_str)
 
+    return formatted_datetime_str

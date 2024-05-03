@@ -1,20 +1,22 @@
-from app.functions.google_calendar_api.get_functions_from_openapi_spec import get_functions_from_openapi_spec
 from app.functions.google_calendar_api.execute_gcal_function_call import execute_gcal_function_call
 from app.functions.openai_api.pretty_print_conversation import pretty_print_conversation
 from app.functions.openai_api.get_openai_prompt_header import get_openai_prompt_header
-from app.functions.helpers import get_user_by_email
+from app.functions.helpers import get_user_by_email, check_for_credentials
+from app.functions.get_tools import get_tools
 from flask import session
+import jsonref
 from openai import OpenAI
 from tenacity import retry, wait_random_exponential, stop_after_attempt
 
 GPT_MODEL = "gpt-3.5-turbo"
-TOOLS = get_functions_from_openapi_spec()
 APOLOGY_STRING = "Sorry, I'm not able to do that yet."
 MAX_ATTEMPTS = 3
+TOOLS = get_tools()
 
 client = OpenAI()
 
-def answer_question(prompt, creds):
+def answer_question(prompt):
+    creds = check_for_credentials()
     user = get_user_by_email(session['email'])
     openai_prompt_header = get_openai_prompt_header(user)
     messages = [{"content": openai_prompt_header, "role": "system"}, {"content": prompt, "role": "user"}]
@@ -26,7 +28,7 @@ def answer_question(prompt, creds):
     if assistant_message.tool_calls:
         assistant_message.content = str(assistant_message.tool_calls[0].function)
         messages.append({"role": assistant_message.role, "content": assistant_message.content})
-        results = execute_gcal_function_call(assistant_message, creds)
+        results = execute_gcal_function_call(assistant_message)
 
         # Add the results of the google calendar function call to the messages array 
         # so the user can see the results 
