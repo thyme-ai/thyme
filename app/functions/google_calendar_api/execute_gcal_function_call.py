@@ -1,6 +1,6 @@
 from googleapiclient.discovery import build
 import json
-from app.functions.google_calendar_api.google_calendar_event_crud_operations import (
+from app.functions.google_calendar_api.gcal_functions import (
     insert_event, get_event, list_events, update_event, delete_event)
 
 function_name_to_function = {
@@ -11,7 +11,7 @@ function_name_to_function = {
    "update_event": update_event
 }
 
-def execute_google_calendar_function_call(message, creds):
+def execute_gcal_function_call(message, creds):
     service = build("calendar", "v3", credentials=creds)
     function_name = message.tool_calls[0].function.name
     args_json = message.tool_calls[0].function.arguments
