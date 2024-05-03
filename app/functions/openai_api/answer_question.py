@@ -1,5 +1,5 @@
 from app.functions.google_calendar_api.get_functions_from_openapi_spec import get_functions_from_openapi_spec
-from app.functions.google_calendar_api.execute_google_calendar_function_call import execute_google_calendar_function_call
+from app.functions.google_calendar_api.execute_gcal_function_call import execute_gcal_function_call
 from app.functions.openai_api.pretty_print_conversation import pretty_print_conversation
 from app.functions.openai_api.get_openai_prompt_header import get_openai_prompt_header
 from app.functions.helpers import get_user_by_email
@@ -26,7 +26,7 @@ def answer_question(prompt, creds):
     if assistant_message.tool_calls:
         assistant_message.content = str(assistant_message.tool_calls[0].function)
         messages.append({"role": assistant_message.role, "content": assistant_message.content})
-        results = execute_google_calendar_function_call(assistant_message, creds)
+        results = execute_gcal_function_call(assistant_message, creds)
 
         # Add the results of the google calendar function call to the messages array 
         # so the user can see the results 
