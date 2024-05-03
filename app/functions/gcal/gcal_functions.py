@@ -1,7 +1,6 @@
 from datetime import datetime, date, time
-from app.functions.google_calendar_api.get_users_current_timestamp_and_timezone import get_users_current_timestamp_and_timezone
-from app.functions.google_calendar_api.build_google_api_service_object_with_creds import build_google_api_service_object_with_creds
-from app.functions.helpers import get_user_by_email, get_easy_read_time
+from app.functions.gcal.utils.build_google_api_service_object_with_creds import build_google_api_service_object_with_creds
+from app.functions.helpers import get_user_by_email, get_easy_read_time, get_users_current_timestamp_and_timezone
 from flask import session
 
 DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S%z"
@@ -38,21 +37,15 @@ def list_events(args):
     events = service.events().list(**params).execute()['items']
 
     if events:
-        intro = "Here's a summary of the events I found:"
+        intro = "Here are the events on your calendar:"
         event_summaries = []
 
         for event in events:
             summary = event.get('summary')
-            start = event.get('start')
+            start = event.get('start').get('dateTime')
+            event_summaries.append(f"{summary} at {get_easy_read_time(start)}")
 
-            dt_str = start.get('dateTime')
-            dt_object = datetime.fromisoformat(dt_str)
-
-            date = dt_object.date()
-            time = dt_object.time()
-
-            event_summaries.append(f"{summary} on {date} at {time}")
-        return f"{intro} + {(", ").join(event_summaries)}"
+        return f"{intro} {(", ").join(event_summaries)}"
     
     return f"""
         {APOLOGY_STRING} Try saying: "What's on my calendar today?" or 
@@ -95,7 +88,6 @@ def get_busy_times(day):
         """
     else:
         return "You're free all day!"
-
 
 
 # ------------

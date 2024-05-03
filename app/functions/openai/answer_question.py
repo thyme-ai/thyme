@@ -1,10 +1,9 @@
-from app.functions.google_calendar_api.execute_gcal_function_call import execute_gcal_function_call
-from app.functions.openai_api.pretty_print_conversation import pretty_print_conversation
-from app.functions.openai_api.get_openai_prompt_header import get_openai_prompt_header
+from app.functions.gcal.utils.execute_gcal_function_call import execute_gcal_function_call
+from app.functions.openai.utils.pretty_print_conversation import pretty_print_conversation
+from app.functions.openai.get_openai_prompt_header import get_openai_prompt_header
 from app.functions.helpers import get_user_by_email, check_for_credentials
-from app.functions.get_tools import get_tools
+from app.functions.openai.utils.get_tools import get_tools
 from flask import session
-import jsonref
 from openai import OpenAI
 from tenacity import retry, wait_random_exponential, stop_after_attempt
 

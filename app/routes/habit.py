@@ -1,6 +1,6 @@
 from app.models import db, Habit
 from app.forms import AddHabitForm, UpdateHabitForm
-from app.functions.openai_api.answer_question import answer_question
+from app.functions.openai.answer_question import answer_question
 from app.functions.helpers import check_for_credentials, get_habit, get_habits, get_user_id_or_create_new_user
 from flask import Blueprint, redirect, url_for, render_template
 
@@ -15,7 +15,7 @@ def add():
     if form.validate_on_submit():
        handle_add_habit(form)
        return redirect(url_for("home.preferences"))
-    return render_template("/components/form.html", title="Add Habit", form=form, justified_type="left-justified")
+    return render_template("/components/forms/form.html", title="Add Habit", form=form, justified_type="left-justified")
 
 # -----------
 # UPDATE 
@@ -27,7 +27,7 @@ def update(habit_id):
     if form.validate_on_submit():
         handle_update_habit(form, habit_id)
         return redirect(url_for("home.preferences"))
-    return render_template("/components/form.html", title=habit.name,  form=form, justified_type="left-justified")
+    return render_template("/components/forms/form.html", title=habit.name,  form=form, justified_type="left-justified")
 
 # -----------
 # DELETE 

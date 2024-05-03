@@ -1,4 +1,4 @@
-from app.functions.google_calendar_api.get_users_current_timestamp_and_timezone import get_users_current_timestamp_and_timezone
+from app.functions.helpers import get_users_current_timestamp_and_timezone
 
 def get_openai_prompt_header(user):
     now = get_users_current_timestamp_and_timezone(user)
