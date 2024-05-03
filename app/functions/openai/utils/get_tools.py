@@ -8,7 +8,7 @@ def get_tools():
     # -----------------
     # CUSTOM FUNCTIONS
     # -----------------
-    with open('./app/specs/custom_functions/get_busy_times_function_spec.json', 'r') as f:
+    with open('./app/specs/custom/get_busy_times_function_spec.json', 'r') as f:
         get_busy_times_function_spec = jsonref.loads(f.read()) 
 
     custom_functions = [get_busy_times_function_spec]
@@ -18,7 +18,7 @@ def get_tools():
     # BUILT-IN FUNCTIONS
     # --------------------
     # Get Open API formatted spec for Google Calendar API (created with the help of Chat GPT)
-    with open('./app/specs/google_calendar_api/google_calendar_api_spec.json', 'r') as f:
+    with open('./app/specs/gcal/google_calendar_api_spec.json', 'r') as f:
         openapi_spec_for_gcal = jsonref.loads(f.read()) 
 
     functions = []

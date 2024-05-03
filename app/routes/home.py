@@ -1,6 +1,6 @@
 from app.models import db, User
 from app.forms import AskQuestionForm, UpdatePreferencesForm
-from app.functions.openai_api.answer_question import answer_question
+from app.functions.openai.answer_question import answer_question
 from app.functions.helpers import get_habits
 from app.functions.helpers import get_user_by_email
 from flask import Blueprint, redirect, session, url_for, render_template
@@ -50,7 +50,7 @@ def updatePreferences():
     if form.validate_on_submit():
        handleUpdatePreferences(form)
        return redirect(url_for("home.preferences"))
-    return render_template("/components/form.html", title="Update Daily Schedule",  form=form, justified_type="left-justified")
+    return render_template("/components/forms/form.html", title="Update Daily Schedule",  form=form, justified_type="left-justified")
 
 
 # --------------------

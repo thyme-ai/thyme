@@ -1,4 +1,4 @@
-from app.functions.google_calendar_api.gcal_functions import (
+from app.functions.gcal.gcal_functions import (
     insert_event, get_event, list_events, update_event, delete_event, get_busy_times
 )
 from app.functions.helpers import check_for_credentials
@@ -27,7 +27,6 @@ def execute_gcal_function_call(message):
         args = json.loads(args_json).get('parameters')
 
     if function_name == 'get_busy_times':
-        print('ARGS FOR GET BUSY TIMES-------', args_json)
         args = json.loads(args_json).get('day')
 
     # -----------------------------------------------------------------

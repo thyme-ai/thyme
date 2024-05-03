@@ -1,7 +1,10 @@
 from app.models import db, User, Habit
 from flask import redirect, session, url_for
 import google.oauth2.credentials
-from datetime import datetime, time
+from datetime import datetime, time, timezone, timedelta
+import pytz
+
+SECONDS_PER_HOUR = 3600
 
 # ------------------
 # CREDENTIALS
@@ -92,3 +95,20 @@ def get_easy_read_time(datetime_str):
     formatted_datetime_str = datetime_obj.strftime(output_format_str)
 
     return formatted_datetime_str
+
+
+def get_users_current_timestamp_and_timezone(user):
+    # get timezone from string version of timezone (e.g. "America/Los_Angeles")
+    timezone_name = user.timezone
+    timezone_dt = pytz.timezone(timezone_name)
+
+    # get offset from UTC 
+    utc_offset = timezone_dt.utcoffset(pytz.datetime.datetime.now()) 
+
+    # convert offset to hours
+    hours_from_utc = utc_offset.total_seconds() / SECONDS_PER_HOUR
+
+    # convert to timezone
+    timezone_user = timezone(timedelta(hours=hours_from_utc))
+    now = datetime.now(timezone_user)
+    return now
