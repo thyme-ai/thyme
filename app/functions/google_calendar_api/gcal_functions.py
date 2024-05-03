@@ -1,21 +1,18 @@
 from datetime import datetime, date, time
 from app.functions.google_calendar_api.get_users_current_timestamp_and_timezone import get_users_current_timestamp_and_timezone
-from app.functions.helpers import get_user_by_email
+from app.functions.google_calendar_api.build_google_api_service_object_with_creds import build_google_api_service_object_with_creds
+from app.functions.helpers import get_user_by_email, get_easy_read_time
 from flask import session
 
-DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S.%f%z'
-EARLIEST_START_TIME = time(7, 0, 0) # TODO - replace with user's wake time
-LATEST_END_TIME = time(22, 0, 0)    # TODO - replace with users's sleep time
+DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S%z"
 CALENDAR_ID = 'primary'
-APOLOGY_STRING = "Sorry, I'm not able to do that yet."
-# GROUP_EXPANSION_MAX = 1           # TODO - enable looking for freeBusy info across multiple calendars
-# CALENDAR_EXPANSION_MAX = 1          
-
+APOLOGY_STRING = "Sorry, I'm not able to do that yet."    
 
 # ------------
 # CREATE
 # ------------
-def insert_event(service, args):
+def insert_event(args):
+    service = build_google_api_service_object_with_creds()
     event = service.events().insert(calendarId=CALENDAR_ID, body=args).execute()
 
     if event:
@@ -29,11 +26,12 @@ def insert_event(service, args):
 # ------------
 # READ
 # ------------
-def get_event(service, eventId):
+def get_event(eventId):
     return APOLOGY_STRING
 
 
-def list_events(service, args):
+def list_events(args):
+    service = build_google_api_service_object_with_creds()
     params = {"calendarId": "primary"}
     for key in args.keys():
         params[key] = args.get(key)
@@ -61,8 +59,10 @@ def list_events(service, args):
         "Give me a list of events on my calendar called _____"
         """
 
-
-def get_busy_times(service, day):
+# ----------------
+# GET BUSY TIMES
+# ----------------
+def get_busy_times(day):
     user = get_user_by_email(session['email'])
     email = user.email
     timezone = user.timezone
@@ -71,32 +71,43 @@ def get_busy_times(service, day):
     date = datetime_obj.date()
 
     tz = datetime_obj.tzinfo
-    time_min = datetime.combine(date, EARLIEST_START_TIME, tz).isoformat()
-    time_max = datetime.combine(date, LATEST_END_TIME, tz).isoformat()
+    time_min = datetime.combine(date, user.wake_time, tz).isoformat()
+    time_max = datetime.combine(date, user.sleep_time, tz).isoformat()
 
     body =  {
             "timeMin": time_min,
             "timeMax": time_max,
             "timeZone": timezone,
-            # "groupExpansionMax": GROUP_EXPANSION_MAX,        # optional
-            # "calendarExpansionMax": CALENDAR_EXPANSION_MAX,  # optional
             "items": [{ "id": email }]
         }   
     
-    busy_times = service.freebusy().query(body=body).execute()
-    return busy_times
+    service = build_google_api_service_object_with_creds()
+    response = service.freebusy().query(body=body).execute()
+    start_end_times = response['calendars'][email]['busy']
+    busy_times = map(lambda x: f"{get_easy_read_time(x['start'])} to {get_easy_read_time(x['end'])}", start_end_times)
+    busy_times_string = (", ").join(busy_times)
+
+    if busy_times_string:
+        return f"""
+            Here is a list of times 
+            within your preferred wake & sleep hours, 
+            when you are busy: {busy_times_string}
+        """
+    else:
+        return "You're free all day!"
+
 
 
 # ------------
 # UPDATE
 # ------------
-def update_event(service, args):
+def update_event(args):
     return APOLOGY_STRING
 
 
 # ------------
 # DELETE
 # ------------
-def delete_event(service, eventId):
+def delete_event(eventId):
       return APOLOGY_STRING
 

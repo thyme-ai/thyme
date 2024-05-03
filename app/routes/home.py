@@ -1,12 +1,9 @@
 from app.models import db, User
 from app.forms import AskQuestionForm, UpdatePreferencesForm
 from app.functions.openai_api.answer_question import answer_question
-from app.functions.helpers import check_for_credentials, get_habits, get_user_or_create_new_user
-from app.functions.google_calendar_api.get_users_current_timestamp_and_timezone import get_users_current_timestamp_and_timezone
-from app.functions.google_calendar_api.gcal_functions import get_busy_times
+from app.functions.helpers import get_habits
 from app.functions.helpers import get_user_by_email
 from flask import Blueprint, redirect, session, url_for, render_template
-from googleapiclient.discovery import build
 
 bp = Blueprint("home", __name__, url_prefix="/")
 
@@ -27,11 +24,10 @@ def index():
 @bp.route('/assistant/', methods=["GET", "POST"])
 @bp.route('/assistant/<answer>', methods=["GET", "POST"])
 def assistant(answer = None):
-  creds = check_for_credentials()
   form = AskQuestionForm()
   if form.validate_on_submit():
     prompt = form.question.data
-    answer = answer_question(prompt, creds)    
+    answer = answer_question(prompt)    
   return render_template("home.html", title="Home", form=form, form_type="one-line-form", justified_type="centered", answer=answer)
 
 

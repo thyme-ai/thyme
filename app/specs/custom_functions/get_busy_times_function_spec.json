@@ -1,0 +1,20 @@
+{
+    "type": "function",
+    "function": {
+        "name": "get_busy_times",
+        "description": "Get array of times (within user's working hours) when user is busy on a specific day.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "day": {
+                    "type": "string", 
+                    "format": "date-time",
+                    "description": "Datetime including timezone for when to find the busy times"
+                }
+            },
+            "required": ["day"]
+        }
+    }
+}
+
+

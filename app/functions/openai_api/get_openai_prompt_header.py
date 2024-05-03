@@ -18,6 +18,9 @@ def get_openai_prompt_header(user):
     If you are making a call to the "insert_event" function, make the event summary 
     start with an emogee that describes the event.
 
+    If you are making a call to the "get_busy_times" function, format the "day"
+    parameter as a datetime in the following format: '%Y-%m-%dT%H:%M:%S%z'
+
     If the prompt contains a request for ideas or suggestions, 
     add your suggestions to the description of the event as a numbered list.
 
