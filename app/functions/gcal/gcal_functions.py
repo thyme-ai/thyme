@@ -9,6 +9,7 @@ APOLOGY_STRING = "Sorry, I'm not able to do that yet."
 
 
 def insert_event(args):
+    print('ARGS-----', args)
     service = build_google_api_service_object_with_creds()
     event = service.events().insert(calendarId=CALENDAR_ID, body=args).execute()
 
@@ -19,6 +20,37 @@ def insert_event(args):
         {APOLOGY_STRING} Try saying something like this : 
         "Add a _____ hour long event to my calendar called _____ on _____.
         """
+
+
+def insert_event_while_avoiding_conflicts(args):
+    ideal_start = datetime.strptime(args['start']['dateTime'], DATETIME_FORMAT)
+    ideal_end = datetime.strptime(args['end']['dateTime'], DATETIME_FORMAT)   
+
+    print('--------------------')
+    print('IDEAL START----------', ideal_start)                   
+
+    closest_free_start = get_closest_free_start(ideal_start, ideal_end)
+    duration = ideal_end - ideal_start
+
+    args['start']['dateTime'] = datetime.strftime(closest_free_start, DATETIME_FORMAT)
+    args['end']['dateTime'] = datetime.strftime(closest_free_start + duration, DATETIME_FORMAT)
+
+    print('ARGS------', args)
+
+    service = build_google_api_service_object_with_creds()
+    event = service.events().insert(calendarId=CALENDAR_ID, body=args).execute()
+
+    if event:
+        return f"""
+        I created your event called {event.get("summary")}
+        at the closest available time which was {get_easy_read_time(closest_free_start)}
+        """
+    else:
+         return f"""
+        {APOLOGY_STRING} Try saying something like this : 
+        "Add a _____ hour long event to my calendar called _____ on _____.
+        """
+
 
 
 def list_events(args):
@@ -103,29 +135,56 @@ def get_busy_times_within_awake_hours(day):
     service = build_google_api_service_object_with_creds()
     response = service.freebusy().query(body=body).execute()
     busy_times_obj = response['calendars'][email]['busy']
-    print('BUSY TIMES----', busy_times_obj)
     return busy_times_obj
 
 
 
-def find_closest_start(ideal_start, ideal_end):
+def get_closest_free_start(ideal_start, ideal_end):
+
+    if type(ideal_start) == str:
+        ideal_start = datetime.strptime(ideal_start, DATETIME_FORMAT)
+        ideal_end = datetime.strptime(ideal_end, DATETIME_FORMAT)
+
     max_delta = timedelta(minutes=8*60)
     increment = timedelta(minutes=30)
 
+    # get ranges during which user is busy 
     busy_ranges = get_busy_times_within_awake_hours(ideal_start)
 
-    closest_start = None
+    # get users awake hours 
+    user = get_user_by_email(session['email'])
+
+    
+    if type(ideal_start) is datetime:
+        ideal_start = datetime.strftime(ideal_start, DATETIME_FORMAT)
+    
+    datetime_obj = datetime.strptime(ideal_start, DATETIME_FORMAT)
+    date = datetime_obj.date()
+    tz = datetime_obj.tzinfo
+    awake_range = {
+        'start': datetime.combine(date, user.wake_time, tz).isoformat(), 
+        'end': datetime.combine(date, user.sleep_time, tz).isoformat()
+    }
+
+    ideal_start = datetime.strptime(ideal_start, DATETIME_FORMAT)
+
+    print('-------------------')
+    print('BUSY RANGES', busy_ranges)
+
+    closest_start = ideal_start
     delta = timedelta(minutes=0)
     while (delta < max_delta):
+    
         starts = [ideal_start + delta, ideal_start - delta]
         ends = [ideal_end + delta, ideal_end - delta]
 
-        print('starts', starts)
-
         for i in range(len(starts)):
-            if not start_or_end_fall_within_busy_range(busy_ranges, starts[i], ends[i]): 
+            print('----------------------')
+            print(f'(i = {i}) ----Checking to see if {get_easy_read_time(starts[i])} works...')
+            if time_is_available(busy_ranges, starts[i], ends[i]) and time_is_within_wake_hours(awake_range, starts[i], ends[i]): 
                 closest_start = starts[i]
-                break
+                print('🎉FOUND A TIME------', closest_start)
+                return closest_start
 
         delta += increment
 
@@ -133,7 +192,8 @@ def find_closest_start(ideal_start, ideal_end):
             
         
 
-def start_or_end_fall_within_busy_range(busy_ranges, target_start, target_end):
+def time_is_available(busy_ranges, target_start, target_end):
+    start_and_end_are_free = False
     user = get_user_by_email(session['email'])
 
     # iterate over all busy ranges for that day 
@@ -142,19 +202,34 @@ def start_or_end_fall_within_busy_range(busy_ranges, target_start, target_end):
         end = datetime.strptime(busy_range['end'], DATETIME_FORMAT)
 
         # check to see if target_start or target_end fall within the busy range
-        start_in_range = target_in_range(target_start, start, end)
-        end_in_range = target_in_range(target_end, start, end)
+        start_in_busy_range = target_in_range(target_start, start, end)
+        end_in_busy_range = target_in_range(target_end, start, end)
 
-        if (start_in_range or end_in_range): 
-            return False
-        
+        # if either the start or the end is in the busy range
+        if (start_in_busy_range or end_in_busy_range): 
+            print('❌ Busy')
+            return False      
     return True
 
 
+def time_is_within_wake_hours(awake_range, target_start, target_end):
+    start = datetime.strptime(awake_range['start'], DATETIME_FORMAT)
+    end = datetime.strptime(awake_range['end'], DATETIME_FORMAT)
+
+    # check to see if target_start or target_end fall within the waking range
+    start_in_awake_range = target_in_range(target_start, start, end)
+    end_in_awake_range = target_in_range(target_end, start, end)
+
+    # if either the start or the end is NOT in the awake range
+    if (not start_in_awake_range or not end_in_awake_range): 
+        print('⏰ Outside of awake hours')
+        return False   
+    
+    return True 
+
+
 def target_in_range(target, start, end):
-    if target == start or target == end: 
-        return True
-    elif target > start and target < end:
+    if target > start and target < end:
         return True
     else: 
         return False
