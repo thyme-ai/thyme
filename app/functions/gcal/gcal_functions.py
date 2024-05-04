@@ -1,15 +1,13 @@
-from datetime import datetime, date, time
+from datetime import datetime, date, time, timedelta
 from app.functions.gcal.utils.build_google_api_service_object_with_creds import build_google_api_service_object_with_creds
-from app.functions.helpers import get_user_by_email, get_easy_read_time, get_users_current_timestamp_and_timezone
+from app.functions.helpers import get_user_by_email, get_easy_read_time
 from flask import session
 
 DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S%z"
 CALENDAR_ID = 'primary'
 APOLOGY_STRING = "Sorry, I'm not able to do that yet."    
 
-# ------------
-# CREATE
-# ------------
+
 def insert_event(args):
     service = build_google_api_service_object_with_creds()
     event = service.events().insert(calendarId=CALENDAR_ID, body=args).execute()
@@ -21,12 +19,6 @@ def insert_event(args):
         {APOLOGY_STRING} Try saying something like this : 
         "Add a _____ hour long event to my calendar called _____ on _____.
         """
-
-# ------------
-# READ
-# ------------
-def get_event(eventId):
-    return APOLOGY_STRING
 
 
 def list_events(args):
@@ -52,13 +44,47 @@ def list_events(args):
         "Give me a list of events on my calendar called _____"
         """
 
-# ----------------
-# GET BUSY TIMES
-# ----------------
+
 def get_busy_times(day):
+    busy_times_obj = get_busy_times_within_awake_hours(day)
+    busy_times_strings = map(lambda x: f"{get_easy_read_time(x['start'])} to {get_easy_read_time(x['end'])}", busy_times_obj)
+    busy_times_joined_string = (", ").join(busy_times_strings)
+
+    if busy_times_joined_string:
+        return f"""
+            Here is a list of times 
+            within your preferred wake & sleep hours, 
+            when you are busy: {busy_times_joined_string}
+        """
+    else:
+        return "You're free all day!"
+    
+
+# ------------------------
+# NOT SUPPORTED YET 
+# ------------------------
+def get_event(eventId):
+    return APOLOGY_STRING
+
+
+def update_event(args):
+    return APOLOGY_STRING
+
+
+def delete_event(eventId):
+      return APOLOGY_STRING
+
+
+# ------------------------
+# HELPERS
+# ------------------------
+def get_busy_times_within_awake_hours(day):
     user = get_user_by_email(session['email'])
     email = user.email
     timezone = user.timezone
+
+    if type(day) is datetime:
+        day = datetime.strftime(day, DATETIME_FORMAT)
 
     datetime_obj = datetime.strptime(day, DATETIME_FORMAT)
     date = datetime_obj.date()
@@ -76,30 +102,65 @@ def get_busy_times(day):
     
     service = build_google_api_service_object_with_creds()
     response = service.freebusy().query(body=body).execute()
-    start_end_times = response['calendars'][email]['busy']
-    busy_times = map(lambda x: f"{get_easy_read_time(x['start'])} to {get_easy_read_time(x['end'])}", start_end_times)
-    busy_times_string = (", ").join(busy_times)
-
-    if busy_times_string:
-        return f"""
-            Here is a list of times 
-            within your preferred wake & sleep hours, 
-            when you are busy: {busy_times_string}
-        """
-    else:
-        return "You're free all day!"
+    busy_times_obj = response['calendars'][email]['busy']
+    return busy_times_obj
 
 
-# ------------
-# UPDATE
-# ------------
-def update_event(args):
-    return APOLOGY_STRING
+
+def find_closest_start(ideal_start, ideal_end):
+    max_delta = timedelta(minutes=8*60)
+    increment = timedelta(minutes=30)
+
+    closest_start = None
+    delta = timedelta(minutes=0)
+    while (delta < max_delta):
+        starts = [ideal_start + delta, ideal_start - delta]
+        ends = [ideal_end + delta, ideal_end - delta]
+
+        print('starts', starts)
+
+        for i in range(len(starts)):
+            if not start_or_end_fall_within_busy_range(starts[i], ends[i]): 
+                closest_start = starts[i]
+                break
+
+        delta += increment
+
+    return closest_start
+            
+        
+
+def start_or_end_fall_within_busy_range(target_start, target_end):
+    user = get_user_by_email(session['email'])
+    busy_ranges = get_busy_times_within_awake_hours(target_start)
+
+    # iterate over all busy ranges for that day 
+    for busy_range in busy_ranges:
+        start = datetime.strptime(busy_range['start'], DATETIME_FORMAT)
+        end = datetime.strptime(busy_range['end'], DATETIME_FORMAT)
+
+        # check to see if target_start or target_end fall within the busy range
+        start_in_range = target_in_range(target_start, start, end)
+        end_in_range = target_in_range(target_end, start, end)
+
+        if (start_in_range or end_in_range): 
+            return False
+        
+    return True
 
 
-# ------------
-# DELETE
-# ------------
-def delete_event(eventId):
-      return APOLOGY_STRING
+def target_in_range(target, start, end):
+    if target == start or target == end: 
+        return True
+    elif target > start and target < end:
+        return True
+    else: 
+        return False
+
+
+
+
+
+
+
 
