@@ -5,7 +5,7 @@ from flask import session
 
 DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S%z"
 CALENDAR_ID = 'primary'
-APOLOGY_STRING = "Sorry, I'm not able to do that yet."    
+APOLOGY_STRING = "Sorrry, I'm not able to do that yet."    
 
 
 def insert_event(args):
@@ -30,6 +30,14 @@ def insert_event_while_avoiding_conflicts(args):
     print('IDEAL START----------', ideal_start)                   
 
     closest_free_start = get_closest_free_start(ideal_start, ideal_end)
+
+    if not closest_free_start:
+        return f"""
+        Sorry, I couldn't find any free times for your event
+        that are within your preferred wake up & sleep times. 
+        Try a different time or different day. 
+        """
+
     duration = ideal_end - ideal_start
 
     args['start']['dateTime'] = datetime.strftime(closest_free_start, DATETIME_FORMAT)
@@ -50,7 +58,6 @@ def insert_event_while_avoiding_conflicts(args):
         {APOLOGY_STRING} Try saying something like this : 
         "Add a _____ hour long event to my calendar called _____ on _____.
         """
-
 
 
 def list_events(args):
@@ -171,7 +178,7 @@ def get_closest_free_start(ideal_start, ideal_end):
     print('-------------------')
     print('BUSY RANGES', busy_ranges)
 
-    closest_start = ideal_start
+    closest_start = None
     delta = timedelta(minutes=0)
     while (delta < max_delta):
     
