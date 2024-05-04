@@ -15,11 +15,17 @@ def get_openai_prompt_header(user):
     If the prompt contains calendar-related tasks, respond to the following prompt
     by using function_call and then summarize actions. 
 
-    If you are making a call to the "insert_event" function, make the event summary 
-    start with an emogee that describes the event.
+    If the prompt contains a request to avoid existing events, avoid meeting conflicts,
+    or find the best time, then try to make a call to the 
+    "insert_event_while_avoiding_conflicts" function.
 
-    If you are making a call to the "get_busy_times" function, format the "day"
-    parameter as a datetime in the following format: '%Y-%m-%dT%H:%M:%S%z'
+    If you are making a call to the "insert_event_while_avoiding_conflicts" function, 
+    format the properties "start.dateTime" and "end.dateTime" as datetimes in 
+    the following format: '%Y-%m-%dT%H:%M:%S%z'
+
+    If you are making a call to either the "insert_event" function or the
+    "insert_event_while_avoiding_conflicts" function , make the event summary 
+    start with an emogee that describes the event.
 
     If the prompt contains a request for ideas or suggestions, 
     add your suggestions to the description of the event as a numbered list.
@@ -28,3 +34,7 @@ def get_openai_prompt_header(user):
     """
 
     return header
+
+
+    # If you are making a call to the "get_busy_times" function, format the "day"
+    # parameter as a datetime in the following format: '%Y-%m-%dT%H:%M:%S%z'

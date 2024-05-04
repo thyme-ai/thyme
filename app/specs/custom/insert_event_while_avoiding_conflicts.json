@@ -1,0 +1,38 @@
+{"type": "function", "function": {"name": "insert_event_while_avoiding_conflicts", "description": "Creates a new event while avoiding conflicts with existing events.", "parameters": {"type": "object", "properties": {"requestBody": {"type": "object", "properties": {"id": {"type": "string", "description": "Unique identifier for the event."
+                        }, "htmlLink": {"type": "string", "description": "URL link to the Google Calendar event."
+                        }, "summary": {"type": "string", "description": "Title of the event."
+                        }, "description": {"type": "string", "description": "Description of the event."
+                        }, "start": {"type": "object", "properties": {"dateTime": {"type": "string", "format": "date-time", "description": "The date and time of the event."
+                                }, "timeZone": {"type": "string", "description": "The time zone of the event."
+                                }
+                            }
+                        }, "end": {"type": "object", "properties": {"dateTime": {"type": "string", "format": "date-time", "description": "The date and time of the event."
+                                }, "timeZone": {"type": "string", "description": "The time zone of the event."
+                                }
+                            }
+                        }, "timezone": {"type": "string", "description": "The time zone of the event."
+                        }, "recurrence": {"type": "array", "items": {"type": "string"
+                            }, "description": "List of RRULE, RDATE, and EXDATE lines for a recurring event."
+                        }, "location": {"type": "string", "description": "The location of the event."
+                        }, "organizer": {"type": "object", "properties": {"email": {"type": "string", "description": "Email address of the person."
+                                }, "displayName": {"type": "string", "description": "Display name of the person."
+                                }, "organizer": {"type": "boolean", "description": "Indicates if the person is the organizer of the event."
+                                }, "self": {"type": "boolean", "description": "Indicates if the person is the authenticated user."
+                                }, "responseStatus": {"type": "string", "description": "Status of the person's participation in the event."
+                                }
+                            }
+                        }, "attendees": {"type": "array", "items": {"type": "object", "properties": {"email": {"type": "string", "description": "Email address of the person."
+                                    }, "displayName": {"type": "string", "description": "Display name of the person."
+                                    }, "organizer": {"type": "boolean", "description": "Indicates if the person is the organizer of the event."
+                                    }, "self": {"type": "boolean", "description": "Indicates if the person is the authenticated user."
+                                    }, "responseStatus": {"type": "string", "description": "Status of the person's participation in the event."
+                                    }
+                                }
+                            }, "description": "List of attendees for the event."
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -50,7 +50,7 @@ def addHabitsToCalendar():
 
         for habit_string in habit_strings:
             prompt = f"Add an event to my calendar that repeats every weekday {habit_string}"
-            answer_question(prompt, creds) 
+            answer_question(prompt) 
             
         answer = f"""
         I added these habits to your calendar: {(", ").join(answer_strings)}. 

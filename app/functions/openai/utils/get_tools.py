@@ -8,11 +8,16 @@ def get_tools():
     # -----------------
     # CUSTOM FUNCTIONS
     # -----------------
-    with open('./app/specs/custom/get_busy_times_function_spec.json', 'r') as f:
-        get_busy_times_function_spec = jsonref.loads(f.read()) 
+    # with open('./app/specs/custom/get_busy_times_function_spec.json', 'r') as f:
+    #     get_busy_times_function_spec = jsonref.loads(f.read()) 
 
-    custom_functions = [get_busy_times_function_spec]
+    with open('./app/specs/custom/insert_event_while_avoiding_conflicts.json', 'r') as f:
+        insert_event_while_avoiding_conflicts_function_spec = jsonref.loads(f.read()) 
 
+    custom_functions = [
+        # get_busy_times_function_spec, 
+        insert_event_while_avoiding_conflicts_function_spec
+    ]
 
     # --------------------
     # BUILT-IN FUNCTIONS
