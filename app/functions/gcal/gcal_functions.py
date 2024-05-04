@@ -103,6 +103,7 @@ def get_busy_times_within_awake_hours(day):
     service = build_google_api_service_object_with_creds()
     response = service.freebusy().query(body=body).execute()
     busy_times_obj = response['calendars'][email]['busy']
+    print('BUSY TIMES----', busy_times_obj)
     return busy_times_obj
 
 
@@ -110,6 +111,8 @@ def get_busy_times_within_awake_hours(day):
 def find_closest_start(ideal_start, ideal_end):
     max_delta = timedelta(minutes=8*60)
     increment = timedelta(minutes=30)
+
+    busy_ranges = get_busy_times_within_awake_hours(ideal_start)
 
     closest_start = None
     delta = timedelta(minutes=0)
@@ -120,7 +123,7 @@ def find_closest_start(ideal_start, ideal_end):
         print('starts', starts)
 
         for i in range(len(starts)):
-            if not start_or_end_fall_within_busy_range(starts[i], ends[i]): 
+            if not start_or_end_fall_within_busy_range(busy_ranges, starts[i], ends[i]): 
                 closest_start = starts[i]
                 break
 
@@ -130,9 +133,8 @@ def find_closest_start(ideal_start, ideal_end):
             
         
 
-def start_or_end_fall_within_busy_range(target_start, target_end):
+def start_or_end_fall_within_busy_range(busy_ranges, target_start, target_end):
     user = get_user_by_email(session['email'])
-    busy_ranges = get_busy_times_within_awake_hours(target_start)
 
     # iterate over all busy ranges for that day 
     for busy_range in busy_ranges:
