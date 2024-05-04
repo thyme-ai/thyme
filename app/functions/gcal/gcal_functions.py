@@ -152,7 +152,7 @@ def get_closest_free_start(ideal_start, ideal_end):
         ideal_start = datetime.strptime(ideal_start, DATETIME_FORMAT)
         ideal_end = datetime.strptime(ideal_end, DATETIME_FORMAT)
 
-    max_delta = timedelta(minutes=8*60)
+    max_delta = timedelta(minutes=12*60)
     increment = timedelta(minutes=30)
 
     # get ranges during which user is busy 
@@ -212,8 +212,12 @@ def time_is_available(busy_ranges, target_start, target_end):
         start_in_busy_range = target_in_range(target_start, start, end)
         end_in_busy_range = target_in_range(target_end, start, end)
 
+        # check to see if busy range start or end is within the target range
+        start_in_target_range = target_in_range(start, target_start, target_end)
+        end_in_target_range = target_in_range(end, target_start, target_end)
+
         # if either the start or the end is in the busy range
-        if (start_in_busy_range or end_in_busy_range): 
+        if (start_in_busy_range or end_in_busy_range or start_in_target_range or end_in_target_range): 
             print('❌ Busy')
             return False      
     return True
