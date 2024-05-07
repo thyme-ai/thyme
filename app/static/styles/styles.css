@@ -96,11 +96,16 @@ textarea {
     width: 80vw
 }
 
-.centered {
+.centered, 
+.centered-in-x-and-y {
     width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.centered-in-x-and-y {
+    justify-content: center;
 }
 
 .chat {
@@ -266,9 +271,32 @@ textarea {
     padding-left: 100px;
 }
 
+#content {
+    z-index: 0;
+}
+
+#loader {
+    position: fixed;
+    display: none;
+    z-index: 1;
+    border: 14px solid var(--thyme-lighter-grey);
+    border-top: 14px solid var(--thyme-light-grey);
+    border-radius: 50%;
+    margin-top: 350px;
+    width: 80px;
+    height: 80px;
+    animation: spin 2s linear infinite;
+  }
+  
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 .return-home {
     color: var(--thyme-lighter-grey)
 }
+
 
 button:hover, 
 a:hover,
