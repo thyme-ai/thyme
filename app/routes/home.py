@@ -27,16 +27,7 @@ def index():
 # --------------------
 @bp.route('/assistant/', methods=["GET", "POST"])
 @bp.route('/assistant/<answer>', methods=["GET", "POST"])
-def assistant(answer = None):
-  
-#   # --------------------
-#   # TEST
-#   user = get_user_by_email(session['email'])
-#   DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S%z"
-#   ideal_start = datetime.strptime("2024-05-04 14:00:00-07:00", DATETIME_FORMAT)
-#   ideal_end = datetime.strptime("2024-05-04 15:00:00-07:00", DATETIME_FORMAT)
-#   print('CLOSEST START------', get_closest_free_start(ideal_start, ideal_end))
-
+def assistant(answer = None): 
 
   form = AskQuestionForm()
   if form.validate_on_submit():

@@ -7,8 +7,11 @@
         <td class="form-field-label">{{ field.label }}</td>
         {% endif%}
     {% endif %}
+
     {% if field.type == 'TextAreaField' %}
     <td class = "form-field text-area-field">{{ form.question(cols="40", rows="2") }}</td>
+    {% elif field.type == 'SubmitField' and form_type == "one-line-form" %}
+    <td class = "form-field">{{ form.submit(onclick="loading();") }}</td>
     {% else %}
     <td class = "form-field">{{ field }}</td>
     {% endif %}
