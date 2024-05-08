@@ -1,13 +1,9 @@
 from app.models import db, User
 from app.forms import AskQuestionForm, UpdatePreferencesForm
 from app.functions.openai.answer_question import answer_question
-from app.functions.helpers import get_habits
-from app.functions.helpers import get_user_by_email, get_users_current_timestamp_and_timezone
-from app.functions.gcal.gcal_functions import get_closest_free_start
+from app.functions.thyme.helpers.habits import get_habits
+from app.functions.thyme.helpers.user import get_user_from_thyme
 from flask import Blueprint, redirect, session, url_for, render_template
-
-from datetime import datetime, timedelta
-from flask import session
 
 bp = Blueprint("home", __name__, url_prefix="/")
 
@@ -18,8 +14,8 @@ bp = Blueprint("home", __name__, url_prefix="/")
 def index():
     if 'credentials' in session:
         return redirect(url_for("home.assistant"))
-    else:
-        return render_template("welcome.html", title="Welcome")
+
+    return render_template("welcome.html", title="Welcome")
 
 
 # --------------------
@@ -28,11 +24,13 @@ def index():
 @bp.route('/assistant/', methods=["GET", "POST"])
 @bp.route('/assistant/<answer>', methods=["GET", "POST"])
 def assistant(answer = None): 
-
+  if 'credentials' not in session:
+      return redirect(url_for("home.index"))
+  
   form = AskQuestionForm()
   if form.validate_on_submit():
     prompt = form.question.data
-    answer = answer_question(prompt)    
+    answer = answer_question(prompt)
   return render_template("home.html", title="Home", form=form, form_type="one-line-form", justified_type="centered", answer=answer)
 
 
@@ -41,7 +39,7 @@ def assistant(answer = None):
 # --------------------
 @bp.route("/preferences", methods=["GET", "POST"])
 def preferences():
-    user = get_user_by_email(session['email'])
+    user =get_user_from_thyme(session['email'])
     habits = get_habits()
     return render_template("preferences.html", title="Preferences", habits=habits, user=user)
 
@@ -62,7 +60,7 @@ def updatePreferences():
 # EVENT HANDLERS
 # --------------------
 def handleUpdatePreferences(form):
-    user = get_user_by_email(session['email'])
+    user = get_user_from_thyme(session['email'])
  
     for field in form._fields.keys():
         data = form.data[field]
@@ -72,4 +70,15 @@ def handleUpdatePreferences(form):
                 db.select(getattr(User, field))
                 .where(User.id == user.id)).scalar_one()
     db.session.commit()
+
+
+# --------------------
+# ERRORS
+# --------------------
+@bp.errorhandler(404)
+def page_not_found(error):
+  if 'credentials' not in session:
+      return redirect(url_for("home.index"))
+  return render_template("error.html", error=error)
+
     

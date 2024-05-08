@@ -1,4 +1,4 @@
-from app.functions.helpers import get_users_current_timestamp_and_timezone
+from app.functions.gcal.helpers.user import get_users_current_timestamp_and_timezone
 
 def get_openai_prompt_header(user):
     now = get_users_current_timestamp_and_timezone(user)
@@ -34,7 +34,3 @@ def get_openai_prompt_header(user):
     """
 
     return header
-
-
-    # If you are making a call to the "get_busy_times" function, format the "day"
-    # parameter as a datetime in the following format: '%Y-%m-%dT%H:%M:%S%z'
