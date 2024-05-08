@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "components/headers/logged_in.html" %}
+    <div class="centered-in-x-and-y">
+        <h2>Sorry, something went wrong.</h2>
+        <p>Click on Thyme above to return home and try again.</p>
+        <p>Error: {{error}}</p>
+    </div>
+{% endblock %}

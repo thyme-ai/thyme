@@ -22,6 +22,8 @@ tenacity = "*"
 termcolor = "*"
 wtforms = "*"
 pytz = "*"
+uuid = "*"
+pytest = "*"
 
 [dev-packages]
 

@@ -1,8 +1,9 @@
 from app.models import db, Habit
 from app.forms import AddHabitForm, UpdateHabitForm
 from app.functions.openai.answer_question import answer_question
-from app.functions.helpers import check_for_credentials, get_habit, get_habits, get_user_id_or_create_new_user
-from flask import Blueprint, redirect, url_for, render_template
+from app.functions.thyme.helpers.habits import get_habit, get_habits
+from app.functions.thyme.helpers.user import get_user_from_thyme
+from flask import Blueprint, redirect, url_for, render_template, session
 
 bp = Blueprint("habit", __name__, url_prefix="/habit")
 
@@ -43,7 +44,6 @@ def delete(habit_id):
 # ------------------------
 @bp.route("/addHabitsToCalendar", methods=["GET", "POST"])
 def addHabitsToCalendar():
-        creds = check_for_credentials()
         habits = get_habits()
         habit_strings = map(lambda habit: f"called {habit.name} for {habit.duration_min} min at {habit.ideal_start.strftime('%-I:%M %p')}", habits)
         answer_strings = map(lambda habit: f"{habit.name}", habits)
@@ -62,12 +62,13 @@ def addHabitsToCalendar():
 # EVENT HANDLERS
 # ------------------------
 def handle_add_habit(form):
+    user = get_user_from_thyme(session['email'])
     habit = Habit(
        name = form.name.data,
        duration_min = form.duration_min.data,
        ideal_start = form.ideal_start.data,
        personal = form.personal.data,
-       user_id = get_user_id_or_create_new_user()
+       user_id = user.id
        )
     db.session.add(habit)
     db.session.commit()

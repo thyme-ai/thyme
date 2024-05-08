@@ -1,6 +1,6 @@
 from termcolor import colored  
 
-def pretty_print_conversation(messages):
+def pretty_print_chat(messages):
     role_to_color = {
         "system": "red",
         "user": "green",
@@ -18,4 +18,4 @@ def pretty_print_conversation(messages):
         elif message["role"] == "assistant" and not message.get("function_call"):
             print(colored(f"assistant: {message['content']}\n", role_to_color[message["role"]]))
         elif message["role"] == "function":
-            print(colored(f"function ({message['name']}): {message['content']}\n", role_to_color[message["role"]]))
+            print(colored(f"function ({message['function_name']}): {message['content']}\n", role_to_color[message["role"]]))
