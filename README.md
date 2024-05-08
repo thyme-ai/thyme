@@ -96,7 +96,6 @@ Thyme app. Email [hello@thyme.company](hello@thyme.company) if you'd like to be 
 3) add "Heroku Postgres" server in heroku as an "add-on"
 4) Make sure "DATABASE_URL" config var (sort of like an env var) matches the DATABASE_URL of the Heroku Postgres Database (click on the database and navigate to settings, Database Credentials ) 
 5) push the local thyme database to Heroku
-```heroku pg:push mylocaldb DATABASE_URL --app example-app```
 ```heroku pg:push thyme DATABASE_URL --app thyme-ai```
 6) For errors use the comamnd: 
 ```heroku logs --tail -a thyme-ai```

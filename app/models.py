@@ -69,7 +69,7 @@ class Message(db.Model):
     role = db.Column(db.String(100), nullable=False)
     content = db.Column(db.String(5000), nullable=True)
     function_name = db.Column(db.String(100), nullable=True)
-    function_call = db.Column(db.String(100), nullable=True)
+    function_call = db.Column(db.String(5000), nullable=True)
 
     chat_id = db.Column(uuid_type, ForeignKey("chats.id", ondelete="CASCADE"), nullable=False)
     chat = db.relationship("Chat")
