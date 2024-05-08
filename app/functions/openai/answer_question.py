@@ -26,18 +26,26 @@ def answer_question(prompt):
     # If assistant found any relevant Google Calendar "tools" (i.e. functions), execute them
     if assistant_message.tool_calls:
         assistant_message.content = str(assistant_message.tool_calls[0].function)
-        messages.append({"role": assistant_message.role, "content": assistant_message.content})
+
+        # Add the function call to the messages array
+        messages.append({
+            "role": assistant_message.role, 
+            "content": None,
+            "function_name": assistant_message.tool_calls[0].function.name, 
+            "function_call": assistant_message.tool_calls[0].function.arguments
+            })
+        
+        # Execute the function
         result = execute_gcal_function(assistant_message)
 
-        # Add the result of the google calendar function call to the messages array 
+        # Add the result of the function call to the messages array 
         messages.append({
             "role": "function", 
-            "tool_call_id": assistant_message.tool_calls[0].id, 
             "function_name": assistant_message.tool_calls[0].function.name, 
             "content": result
             })
             
-    # Otherwise, just result the user's question
+    # Otherwise, just answer the user's question
     else: 
         result = chat_response.choices[0].message.content
         messages.append({
