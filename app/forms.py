@@ -16,7 +16,7 @@ class AddHabitForm(FlaskForm):
 
 
 class AskQuestionForm(FlaskForm):
-    question = TextAreaField("How can I help?", validators=required, widget=TextArea())
+    question = TextAreaField(validators=required, widget=TextArea(), render_kw={"placeholder": "How can I help?"})
     submit = SubmitField("Submit")
 
 

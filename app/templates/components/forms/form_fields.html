@@ -1,6 +1,6 @@
 {% for field in form if field.widget.input_type != 'hidden' %}
 <tr>
-    {% if (field.type != 'SubmitField' and field.type != 'RadioField') %}
+    {% if (field.type != 'SubmitField' and field.type != 'RadioField' and field.name != 'question') %}
         {% if form_type == "one-line-form" %}
         <td class="form-field-label-one-line">{{ field.label }}</td>
         {% else %}
