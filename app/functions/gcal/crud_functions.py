@@ -13,7 +13,10 @@ def insert_event(args):
     event = service.events().insert(calendarId=CALENDAR_ID, body=args).execute()
 
     if event:
-        return f"I created your event called {event.get("summary")}"
+        return f"""
+        I created your event called {event.get("summary")} 
+        at {get_easy_read_time(event.get("start").get("dateTime"))}
+        """
     else:
          return f"""
         {APOLOGY_STRING} Try saying something like this : 
@@ -43,7 +46,8 @@ def insert_event_while_avoiding_conflicts(args):
     if event:
         return f"""
         I created your event called {event.get("summary")}
-        at the closest available time which was {get_easy_read_time(best_start_time)}
+        at the closest available time within your preferred wake & sleep hours 
+        which was {get_easy_read_time(best_start_time)}
         """
     else:
          return f"""
@@ -71,8 +75,7 @@ def list_events(args):
         return f"{intro} {(", ").join(event_summaries)}"
     
     return f"""
-        {APOLOGY_STRING} Try saying: "What's on my calendar today?" or 
-        "Give me a list of events on my calendar called _____"
+        {APOLOGY_STRING} Try saying: "What's on my calendar today?"
         """
 
 # ------------------------
