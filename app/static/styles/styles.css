@@ -23,10 +23,8 @@
 
 
 html, 
-body,
-content {
+.centered-in-x-and-y {
     width: 100vw;
-    height: 100vh;
 }
 
 html,
@@ -69,15 +67,12 @@ button,
     color: var(--thyme-black);
     width: fit-content;
     border: none;
-    padding-inline: 15px;
-    padding-block: 10px;
     border-radius: 25px;
-    margin-inline: 20px;
+    padding: 10px;
+    margin: 10px;
 }
 
 header {
-    width: 100vw;
-    margin: 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -193,8 +188,8 @@ textarea {
     flex-direction: row;
     align-items: center;
     align-content: center;
-    padding-inline: 5px;
-    margin-inline: 5px;
+    padding-inline: 0px;
+    margin-inline: 0px;
 }
 
 header {
@@ -202,7 +197,7 @@ header {
     flex-direction: row;
     padding-inline: 5px;
     margin-inline: 5px;
-    justify-content: space-between;
+    justify-content: end;
 }
 
 .justified-left {
@@ -215,7 +210,7 @@ header {
 }
 
 .justified-right {
-    justify-content: end;
+    justify-content: right;
 }
 
 .fa {
@@ -241,7 +236,7 @@ header {
 
 .header-thyme-button {
     line-height: 5px;
-    margin-left: 40px;
+    margin-right: 200px;
 }
 
 .header-thyme-text {
@@ -334,27 +329,25 @@ a:hover,
 }
 
 
+/* ---------------------------- */
+/* MOBILE
+/* ---------------------------- */
 @media only screen and (max-width: 767px) {
     * {
         font-size: var(--thyme-font-small);
     }
-
     h1 {
         font-size: var(--thyme-font-large);
-    }
-    
+    }   
     h2 {
         font-size: var(--thyme-font-large);
     }
-    
     h3 {
         font-size: var(--thyme-font-medium);
     }
-
     header {
         justify-content: center;
     }
-
 
     textarea {
         width: 90%;
@@ -393,14 +386,21 @@ a:hover,
         font-size: var(--thyme-font-medium); 
     }
 
+    button,
     .icon-button,
     #submit {
         margin: 15px;
         font-size: var(--thyme-font-smallest);
     }
 
-    .icon-button {
-        margin-bottom: 40px;  
+    .header-thyme-button,
+    .transparent-icon-button {
+        padding: 5px;
+        font-size: var(--thyme-font-smallest);
+    }
+
+    .header-thyme-button {
+        margin-right: 10px;
     }
 
     .invite-to-beta-testing,
@@ -429,5 +429,3 @@ a:hover,
         padding: 5px;
         margin: 10px;
     }
-
-
