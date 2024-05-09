@@ -169,7 +169,7 @@ textarea {
     margin-inline: 5px;
 }
 
-.aligned-left {
+header {
     display: flex;
     flex-direction: row;
     padding-inline: 5px;
@@ -301,9 +301,26 @@ a:hover,
     font-weight: 500;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
+    * {
+        font-size: var(--thyme-font-small);
+    }
+
+    header {
+        justify-content: center;
+    }
+
     textarea {
-        width: 300px;
+        width: 90%;
+        margin-left: 20px;
+    }
+
+    textareafield {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    #submit {
         margin: 5px;
     }
   }
