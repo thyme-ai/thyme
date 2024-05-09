@@ -31,9 +31,10 @@ def get_best_time_for_meeting_while_avoiding_conflicts(ideal_start, ideal_end):
             print(f'(i = {i}) ----Checking to see if {get_easy_read_time(starts[i])} works...')
             if time_is_available(busy_ranges, starts[i], ends[i]) and time_is_within_wake_hours(awake_range, starts[i], ends[i]): 
                 best_start_time = starts[i]
+                print('🎉 Found a free time within awake hours')  
                 return best_start_time
         delta += INCREMENT
-    return best_start_time
+    return None
 
 
 def time_is_available(busy_ranges, target_start, target_end):
@@ -50,7 +51,6 @@ def time_is_available(busy_ranges, target_start, target_end):
         if (start_in_busy_range or end_in_busy_range or start_in_target_range or end_in_target_range): 
             print('❌ Busy at this time')
             return False    
-    print('🎉 Found a free time within awake hours')      
     return True
 
 
