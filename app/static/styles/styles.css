@@ -142,13 +142,14 @@ textarea {
 
 
 .chat-answer {
+    background-color: color(--thyme-charcoal);
     color: var(--thyme-white);
     font-size: var(--thyme-font-smallest);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .chat-thyme-placeholder {
