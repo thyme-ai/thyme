@@ -24,8 +24,7 @@
 
 html, 
 body,
-content, 
-.centered-in-x-and-y {
+content {
     width: 100vw;
     height: 100vh;
 }
