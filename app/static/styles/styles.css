@@ -21,15 +21,27 @@
     color: var(--thyme-white);
 }
 
-html,
-body {
+
+html, 
+body,
+content, 
+.centered-in-x-and-y {
     width: 100vw;
-    height: 70vh;
+    height: 100vh;
+}
+
+html,
+body, 
+.content, 
+.centered, 
+.centered-in-x-and-y {
     background-color: var(--thyme-charcoal);
     color: var(--thyme-white);
     display: flex;
     flex-direction: column;
     justify-items: center;
+    justify-content: center;
+    align-items: center;
     align-content: center;
 }
 
@@ -98,22 +110,17 @@ textarea {
     width: 80vw
 }
 
-.content {
-    width: 100vw;
-    height: 100vh;
-}
-
 .centered, 
 .centered-in-x-and-y {
-    /* width: 100vw;
-    height: 100vh; */
     display: flex;
     flex-direction: column;
     align-items: center;
+    align-content: center;
 }
 
 .centered-in-x-and-y {
     justify-content: center;
+    justify-items: center;
 }
 
 .chat {
@@ -121,12 +128,20 @@ textarea {
     height: 80vh;
     flex-direction: column;
     justify-content: end;
-    
 }
 
-.chat-answer {
+.chat-answer, 
+.chat-thyme-placeholder {
     width: 90vw;
     height: 75vh;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+}
+
+
+.chat-answer {
     color: var(--thyme-white);
     font-size: var(--thyme-font-smallest);
     display: flex;
@@ -138,7 +153,7 @@ textarea {
 
 .chat-thyme-placeholder {
     font-size: var(--thyme-font-placeholder-text);
-    color: var(--thyme-light-grey)
+    color: var(--thyme-light-grey);
 }
 
 .form-field-label{
@@ -262,7 +277,7 @@ header {
     border-radius: 30px;
     padding: 20px;
     margin: 40px;
-    margin-top: 60px;
+    margin-top: 40px;
 }
 
 .invite-to-beta-testing {
@@ -296,10 +311,10 @@ header {
     border: 14px solid var(--thyme-lighter-grey);
     border-top: 14px solid var(--thyme-light-grey);
     border-radius: 50%;
-    margin-top: 300px;
     width: 80px;
     height: 80px;
     animation: spin 2s linear infinite;
+    margin-bottom: 40px;
   }
   
 @keyframes spin {
@@ -318,14 +333,28 @@ a:hover,
     font-weight: 500;
 }
 
+
 @media only screen and (max-width: 767px) {
     * {
         font-size: var(--thyme-font-small);
     }
 
+    h1 {
+        font-size: var(--thyme-font-large);
+    }
+    
+    h2 {
+        font-size: var(--thyme-font-large);
+    }
+    
+    h3 {
+        font-size: var(--thyme-font-medium);
+    }
+
     header {
         justify-content: center;
     }
+
 
     textarea {
         width: 90%;
@@ -338,7 +367,53 @@ a:hover,
     }
 
     .chat-answer {
-        padding: 1px;
+        padding: 0px;
+    }
+
+    .home-titles {
+        height: 100%;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        margin-block: 50px;
+        margin-inline: 5px;
+    }
+
+    .home-main-title, 
+    .home-secondary-title,
+    .home-secondary-title-italicized, 
+    .invite-to-beta-testing, 
+    .icon-button {
+        margin-inline: 0px;
+        margin-block: 15px;
+    }
+
+    .home-secondary-title, 
+    .home-secondary-title-italicized {
+        font-size: var(--thyme-font-medium); 
+    }
+
+    .icon-button,
+    #submit {
+        margin: 15px;
+        font-size: var(--thyme-font-smallest);
+    }
+
+    .icon-button {
+        margin-bottom: 40px;  
+    }
+
+    .invite-to-beta-testing,
+    .invite-to-beta-testing > p{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: center;
+        align-self: center;
+    }
+
+    .invite-to-beta-testing > p, a {
+        font-size: var(--thyme-font-smallest);
     }
 
     .left-justified {
@@ -352,16 +427,7 @@ a:hover,
 
     .textareafield {
         padding: 5px;
-        margin: 5px;
+        margin: 10px;
     }
 
-    #submit {
-        margin: 5px;
-    }
-}
 
-@media only screen and (max-width: 1535px) {
-    * {
-        font-size: var(--thyme-font-small);
-    }
-}

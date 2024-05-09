@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 {% include "/components/headers/logged_in_home.html" %}
-<div class="centered">
-    <div class="chat centered">
+<div class="centered-in-x-and-y">
+    <div class="chat centered-in-x-and-y">
         {% if answer %}
         <p class="chat-answer">{{ answer }}</p>
         {% else %}
-        <h1 class="chat-answer chat-thyme-placeholder">Thyme</h1>
+        <h1 class="chat-thyme-placeholder centered-in-x-and-y">Thyme</h1>
         {% endif %}
         {% include "/components/forms/form_component.html" %}
         </div>
