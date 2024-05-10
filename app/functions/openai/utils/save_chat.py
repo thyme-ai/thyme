@@ -1,12 +1,8 @@
 from app.models import db, Message, Chat
-from app.functions.thyme.helpers.user import get_user_from_thyme
 from app.functions.openai.utils.remove_whitspace import remove_whitespace
-from flask import session
 
 
-def save_chat(messages):  
-    user = get_user_from_thyme(session['email'])
-
+def save_chat(messages, user):  
     # Create Chat object and assign to current user
     chat = Chat(user_id = user.id)    
 

@@ -1,6 +1,7 @@
 from app.models import db, User
 from app.forms import AskQuestionForm, UpdatePreferencesForm
 from app.functions.openai.answer_question import answer_question
+from app.functions.openai.utils.save_chat import save_chat
 from app.functions.thyme.helpers.habits import get_habits
 from app.functions.thyme.helpers.user import get_user_from_thyme
 from flask import Blueprint, redirect, session, url_for, render_template
@@ -28,7 +29,10 @@ def assistant(answer = None):
   form = AskQuestionForm()
   if form.validate_on_submit():
     prompt = form.question.data
-    answer = answer_question(prompt)
+    user = get_user_from_thyme(session['email'])
+    messages = answer_question(prompt, user)
+    save_chat(messages, user)
+    answer = messages[len(messages) - 1]['content']
   return render_template("home.html", title="Home", form=form, form_type="one-line-form", justified_type="centered", answer=answer)
 
 
