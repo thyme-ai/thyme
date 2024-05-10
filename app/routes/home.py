@@ -12,9 +12,6 @@ bp = Blueprint("home", __name__, url_prefix="/")
 # --------------------
 @bp.route("/", methods=["GET"])
 def index():
-    if 'credentials' in session:
-        return redirect(url_for("home.assistant"))
-
     return render_template("welcome.html", title="Welcome")
 
 
