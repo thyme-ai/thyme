@@ -6,6 +6,7 @@ from app.functions.thyme.helpers.user import get_user_from_thyme
 from flask import Blueprint, redirect, session, url_for, render_template
 
 bp = Blueprint("home", __name__, url_prefix="/")
+APOLOGY_STRING = "Sorrry, I'm not able to do that yet."    
 
 # --------------------
 # WELCOME
@@ -73,9 +74,10 @@ def handleUpdatePreferences(form):
 # ERRORS
 # --------------------
 @bp.errorhandler(404)
+@bp.errorhandler(500)
 def page_not_found(error):
-  if 'credentials' not in session:
+    if 'credentials' not in session:
       return redirect(url_for("home.index"))
-  return render_template("error.html", error=error)
-
+    form = AskQuestionForm()
+    return render_template("home.html", title="Home", form=form, form_type="one-line-form", justified_type="centered", answer=APOLOGY_STRING)
     
