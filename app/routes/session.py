@@ -1,23 +1,10 @@
+from app.constants.general import GOOGLE_CLIENT_CONFIG, SCOPES
 from flask import Blueprint, redirect, request, session, url_for
-from os import environ
-from dotenv import load_dotenv
-import json
 import requests
 import google_auth_oauthlib.flow
 from app.functions.gcal.helpers.user import credentials_to_dict, get_email_from_google, get_user_from_google, get_timezone_from_google
 from app.functions.thyme.helpers.user import create_user, get_user_from_thyme
 bp = Blueprint("session", __name__, url_prefix="/session")
-
-SCOPES = [
-    "https://www.googleapis.com/auth/calendar.events",  # edit events in all your calendars (you cant edit/share/delete calendars)
-    "https://www.googleapis.com/auth/userinfo.email",   # get user's email address
-    "https://www.googleapis.com/auth/userinfo.profile", # get user's email address
-    "https://www.googleapis.com/auth/calendar.readonly" # get calendar settings (including)
-]
-
-load_dotenv()
-GOOGLE_CLIENT_CONFIG = json.loads(environ.get('GOOGLE_CLIENT_CONFIG'))
-
 
 # ----------------
 # LOGIN

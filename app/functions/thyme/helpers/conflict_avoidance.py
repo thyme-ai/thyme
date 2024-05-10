@@ -1,14 +1,9 @@
+from app.constants.general import DATETIME_FORMAT, MAX_DELTA, INCREMENT
 from datetime import datetime, timedelta
 from app.functions.gcal.utils.build_google_api_service import build_google_api_service
 from app.functions.thyme.helpers.user import get_user_from_thyme
 from app.functions.thyme.utils.get_easy_read_time import get_easy_read_time
 from flask import session
-
-DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S%z"
-CALENDAR_ID = 'primary'
-MAX_DELTA = timedelta(minutes=12*60)
-INCREMENT = timedelta(minutes=30) 
-
 
 def get_best_time_for_meeting_while_avoiding_conflicts(ideal_start, ideal_end):
     if type(ideal_start) == str:
@@ -17,8 +12,6 @@ def get_best_time_for_meeting_while_avoiding_conflicts(ideal_start, ideal_end):
 
     busy_ranges = get_busy_times_within_awake_range(ideal_start)
     awake_range = get_awake_range(ideal_start)
-
-    # ideal_start = datetime.strptime(ideal_start, DATETIME_FORMAT)
 
     best_start_time = None
     delta = timedelta(minutes=0)

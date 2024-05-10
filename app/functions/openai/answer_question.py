@@ -1,15 +1,10 @@
+from app.constants.general import GPT_MODEL, MAX_ATTEMPTS, MAX_WAIT, TOOLS
 from app.functions.gcal.utils.execute_gcal_function import execute_gcal_function
 from app.functions.openai.utils.pretty_print_chat import pretty_print_chat
 from app.functions.openai.utils.get_openai_prompt_header import get_openai_prompt_header
 from app.functions.openai.utils.get_tools import get_tools
 from openai import OpenAI
 from tenacity import retry, wait_random_exponential, stop_after_attempt
-
-GPT_MODEL = "gpt-3.5-turbo"
-MAX_ATTEMPTS = 3
-MAX_WAIT = 40
-TOOLS = get_tools()
-APOLOGY_STRING = "Sorry, I'm not able to do that yet."
 
 client = OpenAI()
 

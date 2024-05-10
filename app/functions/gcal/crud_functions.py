@@ -1,12 +1,8 @@
+from app.constants.general import APOLOGY, CALENDAR_ID, DATETIME_FORMAT
 from app.functions.gcal.utils.build_google_api_service import build_google_api_service
 from app.functions.thyme.helpers.conflict_avoidance import get_best_time_for_meeting_while_avoiding_conflicts
 from app.functions.thyme.utils.get_easy_read_time import get_easy_read_time
 from datetime import datetime
-
-DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S%z"
-CALENDAR_ID = 'primary'
-APOLOGY_STRING = "Sorrry, I'm not able to do that yet."    
-
 
 def insert_event(args):
     service = build_google_api_service()
@@ -19,7 +15,7 @@ def insert_event(args):
         """
     else:
          return f"""
-        {APOLOGY_STRING} Try saying something like this : 
+        {APOLOGY} Try saying something like this : 
         "Add a _____ hour long event to my calendar called _____ on _____.
         """
 
@@ -51,7 +47,7 @@ def insert_event_while_avoiding_conflicts(args):
         """
     else:
          return f"""
-        {APOLOGY_STRING} Try saying something like this : 
+        {APOLOGY} Try saying something like this : 
         "Add a _____ hour long event to my calendar called _____ on _____.
         """
 
@@ -75,22 +71,22 @@ def list_events(args):
         return f"{intro} {(", ").join(event_summaries)}"
     
     return f"""
-        {APOLOGY_STRING} Try saying: "What's on my calendar today?"
+        {APOLOGY} Try saying: "What's on my calendar today?"
         """
 
 # ------------------------
 # NOT SUPPORTED YET 
 # ------------------------
 def get_event(eventId):
-    return APOLOGY_STRING
+    return APOLOGY
 
 
 def update_event(args):
-    return APOLOGY_STRING
+    return APOLOGY
 
 
 def delete_event(eventId):
-      return APOLOGY_STRING
+      return APOLOGY
 
 
 

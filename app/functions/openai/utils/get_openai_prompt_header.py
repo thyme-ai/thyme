@@ -1,15 +1,12 @@
+from app.constants.general import APOLOGY, DATETIME_FORMAT, DEFAULT_EVENT_DURATION
 from app.functions.gcal.helpers.user import get_users_current_timestamp_and_timezone
+from app.constants.prompts import get_variants_of_create_event_with_date_and_time,get_variants_of_create_event_while_avoiding_conflicts
 
 def get_openai_prompt_header(user):
     now = get_users_current_timestamp_and_timezone(user)
-    APOLOGY_STRING = "Sorrry, I'm not able to do that yet."
-    DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S%z";
-    DEFAULT_EVENT_DURATION = "1 hour"
 
-    AVOID_CONFLICTS_PHRASES = """
-    avoid conflicts, avoid existing meetings, 
-    find the best time, find an open time, find an available time 
-    """
+    CREATE_EVENT_PHRASES = get_variants_of_create_event_with_date_and_time()
+    AVOID_CONFLICTS_PHRASES = get_variants_of_create_event_while_avoiding_conflicts()
 
     FUNCTIONS = """
     insert_event, 
@@ -33,11 +30,11 @@ def get_openai_prompt_header(user):
 
     ASSUMPTIONS_FOR_CREATING_EVENTS = f"""
     Assumptions:
-    1. If the user did not specify a start time, or the user did not specify a date, 
-       or the user used any of the following phrases: 
-       {AVOID_CONFLICTS_PHRASES}, call the "insert_event_while_avoiding_conflicts" function.
-    2. If the user specified the date, start time, and duration of the event, make a call to the 
-       "insert_event" function. 
+    1. If the user did not specify a start time, did not specify a date, 
+       or htey user says something like {AVOID_CONFLICTS_PHRASES}
+       call the "insert_event_while_avoiding_conflicts" function.
+    2. If the user says something like {CREATE_EVENT_PHRASES} and the user specified the date, 
+       start time, and duration of the event, make a call to the "insert_event" function. 
     3. If the user did not specify a duration, assume the event is {DEFAULT_EVENT_DURATION} long 
     4. If the prompt contains a request for ideas or suggestions for an event, add your suggestions to 
        the description of the event as a numbered list.
@@ -66,7 +63,7 @@ def get_openai_prompt_header(user):
     Assume that today is {now} and the timezone is {user.timezone}
 
     If the prompt contains a request similar to any of the following phrases, 
-    {UNSUPPORTED_FEATURES_PHRASES}, don't call and functions and tell the user, {APOLOGY_STRING}
+    {UNSUPPORTED_FEATURES_PHRASES}, don't call and functions and tell the user, {APOLOGY}
 
     If the prompt contains a request to create, make, or add an event or meeting, make the following 
     assumptions and call one of the following functions {FUNCTIONS} If there is a relevant function 
