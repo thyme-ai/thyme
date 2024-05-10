@@ -1,10 +1,7 @@
 from app.functions.gcal.utils.execute_gcal_function import execute_gcal_function
 from app.functions.openai.utils.pretty_print_chat import pretty_print_chat
-from app.functions.openai.utils.save_chat import save_chat
 from app.functions.openai.utils.get_openai_prompt_header import get_openai_prompt_header
-from app.functions.thyme.helpers.user import get_user_from_thyme
 from app.functions.openai.utils.get_tools import get_tools
-from flask import session
 from openai import OpenAI
 from tenacity import retry, wait_random_exponential, stop_after_attempt
 
@@ -16,8 +13,7 @@ APOLOGY_STRING = "Sorry, I'm not able to do that yet."
 
 client = OpenAI()
 
-def answer_question(prompt):
-    user = get_user_from_thyme(session['email'])
+def answer_question(prompt, user):
     openai_prompt_header = get_openai_prompt_header(user)
     messages = [{"content": openai_prompt_header, "role": "system"}, {"content": prompt, "role": "user"}]
     chat_response = chat_completion_request(messages, TOOLS)
@@ -54,8 +50,7 @@ def answer_question(prompt):
         })
     
     pretty_print_chat(messages)
-    save_chat(messages)
-    return result
+    return messages
     
 
 # If chat completion fails, wait MAX_WAIT seconds & try again MAX_ATTEMPTS more times
