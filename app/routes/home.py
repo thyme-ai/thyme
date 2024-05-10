@@ -1,3 +1,4 @@
+from app.constants.general import APOLOGY
 from app.models import db, User
 from app.forms import AskQuestionForm, UpdatePreferencesForm
 from app.functions.openai.answer_question import answer_question
@@ -7,7 +8,6 @@ from app.functions.thyme.helpers.user import get_user_from_thyme
 from flask import Blueprint, redirect, session, url_for, render_template
 
 bp = Blueprint("home", __name__, url_prefix="/")
-APOLOGY_STRING = "Sorrry, I'm not able to do that yet."    
 
 # --------------------
 # WELCOME
@@ -83,5 +83,5 @@ def page_not_found(error):
     if 'credentials' not in session:
       return redirect(url_for("home.index"))
     form = AskQuestionForm()
-    return render_template("home.html", title="Home", form=form, form_type="one-line-form", justified_type="centered", answer=APOLOGY_STRING)
+    return render_template("home.html", title="Home", form=form, form_type="one-line-form", justified_type="centered", answer=APOLOGY)
     

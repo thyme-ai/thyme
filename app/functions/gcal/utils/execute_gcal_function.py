@@ -1,6 +1,6 @@
+from app.constants.general import APOLOGY
 from app.functions.gcal.crud_functions import insert_event, list_events, insert_event_while_avoiding_conflicts
 import json
-
 
 function_name_to_function = {
    "insert_event": insert_event,
@@ -9,7 +9,6 @@ function_name_to_function = {
 
 }
 
-APOLOGY_STRING = "Sorry, I'm not able to do that yet."
 
 def execute_gcal_function(message):
     function_name = message.tool_calls[0].function.name
@@ -26,4 +25,4 @@ def execute_gcal_function(message):
         crud_function = function_name_to_function.get(function_name)
         return crud_function(args)
     
-    return APOLOGY_STRING
+    return APOLOGY
