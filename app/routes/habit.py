@@ -4,6 +4,7 @@ from app.functions.openai.answer_question import answer_question
 from app.functions.thyme.helpers.habits import get_habit, get_habits
 from app.functions.thyme.helpers.user import get_user_from_thyme
 from flask import Blueprint, redirect, url_for, render_template, session
+from app.forms import AskQuestionForm
 
 bp = Blueprint("habit", __name__, url_prefix="/habit")
 
@@ -44,13 +45,14 @@ def delete(habit_id):
 # ------------------------
 @bp.route("/addHabitsToCalendar", methods=["GET", "POST"])
 def addHabitsToCalendar():
+        user = get_user_from_thyme(session['email'])
         habits = get_habits()
         habit_strings = map(lambda habit: f"called {habit.name} for {habit.duration_min} min at {habit.ideal_start.strftime('%-I:%M %p')}", habits)
         answer_strings = map(lambda habit: f"{habit.name}", habits)
 
         for habit_string in habit_strings:
             prompt = f"Add an event to my calendar that repeats every weekday {habit_string}"
-            answer_question(prompt) 
+            answer_question(prompt, user) 
             
         answer = f"""
         I added these habits to your calendar: {(", ").join(answer_strings)}. 
@@ -92,3 +94,14 @@ def handle_update_habit(form, habit_id):
     db.session.commit()
 
 
+# --------------------
+# ERRORS
+# --------------------
+@bp.errorhandler(404)
+@bp.errorhandler(500)
+def page_not_found(error):
+    if 'credentials' not in session:
+      return redirect(url_for("home.index"))
+    form = AskQuestionForm()
+    return render_template("home.html", title="Home", form=form, form_type="one-line-form", justified_type="centered", answer=APOLOGY)
+    

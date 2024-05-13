@@ -3,18 +3,21 @@ from app.constants.testing import SUMMARY, DURATION, TIME, DAY
 WITH_DATE_AND_TIME = f"called {SUMMARY} for {DURATION} at {TIME} {DAY}"
 WITH_DATE = f"called {SUMMARY} for {DURATION} {DAY}"
 
-EVENT = ["an event", "a meeting", "a block", "a meeting block"]
-CREATE = ["create", "add", "book", "insert", "schedule"]
-
-# Short Version for Testings New Test Cases Quickly
+# --------------------------------------------------------------------------------
+# Uncomment the shorter versions of EVENT & CREATE to run new tests more quickly
+# --------------------------------------------------------------------------------
 # EVENT = ["an event"]
 # CREATE = ["Create"]
+EVENT = ["an event", "a meeting", "a block", "a meeting block"]
+CREATE = ["create", "add", "book", "insert", "schedule"]
+# ----------------------------------------------------
 
 AVOID_AFTER = [
     "avoid conflicts",
     "avoid existing events",
     "don't schedule over other events"
 ]
+
 AVOID_BEFORE = [
     "Find an open time for",
     "Find the best time for",
