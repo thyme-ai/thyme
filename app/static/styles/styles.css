@@ -443,7 +443,10 @@ a:hover,
     position: relative;
     display: flex;
     flex-direction: column;
+    justify-items: center;
     justify-content: center;
+    align-items: center;
+    align-content: center;
   }
   
   /* Tooltip text */
@@ -461,19 +464,14 @@ a:hover,
     position: absolute;
     z-index: 1;
     top: 80%; 
-    left: 50%;
-    margin-left: -60px;
+    left: 50%; 
+    margin-left: -50%; 
   
     /* Fade in tooltip */
     opacity: 0;
     transition: opacity 0.3s;
   }
 
-  .tooltiptext {
-    width: fit-content;
-    padding: 5px;
-    margin: 5px;
-  }
   
   /* Show the tooltip text when you mouse over the tooltip container */
   .tooltip:hover .tooltiptext {
