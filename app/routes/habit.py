@@ -5,6 +5,8 @@ from app.functions.thyme.helpers.habits import get_habit, get_habits
 from app.functions.thyme.helpers.user import get_user_from_thyme
 from flask import Blueprint, redirect, url_for, render_template, session
 from app.forms import AskQuestionForm
+from app.functions.thyme.helpers.forms import prepopulate_form
+from app.constants.general import APOLOGY
 
 bp = Blueprint("habit", __name__, url_prefix="/habit")
 
@@ -14,6 +16,7 @@ bp = Blueprint("habit", __name__, url_prefix="/habit")
 @bp.route("/add", methods=["GET", "POST"])
 def add():
     form = AddHabitForm()
+
     if form.validate_on_submit():
        handle_add_habit(form)
        return redirect(url_for("home.preferences"))
@@ -26,6 +29,8 @@ def add():
 def update(habit_id):
     form = UpdateHabitForm()
     habit = get_habit(habit_id)
+    prepopulate_form(form, habit)
+
     if form.validate_on_submit():
         handle_update_habit(form, habit_id)
         return redirect(url_for("home.preferences"))
