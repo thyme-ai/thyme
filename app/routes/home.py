@@ -5,6 +5,7 @@ from app.functions.openai.answer_question import answer_question
 from app.functions.openai.utils.save_chat import save_chat
 from app.functions.thyme.helpers.habits import get_habits
 from app.functions.thyme.helpers.user import get_user_from_thyme
+from app.functions.thyme.helpers.forms import prepopulate_form
 from flask import Blueprint, redirect, session, url_for, render_template
 
 bp = Blueprint("home", __name__, url_prefix="/")
@@ -52,6 +53,9 @@ def preferences():
 @bp.route("/updatePreferences", methods=["GET", "POST"])
 def updatePreferences():
     form = UpdatePreferencesForm()
+    user = get_user_from_thyme(session['email'])
+    prepopulate_form(form, user)
+
     if form.validate_on_submit():
        handleUpdatePreferences(form)
        return redirect(url_for("home.preferences"))

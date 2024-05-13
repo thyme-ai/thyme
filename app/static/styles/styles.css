@@ -472,7 +472,6 @@ a:hover,
     transition: opacity 0.3s;
   }
 
-  
   /* Show the tooltip text when you mouse over the tooltip container */
   .tooltip:hover .tooltiptext {
     visibility: visible;
