@@ -12,6 +12,7 @@
     --thyme-font-medium: 30;
     --thyme-font-small: 20;
     --thyme-font-smallest: 18;
+    --thyme-font-tooltips: 14;
 }
 
 * {
@@ -19,6 +20,10 @@
     font-weight: 300;
     font-size: var(--thyme-font-smallest);
     color: var(--thyme-white);
+}
+
+a {
+    text-decoration: none;
 }
 
 
@@ -225,7 +230,6 @@ header {
     align-items: center;
 }
 
-.header-thyme-button,
 .transparent-icon-button {
     background-color: transparent;
 }
@@ -234,9 +238,10 @@ header {
     justify-self: end;
 }
 
-.header-thyme-button {
+.header-thyme {
     line-height: 5px;
     margin-right: 200px;
+    color: var(--thyme-lighter-grey);
 }
 
 .header-thyme-text {
@@ -397,6 +402,7 @@ a:hover,
     .transparent-icon-button {
         padding: 5px;
         font-size: var(--thyme-font-smallest);
+        color: var(--thyme-lighter-grey)
     }
 
     .header-thyme-button {
@@ -429,3 +435,48 @@ a:hover,
         padding: 5px;
         margin: 10px;
     }
+
+}
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  /* Tooltip text */
+  .tooltip .tooltiptext {
+    font-size: var(--thyme-font-tooltips);
+    visibility: hidden;
+    width: fit-content;
+    background-color: var(--thyme-lighter-grey);
+    color: var(--thyme-black);
+    text-align: center;
+    padding: 5px;
+    border-radius: 6px;
+  
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    top: 80%; 
+    left: 50%;
+    margin-left: -60px;
+  
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .tooltiptext {
+    width: fit-content;
+    padding: 5px;
+    margin: 5px;
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
