@@ -85,3 +85,13 @@ def logout():
     del session['email']
 
   return redirect(url_for("home.index"))
+
+
+# --------------------
+# ERRORS
+# --------------------
+@bp.errorhandler(404)
+@bp.errorhandler(500)
+def page_not_found(error):
+  return redirect(url_for("home.index"))
+    
