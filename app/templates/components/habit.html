@@ -1,13 +1,9 @@
-<div class="habit">
+<div class="habit horizontally-centered-content">
     <div class="horizontally-centered-content">
-        <p><span class="habit-bold">{{habit.name}}</span> - {{habit._min}} min near {{habit.ideal_start.strftime('%-I:%M %p')}}</p>
+        <p><span class="habit-bold">{{habit.name}}</span> - {{habit.duration_min}} min at {{habit.ideal_start.strftime('%-I %p')}}</p>
         <div class="horizontal-button-container">
-            <form class="horizontally-centered-content" method="get" action="/habit/update/{{habit.id}}">
-                <button>Edit</button>
-            </form>
-            <form class="horizontally-centered-content" method="get" action="/habit/delete/{{habit.id}}">
-                <button>Delete</button>
-            </form>
+            {% include "components/buttons/edit.html" %}
+            {% include "components/buttons/delete.html" %}
         </div>
     </div>
 </div>

@@ -10,7 +10,7 @@
     --thyme-font-placeholder-text: 70;
     --thyme-font-large: 35;
     --thyme-font-medium: 30;
-    --thyme-font-small: 20;
+    --thyme-font-small: 22;
     --thyme-font-smallest: 18;
     --thyme-font-tooltips: 14;
 }
@@ -75,6 +75,7 @@ button,
     border-radius: 25px;
     padding: 10px;
     margin: 10px;
+    padding-inline: 15px;
 }
 
 header {
@@ -88,6 +89,10 @@ header {
 
 input {
     color: var(--thyme-black);
+}
+
+section {
+    margin-bottom: 40px;
 }
 
 textarea {
@@ -169,8 +174,11 @@ textarea {
 
 
 .habit {
-    padding-block: 2px;
-    width: 80%;
+    padding-block: 5px;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .habit-bold {
@@ -223,6 +231,11 @@ header {
     margin: 10px;
 }
 
+.icon-white {
+    color: var(--thyme-white);
+
+}
+
 .one-line-form {
     margin-top: 50px;
     display: flex;
@@ -232,6 +245,8 @@ header {
 
 .transparent-icon-button {
     background-color: transparent;
+    padding: 0px;
+    margin: 5px;
 }
 
 .header-right-buttons {
@@ -333,111 +348,6 @@ a:hover,
     font-weight: 500;
 }
 
-
-/* ---------------------------- */
-/* MOBILE
-/* ---------------------------- */
-@media only screen and (max-width: 767px) {
-    * {
-        font-size: var(--thyme-font-small);
-    }
-    h1 {
-        font-size: var(--thyme-font-large);
-    }   
-    h2 {
-        font-size: var(--thyme-font-large);
-    }
-    h3 {
-        font-size: var(--thyme-font-medium);
-    }
-    header {
-        justify-content: center;
-    }
-
-    textarea {
-        width: 90%;
-        margin-inline: 20px;
-    }
-
-    button,
-    #submit {
-    margin: 0px;
-    }
-
-    .chat-answer {
-        padding: 0px;
-    }
-
-    .home-titles {
-        height: 100%;
-        width: 80%;
-        display: flex;
-        flex-direction: column;
-        margin-block: 50px;
-        margin-inline: 5px;
-    }
-
-    .home-main-title, 
-    .home-secondary-title,
-    .home-secondary-title-italicized, 
-    .invite-to-beta-testing, 
-    .icon-button {
-        margin-inline: 0px;
-        margin-block: 15px;
-    }
-
-    .home-secondary-title, 
-    .home-secondary-title-italicized {
-        font-size: var(--thyme-font-medium); 
-    }
-
-    button,
-    .icon-button,
-    #submit {
-        margin: 15px;
-        font-size: var(--thyme-font-smallest);
-    }
-
-    .header-thyme-button,
-    .transparent-icon-button {
-        padding: 5px;
-        font-size: var(--thyme-font-smallest);
-        color: var(--thyme-lighter-grey)
-    }
-
-    .header-thyme-button {
-        margin-right: 10px;
-    }
-
-    .invite-to-beta-testing,
-    .invite-to-beta-testing > p{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        align-content: center;
-        align-self: center;
-    }
-
-    .invite-to-beta-testing > p, a {
-        font-size: var(--thyme-font-smallest);
-    }
-
-    .left-justified {
-        margin: 20px;
-        padding: 20px;
-    }
-
-    .one-line-form {
-        width: 95vw;
-    }
-
-    .textareafield {
-        padding: 5px;
-        margin: 10px;
-    }
-
-}
-
 /* Tooltip container */
 .tooltip {
     position: relative;
@@ -477,3 +387,106 @@ a:hover,
     visibility: visible;
     opacity: 1;
   }
+
+
+/* ---------------------------- */
+/* MOBILE
+/* ---------------------------- */
+@media only screen and (max-width: 668px) {
+    * {
+        font-size: var(--thyme-font-smallest); 
+    }
+
+    header {
+        justify-content: center;
+    }
+
+    textarea {
+        width: 90%;
+        margin-inline: 20px;
+    }
+
+    .chat-answer {
+        padding: 0px;
+    }
+
+    .home-titles {
+        height: 100%;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        margin-block: 50px;
+        margin-inline: 5px;
+    }
+
+    .home-main-title, 
+    .home-secondary-title,
+    .home-secondary-title-italicized, 
+    .invite-to-beta-testing, 
+    .icon-button {
+        margin-inline: 20px;
+        margin-block: 15px;
+    }
+
+    .home-secondary-title, 
+    .home-secondary-title-italicized {
+        font-size: var(--thyme-font-medium); 
+    }
+
+    button,
+    #submit {
+        margin: 10px;
+        padding: 10px;
+        padding-inline: 15px;
+    }
+    .icon-button {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    .transparent-icon-button {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .header-thyme-button,
+    .transparent-icon-button {
+        padding: 5px;
+        font-size: var(--thyme-font-smallest);
+        color: var(--thyme-white)
+    }
+
+    .header-thyme-button {
+        margin-right: 10px;
+    }
+
+    .invite-to-beta-testing,
+    .invite-to-beta-testing > p{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: center;
+        align-self: center;
+    }
+
+    .invite-to-beta-testing > p, a {
+        font-size: var(--thyme-font-smallest);
+    }
+
+    .left-justified {
+        margin: 20px;
+        padding: 20px;
+       
+    }
+
+    .one-line-form {
+        width: 95vw;
+    }
+
+    .textareafield {
+        padding: 5px;
+        margin: 10px;
+    }
+
+}
+
