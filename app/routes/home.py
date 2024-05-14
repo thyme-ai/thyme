@@ -31,7 +31,6 @@ def assistant(answer = None):
   answer = None
   if form.validate_on_submit():
       answer = handleAnswerQuestion(form)
-      return redirect(url_for("home.assistant"))
   return render_template("home.html", title="Home", form=form, form_type="one-line-form", justified_type="centered", answer=answer)
 
 
@@ -68,7 +67,6 @@ def handleAnswerQuestion(form):
     messages = answer_question(prompt, user)
     save_chat(messages, user)
     answer = messages[len(messages) - 1]['content']
-    form.question.data = None
     return answer
 
 
