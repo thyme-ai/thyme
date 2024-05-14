@@ -49,19 +49,21 @@ def delete(habit_id):
 # ------------------------
 @bp.route("/addHabitsToCalendar", methods=["GET", "POST"])
 def addHabitsToCalendar():
-        user = get_user_from_thyme(session['email'])
-        habits = get_habits()
-        habit_strings = map(lambda habit: f"called {habit.name} for {habit.duration_min} min at {habit.ideal_start.strftime('%-I:%M %p')}", habits)
-        answer_strings = map(lambda habit: f"{habit.name}", habits)
+    user = get_user_from_thyme(session['email'])
+    habits = get_habits()
+    habit_strings = map(lambda habit: f"called {habit.name} for {habit.duration_min} min at {habit.ideal_start.strftime('%-I:%M %p')}", habits)
+    answer_strings = map(lambda habit: f"{habit.name}", habits)
 
-        for habit_string in habit_strings:
-            prompt = f"Add an event to my calendar that repeats every weekday {habit_string}"
-            answer_question(prompt, user) 
+    for habit_string in habit_strings:
+        prompt = f"Add an event to my calendar that repeats every weekday {habit_string}"
+        answer_question(prompt, user) 
             
-        answer = f"""
-        I added these habits to your calendar: {(", ").join(answer_strings)}. 
-        You might need to refresh Google Calendar to see them. """
-        return redirect(url_for("home.assistant", answer=answer))
+    answer = f"""
+    I added these habits to your calendar: {(", ").join(answer_strings)}. 
+    You might need to refresh the Google Calendar page or reopen the 
+    Google Calendar App to see them."""
+    
+    return redirect(url_for("home.assistant", answer=answer))
 
 
 # ------------------------
