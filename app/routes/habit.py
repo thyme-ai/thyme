@@ -16,7 +16,6 @@ bp = Blueprint("habit", __name__, url_prefix="/habit")
 @bp.route("/add", methods=["GET", "POST"])
 def add():
     form = AddHabitForm()
-
     if form.validate_on_submit():
        handle_add_habit(form)
        return redirect(url_for("home.preferences"))
@@ -28,12 +27,12 @@ def add():
 @bp.route("/update/<habit_id>", methods=["GET", "POST"])
 def update(habit_id):
     form = UpdateHabitForm()
-    habit = get_habit(habit_id)
-    prepopulate_form(form, habit)
-
     if form.validate_on_submit():
         handle_update_habit(form, habit_id)
         return redirect(url_for("home.preferences"))
+    
+    habit = get_habit(habit_id)
+    prepopulate_form(form, habit)
     return render_template("/components/forms/form.html", title=habit.name,  form=form, justified_type="left-justified")
 
 # -----------
@@ -89,13 +88,12 @@ def handle_delete_habit(habit_id):
 
 def handle_update_habit(form, habit_id):
     habit = get_habit(habit_id)
+    print('FORM', form.data )
     for field in form._fields.keys():
-            data = form.data[field]
+            data = getattr(getattr(form, field), 'data')
             if data != None and field != 'submit' and field != 'csrf_token' :
+                print('attribute set', data)
                 setattr(habit, field, data)
-                db.session.execute(
-                    db.select(getattr(Habit, field))
-                    .where(Habit.id == habit.id)).scalar_one()
     db.session.commit()
 
 

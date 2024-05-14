@@ -28,12 +28,10 @@ def assistant(answer = None):
       return redirect(url_for("home.index"))
   
   form = AskQuestionForm()
+  answer = None
   if form.validate_on_submit():
-    prompt = form.question.data
-    user = get_user_from_thyme(session['email'])
-    messages = answer_question(prompt, user)
-    save_chat(messages, user)
-    answer = messages[len(messages) - 1]['content']
+      answer = handleAnswerQuestion(form)
+      return redirect(url_for("home.assistant"))
   return render_template("home.html", title="Home", form=form, form_type="one-line-form", justified_type="centered", answer=answer)
 
 
@@ -53,18 +51,27 @@ def preferences():
 @bp.route("/updatePreferences", methods=["GET", "POST"])
 def updatePreferences():
     form = UpdatePreferencesForm()
-    user = get_user_from_thyme(session['email'])
-    prepopulate_form(form, user)
-
     if form.validate_on_submit():
        handleUpdatePreferences(form)
        return redirect(url_for("home.preferences"))
+    user = get_user_from_thyme(session['email'])
+    prepopulate_form(form, user)
     return render_template("/components/forms/form.html", title="Update Daily Schedule",  form=form, justified_type="left-justified")
 
 
 # --------------------
 # EVENT HANDLERS
 # --------------------
+def handleAnswerQuestion(form):
+    prompt = form.question.data
+    user = get_user_from_thyme(session['email'])
+    messages = answer_question(prompt, user)
+    save_chat(messages, user)
+    answer = messages[len(messages) - 1]['content']
+    form.question.data = None
+    return answer
+
+
 def handleUpdatePreferences(form):
     user = get_user_from_thyme(session['email'])
  
