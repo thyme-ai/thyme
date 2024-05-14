@@ -2,7 +2,7 @@
 {% block content %}
 {% include "components/headers/logged_in.html" %}
     <div class="centered-in-x-and-y">
-        <div class="left-justfied">
+        <section class="centered-in-x-and-y">
             <h2>Daily Schedule</h2>        
             <ul>
                 <li>Name: {{ user.first_name }} {{ user.last_name }}</li>
@@ -14,27 +14,35 @@
             <a href="{{ url_for('home.updatePreferences') }}">
                 <button>Update</button>
             </a>
+        </section>
+        <section class="centered-in-x-and-y">
             <h2>My Habits</h2>
-            <h4>Personal</h4>        
-            <ul>
-                {% for habit in habits %}
-                {% if habit.personal %}
-                <li>{% include "components/habit.html" %}</li>
-                {% endif %}
-                {% endfor %}
-            </ul>
-            <h4>Work</h4>        
-            <ul>
-                {% for habit in habits %}
-                {% if not habit.personal%}
-                <li>{% include "components/habit.html" %}</li>
-                {% endif %}
-                {% endfor %}
-            </ul>
-            <a href="{{ url_for('habit.add') }}">
-                <button>Add Habit</button>
-            </a> 
-            {% include "/components/buttons/add_habits_to_google_calendar.html" %}    
-        </div>
-        </div>
+            <section class="centered-in-x-and-y">
+                <h3>Personal</h3>        
+                <ul>
+                    {% for habit in habits %}
+                    {% if habit.personal %}
+                    <li>{% include "components/habit.html" %}</li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+                {% include "components/buttons/add_habit.html" %}
+
+            </section>
+            <section class="centered-in-x-and-y">
+                <h3>Work</h3>        
+                <ul>
+                    {% for habit in habits %}
+                    {% if not habit.personal%}
+                    <li>{% include "components/habit.html" %}</li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+                {% include "components/buttons/add_habit.html" %}
+            </section>
+        </section>
+        <section class="centered-in-x-and-y">
+            {% include "/components/buttons/add_habits_to_gcal.html" %}    
+        </section>     
+    </div>
 {% endblock %}
