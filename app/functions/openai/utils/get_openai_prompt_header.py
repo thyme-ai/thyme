@@ -31,16 +31,18 @@ def get_openai_prompt_header(user):
     ASSUMPTIONS_FOR_CREATING_EVENTS = f"""
     Assumptions:
     1. If the user did not specify a start time, did not specify a date, 
-       or htey user says something like {AVOID_CONFLICTS_PHRASES}
+       or the user says something like {AVOID_CONFLICTS_PHRASES}
        call the "insert_event_while_avoiding_conflicts" function.
     2. If the user says something like {CREATE_EVENT_PHRASES} and the user specified the date, 
        start time, and duration of the event, make a call to the "insert_event" function. 
     3. If the user did not specify a duration, assume the event is {DEFAULT_EVENT_DURATION} long 
-    4. If the prompt contains a request for ideas or suggestions for an event, add your suggestions to 
-       the description of the event as a numbered list.
-    5. Format the properties "start.dateTime" and "end.dateTime" as datetimes 
+    4. Format the properties "start.dateTime" and "end.dateTime" as datetimes 
        in the following format: {DATETIME_FORMAT}
-    6. Make the event "summary" property start with an emogee that describes the event 
+    5. If you create an event, make the "summary" property of the event
+       start with an emogee that describes the event 
+    6. If you create an event and only if the users asks you to suggests ideas in the "description"
+       of the event, then fill the "description" based on what the user is asking for. Otherwise,
+       leave the "description" of the event blank.
     """
 
 
