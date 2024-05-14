@@ -1,38 +1,40 @@
 {% extends "base.html" %}
 {% block content %}
 {% include "components/headers/logged_in.html" %}
-    <div class="left-justified">
-        <h3>Daily Schedule</h3>        
-        <ul>
-            <li>Name: {{ user.first_name }} {{ user.last_name }}</li>
-            <li>Email: {{ user.email }}</li>
-            <li>Timezone: {{ user.timezone }}</li>
-            <li>Wake Time: {{user.wake_time.strftime('%-I:%M %p')}}</li>
-            <li>Sleep Time: {{user.sleep_time.strftime('%-I:%M %p')}}</li>
-        </ul>
-        <a href="{{ url_for('home.updatePreferences') }}">
-            <button>Update</button>
-        </a>
-        <h3>My Habits</h3>
-        <h4>Personal</h4>        
-        <ul>
-            {% for habit in habits %}
-            {% if habit.personal %}
-            <li>{% include "components/habit.html" %}</li>
-            {% endif %}
-            {% endfor %}
-        </ul>
-        <h4>Work</h4>        
-        <ul>
-            {% for habit in habits %}
-            {% if not habit.personal%}
-            <li>{% include "components/habit.html" %}</li>
-            {% endif %}
-            {% endfor %}
-        </ul>
-        <a href="{{ url_for('habit.add') }}">
-            <button>Add Habit</button>
-        </a> 
-        {% include "/components/buttons/add_habits_to_google_calendar.html" %}    
-    </div>
+    <div class="centered-in-x-and-y">
+        <div class="left-justfied">
+            <h2>Daily Schedule</h2>        
+            <ul>
+                <li>Name: {{ user.first_name }} {{ user.last_name }}</li>
+                <li>Email: {{ user.email }}</li>
+                <li>Timezone: {{ user.timezone }}</li>
+                <li>Wake Time: {{user.wake_time.strftime('%-I:%M %p')}}</li>
+                <li>Sleep Time: {{user.sleep_time.strftime('%-I:%M %p')}}</li>
+            </ul>
+            <a href="{{ url_for('home.updatePreferences') }}">
+                <button>Update</button>
+            </a>
+            <h2>My Habits</h2>
+            <h4>Personal</h4>        
+            <ul>
+                {% for habit in habits %}
+                {% if habit.personal %}
+                <li>{% include "components/habit.html" %}</li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            <h4>Work</h4>        
+            <ul>
+                {% for habit in habits %}
+                {% if not habit.personal%}
+                <li>{% include "components/habit.html" %}</li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            <a href="{{ url_for('habit.add') }}">
+                <button>Add Habit</button>
+            </a> 
+            {% include "/components/buttons/add_habits_to_google_calendar.html" %}    
+        </div>
+        </div>
 {% endblock %}
