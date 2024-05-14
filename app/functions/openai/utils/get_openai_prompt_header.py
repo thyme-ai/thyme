@@ -43,13 +43,13 @@ def get_openai_prompt_header(user):
 
     7. If you create an event and only if the users asks you to suggests ideas for the location, 
        or asks for "best places or locations for something, make the "description" of the event 
-       a list of 5 ideas (unless the specify otherwise) 
-       for where to hold the event with a link to the Google Maps page for the suggested location.
+       a list of 5 ideas (unless the user specifies a different number) for where to hold the 
+       event.
        
     8. If you create an event and only if the users asks you to suggests ideas for an agenda,
        topics to discuss, or activities to do during the event, make the "description" of the 
-       event a list of 5 ideas (unless the specify otherwise) with links to the top Google Search
-       result related to the idea. 
+       event a list of 5 ideas (unless the user specifies a different number) with links to 
+       the top Google Search result related to the idea. 
        Here is an example of how to format the suggested idea: 
        "1. Build a Balloon Car - Fun balloon powered car activity for kids 
        https://www.sciencebuddies.org/stem-activities/balloon-car"
