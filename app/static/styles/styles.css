@@ -187,7 +187,7 @@ textarea {
 
 .icon {
     width: 20px;
-    padding-inline: 5px;
+    padding-right: 10px;
 }
 
 .home-secondary-title-italicized {
@@ -201,8 +201,8 @@ textarea {
     flex-direction: row;
     align-items: center;
     align-content: center;
-    padding-inline: 0px;
-    margin-inline: 0px;
+    padding-inline: 5px;
+    margin-inline: 4px;
 }
 
 header {
