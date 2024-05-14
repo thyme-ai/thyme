@@ -28,7 +28,6 @@ def assistant(answer = None):
       return redirect(url_for("home.index"))
   
   form = AskQuestionForm()
-  answer = None
   if form.validate_on_submit():
       answer = handleAnswerQuestion(form)
   return render_template("home.html", title="Home", form=form, form_type="one-line-form", justified_type="centered", answer=answer)
