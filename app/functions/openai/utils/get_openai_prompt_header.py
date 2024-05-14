@@ -40,9 +40,26 @@ def get_openai_prompt_header(user):
        in the following format: {DATETIME_FORMAT}
     5. If you create an event, make the "summary" property of the event
        start with an emogee that describes the event 
-    6. If you create an event and only if the users asks you to suggests ideas in the "description"
-       of the event, then fill the "description" based on what the user is asking for. Otherwise,
-       leave the "description" of the event blank.
+    7. If you create an event and only if the users asks you to suggests ideas for the location 
+       of the event, make the "description" of the event a list of 5 ideas (unless the specify otherwise) 
+       for where to hold the event with a link to the Google Maps page for the location. 
+       Here is an example of a suggested location: 
+       "1. Ocean Beach - Great waves and stunning views https://maps.app.goo.gl/JvM8cYptFS1VWH8u8"
+
+    8. If you create an event and only if the users asks you to suggests ideas for an agenda,
+       topics to discuss, or activities to do during the event, make the "description" of the 
+       event a list of 5 ideas (unless the specify otherwise) with links to the top Google Search
+       result related to the idea. Here is an example of a suggested idea: 
+       "1. Build a Balloon Car - Fun balloon powered car activity for kids 
+       https://www.sciencebuddies.org/stem-activities/balloon-car"
+
+    9. Check that all links added to the "description" of an event are valid webpages
+       and they do not contain a 404, Page not Found, or other error message. 
+    
+    10. If you create an event and the user does not ask for any suggestions for locations or 
+       ideas for the event, just leave the "description" of the event blank. 
+
+    
     """
 
 
