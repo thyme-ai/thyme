@@ -1,13 +1,15 @@
-<div class="{{justified_type}}">
-  {% if title != "Home" %}
-  <h1>{{ title }}</h1>
-  {% endif %}
-  <form method="post" action={{ path }}>
-      {{ form.hidden_tag() }}
-      <table>
-          <tbody class="{{ form_type if form_type }}">
-            {% include "/components/forms/form_fields.html" %}
-          </tbody>
-      </table>
-  </form>
+<div class="centered-in-x-and-y">
+  <div class="{{justified_type}}">
+    {% if title != "Home" %}
+    <h1>{{ title }}</h1>
+    {% endif %}
+    <form method="post" action={{ path }}>
+        {{ form.hidden_tag() }}
+        <table>
+            <tbody class="{{ form_type if form_type }}">
+              {% include "/components/forms/form_fields.html" %}
+            </tbody>
+        </table>
+    </form>
+  </div>
 </div>
