@@ -26,8 +26,8 @@ def get_suggested_start_time(ideal_start, ideal_end):
             start = starts[i]
             end = ends[i]
             print(f'Checking to see if {get_easy_read_time(start)} works...')
-            range_in_awake_range = range_in_range(start, end, awake_range['start'], awake_range['end'])
-            range_in_busy_ranges = range_in_ranges(busy_ranges, start, end)
+            range_in_awake_range = start_or_end_in_range(start, end, awake_range['start'], awake_range['end'])
+            range_in_busy_ranges = start_or_end_in_ranges(start, end, busy_ranges)
 
             if range_in_awake_range and not range_in_busy_ranges: 
                 best_start_time = start
@@ -94,22 +94,14 @@ def get_awake_range(dt):
 # ---------------
 # HELPERS
 # ---------------
-def range_in_ranges(ranges, target_start, target_end):
+def start_or_end_in_ranges(start, end, ranges):
     for range in ranges: 
-        if range_in_range(target_start, target_end, range['start'], range['end']):
+        if start_or_end_in_range(start, end, range['start'], range['end']):
             return True
     return False
 
 
-def range_in_range(time_start, time_end, range_start, range_end):
-    start_in_range = start_time_in_range(time_start, range_start, range_end)
-    end_in_range = end_time_in_range(time_end, range_start, range_end)
+def start_or_end_in_range(start, end, range_start, range_end):
+    start_in_range = (start >= range_start and start < range_end)
+    end_in_range = (end > range_start and end <= range_end)
     return start_in_range or end_in_range
-
-
-def start_time_in_range(start_time, range_start, range_end):
-    return start_time >= range_start and start_time < range_end
-
-
-def end_time_in_range(end_time, range_start, range_end):
-    return end_time > range_start and end_time <= range_end
