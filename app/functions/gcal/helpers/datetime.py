@@ -42,9 +42,6 @@ def get_timezone_object_from_string(timezone_string):
     return timezone(timedelta(hours=hours_from_utc))                 # hours to timezone object
 
 
-# ---------------------
-# EASY TO READ STRINGS 
-# ----------------------
 def get_easy_read_time(dt):
     if type(dt) is str:
         dt = datetime.strptime(dt, DATETIME_FORMAT)
