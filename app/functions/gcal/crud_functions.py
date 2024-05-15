@@ -8,7 +8,11 @@ from app.constants.responses import (
 )
 from app.functions.gcal.utils.build_google_api_service import build_google_api_service
 from app.functions.gcal.helpers.datetime import get_datetime_string, get_datetime_object
-from app.functions.thyme.helpers.conflict_avoidance import get_suggested_start_time
+from app.functions.thyme.helpers.conflict_avoidance import (
+    get_suggested_start_time, 
+    get_busy_ranges_within_awake_range, 
+    get_awake_range
+)
 from app.functions.thyme.utils.get_easy_read_time import get_easy_read_time
 
 
@@ -27,7 +31,9 @@ def insert_event_while_avoiding_conflicts(args):
     duration = ideal_end - ideal_start
 
     # Get suggested start time for event, within user's awake hours & without conflicts
-    suggested_start = get_suggested_start_time(ideal_start, ideal_end)
+    busy_ranges = get_busy_ranges_within_awake_range(ideal_start)
+    awake_range = get_awake_range(ideal_start)
+    suggested_start = get_suggested_start_time(ideal_start, ideal_end, awake_range, busy_ranges)
     if not suggested_start:
         return CREATE_AND_AVOID_CONFLICTS_FAIL
     

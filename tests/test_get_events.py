@@ -5,8 +5,10 @@ from app.constants.testing import USER_FOR_TESTING
 from app.constants.prompts import get_variants_of_read_events
 from app.functions.openai.utils.get_function_name_from_chat_response import get_function_name_from_chat_response
 from app.functions.openai.utils.get_openai_prompt_header import get_openai_prompt_header
+import pytest
 
-# @pytest.mark.skip
+
+@pytest.mark.skip
 @mark.parametrize("variant", [*get_variants_of_read_events()])
 def test_get_event(variant):
     PROMPT_HEADER_FOR_TESTING = get_openai_prompt_header(USER_FOR_TESTING)

@@ -9,12 +9,14 @@ load_dotenv()
 def test_api_key_configuration():
     assert 'OPENAI_API_KEY' in os.environ, "API key not configured"
 
+
 @pytest.mark.skip
 def test_openai_api_request():
     prompt = "Why is the sky blue?"
     messages = [{"content": prompt, "role": "user"}]
     response = chat_completion_request(messages)
     assert response is not None, "Failed to receive response from OpenAI API"
+
 
 @pytest.mark.skip
 def test_openai_api_error_handling():

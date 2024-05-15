@@ -7,6 +7,7 @@ from app.functions.openai.utils.get_function_name_from_chat_response import get_
 from app.functions.openai.utils.get_openai_prompt_header import get_openai_prompt_header
 import pytest
 
+
 @pytest.mark.skip
 @mark.parametrize("variant", [*get_variants_of_create_event_with_date_and_time()])
 def test_create_event(variant):
@@ -30,4 +31,3 @@ def test_create_event_while_avoiding_conflicts_without_time(variant):
     function_name = get_function_name_from_chat_response(result)
     print(variant)
     assert function_name == 'insert_event_while_avoiding_conflicts'
-
