@@ -8,13 +8,10 @@ from app.functions.gcal.helpers.datetime import (
     get_users_current_timestamp_and_timezone
 )
 from app.functions.thyme.helpers.user import get_user_from_thyme
-from app.functions.thyme.utils.get_easy_read_time import get_easy_read_time
+from app.functions.gcal.helpers.datetime import get_easy_read_time
 from flask import session
 
-def get_suggested_start_time(ideal_start, ideal_end):
-    busy_ranges = get_busy_ranges_within_awake_range(ideal_start)
-    awake_range = get_awake_range(ideal_start)
-
+def get_suggested_start_time(ideal_start, ideal_end, awake_range, busy_ranges):
     best_start_time = None
     delta = timedelta(minutes=0)
 
@@ -41,9 +38,9 @@ def get_suggested_start_time(ideal_start, ideal_end):
 # --------------------
 # AWAKE & BUSY RANGES
 # ---------------------
-def get_busy_ranges_within_awake_range(day):
+def get_busy_ranges_within_awake_range(dt):
     user = get_user_from_thyme(session['email'])
-    awake_range = get_awake_range(day)
+    awake_range = get_awake_range(dt)
 
     # convert awake ranges to strings for gcal request
     awake_range_start = get_datetime_string(awake_range['start'])

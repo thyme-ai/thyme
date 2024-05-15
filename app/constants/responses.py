@@ -1,6 +1,5 @@
 from app.constants.general import APOLOGY
-from app.functions.thyme.utils.get_easy_read_time import get_easy_read_time
-
+from app.functions.gcal.helpers.datetime import get_easy_read_time
 
 # -----------
 # FAIL 

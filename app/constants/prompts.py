@@ -6,10 +6,11 @@ WITH_DATE = f"called {SUMMARY} for {DURATION} {DAY}"
 # --------------------------------------------------------------------------------
 # Uncomment the shorter versions of EVENT & CREATE to run new tests more quickly
 # --------------------------------------------------------------------------------
-# EVENT = ["an event"]
-# CREATE = ["Create"]
-EVENT = ["an event", "a meeting", "a block", "a meeting block"]
-CREATE = ["create", "add", "book", "insert", "schedule"]
+EVENT = ["an event"]
+CREATE = ["Create"]
+# EVENT = ["an event", "a meeting", "a block", "a meeting block"]
+# CREATE = ["create", "add", "book", "insert", "schedule"]
+
 SOME_DAY = ["today", "tomorrow", "Tuesday", "this Tuesday", "on the 15th"]
 # ----------------------------------------------------
 
@@ -23,12 +24,14 @@ AVOID_BEFORE = [
     "Find an open time for",
     "Find the best time for",
     "Find an available time for",
+    "Find some time on my calendar for"
 ]
 
 GET_EVENTS = [
     "What's on my calendar",
+    "What meetings are on my calendar",
     "What do I have scheduled",
-    "What do I have going on"
+    "What do I have going on",
 ]
 
 
