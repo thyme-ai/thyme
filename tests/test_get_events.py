@@ -8,7 +8,7 @@ from app.functions.openai.utils.get_openai_prompt_header import get_openai_promp
 import pytest
 
 
-@pytest.mark.skip
+# @pytest.mark.skip
 @mark.parametrize("variant", [*get_variants_of_read_events()])
 def test_get_event(variant):
     PROMPT_HEADER_FOR_TESTING = get_openai_prompt_header(USER_FOR_TESTING)

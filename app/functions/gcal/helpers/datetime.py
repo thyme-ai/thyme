@@ -39,4 +39,13 @@ def get_timezone_object_from_string(timezone_string):
     timezone_dt = pytz.timezone(timezone_string)                     # string to timezone
     utc_offset = timezone_dt.utcoffset(pytz.datetime.datetime.now()) # timezone to utc offset 
     hours_from_utc = utc_offset.total_seconds() / SECONDS_PER_HOUR   # utc offset to hours
-    return timezone(timedelta(hours=hours_from_utc))        # hours to timezone object
+    return timezone(timedelta(hours=hours_from_utc))                 # hours to timezone object
+
+
+# ---------------------
+# EASY TO READ STRINGS 
+# ----------------------
+def get_easy_read_time(dt):
+    if type(dt) is str:
+        dt = datetime.strptime(dt, DATETIME_FORMAT)
+    return  datetime.strftime(dt, "%I %p on %m/%d").lstrip("0")

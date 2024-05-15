@@ -17,7 +17,6 @@
         </section>
         <section class="centered-in-x-and-y">
             <h2>My Habits</h2>
-            <section class="centered-in-x-and-y">
                 <h3>Personal</h3>        
                 <ul>
                     {% for habit in habits %}
@@ -26,10 +25,6 @@
                     {% endif %}
                     {% endfor %}
                 </ul>
-                {% include "components/buttons/add_habit.html" %}
-
-            </section>
-            <section class="centered-in-x-and-y">
                 <h3>Work</h3>        
                 <ul>
                     {% for habit in habits %}
@@ -39,7 +34,6 @@
                     {% endfor %}
                 </ul>
                 {% include "components/buttons/add_habit.html" %}
-            </section>
         </section>
         <section class="centered-in-x-and-y">
             {% include "/components/buttons/add_habits_to_gcal.html" %}    

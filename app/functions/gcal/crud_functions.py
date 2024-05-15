@@ -13,7 +13,7 @@ from app.functions.thyme.helpers.conflict_avoidance import (
     get_busy_ranges_within_awake_range, 
     get_awake_range
 )
-from app.functions.thyme.utils.get_easy_read_time import get_easy_read_time
+from app.functions.gcal.helpers.datetime import get_easy_read_time
 
 
 def insert_event(args):
@@ -58,10 +58,13 @@ def list_events(args):
     events = service.events().list(**params).execute()['items']
 
     if events:
-        event_strings = map(lambda e:f"{e.summary} at {get_easy_read_time(e.start.dateTime)}", events)
+        event_strings = []
+        for event in events: 
+            if event['status'] == 'confirmed':
+                event_strings.append(f"{event['summary']} at { get_easy_read_time(event['start']['dateTime']) }")
+        
         return f"Here are the events on your calendar: {(", ").join(event_strings)}"
-    else:
-        return READ_FAIL
+    return READ_FAIL
 
 
 # ------------------------

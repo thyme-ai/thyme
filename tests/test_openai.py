@@ -5,12 +5,12 @@ import pytest
 
 load_dotenv()
 
-@pytest.mark.skip
+# @pytest.mark.skip
 def test_api_key_configuration():
     assert 'OPENAI_API_KEY' in os.environ, "API key not configured"
 
 
-@pytest.mark.skip
+# @pytest.mark.skip
 def test_openai_api_request():
     prompt = "Why is the sky blue?"
     messages = [{"content": prompt, "role": "user"}]
@@ -18,7 +18,7 @@ def test_openai_api_request():
     assert response is not None, "Failed to receive response from OpenAI API"
 
 
-@pytest.mark.skip
+# @pytest.mark.skip
 def test_openai_api_error_handling():
     mock_rate_limit_error_response = "'error': 'Rate limit exceeded'"
     messages = [{"content": mock_rate_limit_error_response, "role": "assistant"}]

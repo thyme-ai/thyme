@@ -8,7 +8,7 @@ from app.functions.gcal.helpers.datetime import (
     get_users_current_timestamp_and_timezone
 )
 from app.functions.thyme.helpers.user import get_user_from_thyme
-from app.functions.thyme.utils.get_easy_read_time import get_easy_read_time
+from app.functions.gcal.helpers.datetime import get_easy_read_time
 from flask import session
 
 def get_suggested_start_time(ideal_start, ideal_end, awake_range, busy_ranges):
