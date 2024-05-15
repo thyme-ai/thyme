@@ -7,9 +7,8 @@ from app.constants.prompts import (
 
 def get_openai_prompt_header(user):
     now = get_users_current_timestamp_and_timezone(user)
-
     CREATE_EVENT_PHRASES = get_variants_of_create_event_with_date_and_time()
-    CREATE_EVENT_WHILE_AVOIDING_CONFLICTS_PHRASES = get_variants_of_create_event_while_avoiding_conflicts()
+   #  CREATE_EVENT_WHILE_AVOIDING_CONFLICTS_PHRASES = get_variants_of_create_event_while_avoiding_conflicts()
     LIST_EVENTS_PHRASES = get_variants_of_read_events()
 
     UNSUPPORTED_FEATURES_PHRASES = """
@@ -20,8 +19,7 @@ def get_openai_prompt_header(user):
 
     ASSUMPTIONS_FOR_CREATING_EVENTS = f"""
     Assumptions:
-    1. Format the properties "start.dateTime" and "end.dateTime" as datetimes 
-       in the following format: {DATETIME_FORMAT}
+    1. Format the properties "start.dateTime" and "end.dateTime" in the following format: {DATETIME_FORMAT}
 
     2. If the user did not specify a duration, assume the event is {DEFAULT_EVENT_DURATION} long 
 
@@ -73,18 +71,22 @@ def get_openai_prompt_header(user):
     1. If the user requests something similar to any of the following phrases, 
     {UNSUPPORTED_FEATURES_PHRASES}, don't call and functions and tell the user, {APOLOGY}
 
-    2. If the user did not specify a start time, did not specify a date, or the user says
-    something like {CREATE_EVENT_WHILE_AVOIDING_CONFLICTS_PHRASES}, call the "insert_event_while_avoiding_conflicts" function
+    2. If the user wants to add an event to their calendar and they do not specify a start time
+    for the event call the "insert_event_while_avoiding_conflicts" function
+    and follow the "ASSUMPTIONS FOR CREATING EVENTS" specified above.
+
+    3. If the user wants to add an event to their calendar and they say any of the following 
+    phrases {LIST_EVENTS_PHRASES}, call the "insert_event_while_avoiding_conflicts" function
     and follow the "ASSUMPTIONS FOR CREATING EVENTS" specified above.
     
-    3. If the user says something like {CREATE_EVENT_PHRASES} and the user specified the date, 
+    4. If the user says something like {CREATE_EVENT_PHRASES} and the user specified the date, 
     start time, and duration of the event, make a call to the "insert_event" function
     and follow the "ASSUMPTIONS FOR CREATING EVENTS" specified above.
 
-    4. If the prompt contains any phrases similar to the following phrases: {LIST_EVENTS_PHRASES}, 
+    5. If the prompt contains any phrases similar to the following phrases: {LIST_EVENTS_PHRASES}, 
     respond by calling the list_events function.
 
-    5. If no functions are called and the user asks a general question not related to their calendar, 
+    6. If no functions are called and the user asks a general question not related to their calendar, 
     just answer the question normally in an easy to read format. 
     """
 
