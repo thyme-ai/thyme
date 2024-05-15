@@ -2,7 +2,8 @@ from app.constants.general import GOOGLE_CLIENT_CONFIG, SCOPES
 from flask import Blueprint, redirect, request, session, url_for
 import requests
 import google_auth_oauthlib.flow
-from app.functions.gcal.helpers.user import credentials_to_dict, get_email_from_google, get_user_from_google, get_timezone_from_google
+from app.functions.gcal.helpers.user import credentials_to_dict, get_email_from_google, get_user_from_google
+from app.functions.gcal.helpers.datetime import get_timezone_from_google
 from app.functions.thyme.helpers.user import create_user, get_user_from_thyme
 bp = Blueprint("session", __name__, url_prefix="/session")
 

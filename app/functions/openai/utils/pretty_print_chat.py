@@ -10,7 +10,8 @@ def pretty_print_chat(messages):
     
     for message in messages:
         if message["role"] == "system":
-            print(colored(f"system: {message['content']}\n", role_to_color[message["role"]]))
+            # print(colored(f"system: {message['content']}\n", role_to_color[message["role"]]))
+            print(colored(f"system: PROMPT HEADER\n", role_to_color[message["role"]]))
         elif message["role"] == "user":
             print(colored(f"user: {message['content']}\n", role_to_color[message["role"]]))
         elif message["role"] == "assistant" and message.get("function_call"):
