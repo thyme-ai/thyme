@@ -45,7 +45,7 @@ def get_variants_of_create_event_while_avoiding_conflicts():
     create_events = get_variants_of_create_event_with_date_only()  
     avoid_after = get_prompt_variants(verbs=create_events, nouns=AVOID_AFTER, middle=' and ')
     avoid_before = get_prompt_variants(verbs=AVOID_BEFORE, nouns=EVENT, tail=WITH_DATE)
-    return [*avoid_after, *avoid_before]
+    return [*create_events, *avoid_after, *avoid_before]
 
 def get_variants_of_read_events():
     return get_prompt_variants(verbs=GET_EVENTS, nouns=SOME_DAY)

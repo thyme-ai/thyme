@@ -45,4 +45,4 @@ def get_timezone_object_from_string(timezone_string):
 def get_easy_read_time(dt):
     if type(dt) is str:
         dt = datetime.strptime(dt, DATETIME_FORMAT)
-    return  datetime.strftime(dt, "%I %p on %m/%d").lstrip("0")
+    return  datetime.strftime(dt, "%I:%M %p on %m/%d").lstrip("0")
