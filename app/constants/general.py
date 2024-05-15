@@ -34,5 +34,5 @@ SCOPES = [
 APOLOGY = "Sorry, I'm not able to do that yet."
 DEFAULT_EVENT_DURATION = "1 hour"
 MAX_DELTA = timedelta(minutes=12*60) # when suggesting available times for events 
-INCREMENT = timedelta(minutes=30)    # when suggesting available times for events 
+INCREMENT = timedelta(minutes=15)    # when suggesting available times for events 
 TOOLS = get_tools()                  # 'tools' (i.e. functions) that Open AI can use to create arguments for function calls

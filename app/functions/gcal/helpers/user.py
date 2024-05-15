@@ -1,8 +1,8 @@
+from app.functions.gcal.helpers.datetime import get_timezone_object_from_string
 from google.auth.transport.requests import AuthorizedSession
-from datetime import datetime, timezone, timedelta
+from datetime import datetime
 from flask import session, redirect, url_for
 import google.oauth2.credentials
-import pytz
 
 SECONDS_PER_HOUR = 3600
 
@@ -36,29 +36,4 @@ def get_email_from_google(credentials):
 
 def get_user_from_google(credentials):
     user =  AuthorizedSession(credentials).get('https://www.googleapis.com/oauth2/v3/userinfo#profile').json()
-    return user
-
-
-def get_timezone_from_google(credentials): 
-   timezone_object = AuthorizedSession(credentials).get('https://www.googleapis.com/calendar/v3/users/me/settings/timezone').json()
-   return timezone_object['value']
-
-
-# -----------------------------------------------
-# CONVERT TIMEZONE TO GOOGLE CALENDAR API FORMAT
-# -----------------------------------------------
-def get_users_current_timestamp_and_timezone(user):
-    # get timezone from string version of timezone (e.g. "America/Los_Angeles")
-    timezone_name = user.timezone
-    timezone_dt = pytz.timezone(timezone_name)
-
-    # get offset from UTC 
-    utc_offset = timezone_dt.utcoffset(pytz.datetime.datetime.now()) 
-
-    # convert offset to hours
-    hours_from_utc = utc_offset.total_seconds() / SECONDS_PER_HOUR
-
-    # convert to timezone
-    timezone_user = timezone(timedelta(hours=hours_from_utc))
-    now = datetime.now(timezone_user)
-    return now
+    return user                   

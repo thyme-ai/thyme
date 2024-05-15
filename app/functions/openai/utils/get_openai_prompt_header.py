@@ -1,5 +1,5 @@
 from app.constants.general import APOLOGY, DATETIME_FORMAT, DEFAULT_EVENT_DURATION
-from app.functions.gcal.helpers.user import get_users_current_timestamp_and_timezone
+from app.functions.gcal.helpers.datetime import get_users_current_timestamp_and_timezone
 from app.constants.prompts import get_variants_of_create_event_with_date_and_time,get_variants_of_create_event_while_avoiding_conflicts
 
 def get_openai_prompt_header(user):
@@ -30,14 +30,14 @@ def get_openai_prompt_header(user):
 
     ASSUMPTIONS_FOR_CREATING_EVENTS = f"""
     Assumptions:
-    1. If the user did not specify a start time, did not specify a date, 
+    1. Format the properties "start.dateTime" and "end.dateTime" as datetimes 
+       in the following format: {DATETIME_FORMAT}
+    2. If the user did not specify a start time, did not specify a date, 
        or the user says something like {AVOID_CONFLICTS_PHRASES}
        call the "insert_event_while_avoiding_conflicts" function.
-    2. If the user says something like {CREATE_EVENT_PHRASES} and the user specified the date, 
+    3. If the user says something like {CREATE_EVENT_PHRASES} and the user specified the date, 
        start time, and duration of the event, make a call to the "insert_event" function. 
-    3. If the user did not specify a duration, assume the event is {DEFAULT_EVENT_DURATION} long 
-    4. Format the properties "start.dateTime" and "end.dateTime" as datetimes 
-       in the following format: {DATETIME_FORMAT}
+    4. If the user did not specify a duration, assume the event is {DEFAULT_EVENT_DURATION} long  
     5. If you create an event, make the "summary" property of the event
        start with an emogee that describes the event 
 
