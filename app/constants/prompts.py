@@ -10,6 +10,7 @@ WITH_DATE = f"called {SUMMARY} for {DURATION} {DAY}"
 # CREATE = ["Create"]
 EVENT = ["an event", "a meeting", "a block", "a meeting block"]
 CREATE = ["create", "add", "book", "insert", "schedule"]
+SOME_DAY = ["today", "tomorrow", "Tuesday", "this Tuesday", "on the 15th"]
 # ----------------------------------------------------
 
 AVOID_AFTER = [
@@ -24,32 +25,35 @@ AVOID_BEFORE = [
     "Find an available time for",
 ]
 
+GET_EVENTS = [
+    "What's on my calendar",
+    "What do I have scheduled",
+    "What do I have going on"
+]
+
 
 def get_variants_of_create_event_with_date_only():
-    result = []
-    for e in range(len(EVENT)):
-        for c in range(len(CREATE)):
-            result.append(f"{CREATE[c]} {EVENT[e]} {WITH_DATE}")
-    return result
-
+    return get_prompt_variants(verbs=CREATE, nouns=EVENT, tail=WITH_DATE)
 
 def get_variants_of_create_event_with_date_and_time():
-    result = []
-    for e in range(len(EVENT)):
-        for c in range(len(CREATE)):
-            result.append(f"{CREATE[c]} {EVENT[e]} {WITH_DATE_AND_TIME}")
-    return result
-
+    return get_prompt_variants(verbs=CREATE, nouns=EVENT, tail=WITH_DATE_AND_TIME)
 
 def get_variants_of_create_event_while_avoiding_conflicts():
     create_events = get_variants_of_create_event_with_date_only()  
+    avoid_after = get_prompt_variants(verbs=create_events, nouns=AVOID_AFTER, middle=' and ')
+    avoid_before = get_prompt_variants(verbs=AVOID_BEFORE, nouns=EVENT, tail=WITH_DATE)
+    return [*avoid_after, *avoid_before]
+
+def get_variants_of_read_events():
+    return get_prompt_variants(verbs=GET_EVENTS, nouns=SOME_DAY)
+
+
+# ------------
+# HELPERS
+# ------------
+def get_prompt_variants(verbs, nouns, middle=' ', tail=' '):
     result = []
-
-    for c in range(len(create_events)):
-        for a in range(len(AVOID_AFTER)):
-            result.append(f"{create_events[c]} and {AVOID_AFTER[a]}")
-
-        for b in range(len(AVOID_BEFORE)):
-            result.append(f"{AVOID_BEFORE[b]} an event {WITH_DATE} ")
+    for i in range(len(verbs)):
+        for j in range(len(nouns)):
+            result.append(f"{verbs[i]}{middle}{nouns[j]} {tail}")
     return result
-    
