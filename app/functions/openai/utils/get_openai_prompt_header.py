@@ -1,5 +1,5 @@
 from app.constants.general import APOLOGY, DATETIME_FORMAT, DEFAULT_EVENT_DURATION
-from app.constants.prompts import VARIANTS_CREATE_EVENT, VARIANTS_READ_EVENTS
+from app.constants.prompts import VARIANTS_CREATE_EVENT, VARIANTS_READ_EVENTS, AVOID_AFTER, AVOID_BEFORE
 from app.functions.gcal.helpers.datetime import get_users_current_timestamp_and_timezone
 
 
@@ -11,6 +11,8 @@ def get_openai_prompt_header(user):
    add or invite new people or attendees to event,
    delete an event or events
    """
+
+   AVOID_CONFLICTS_PHRASES = [*AVOID_BEFORE, *AVOID_AFTER]
 
    ASSUMPTIONS_FOR_CREATING_EVENTS = f"""
     Assumptions:
@@ -66,11 +68,11 @@ def get_openai_prompt_header(user):
     1. If the user requests something similar to any of the following phrases, 
     {UNSUPPORTED_FEATURES_PHRASES}, don't call and functions and tell the user, {APOLOGY}
 
-    2. If the user wants to add an event to their calendar and they do not specify a start time
-    for the event call the "insert_event_while_avoiding_conflicts" function
+    2. If the user wants to add an event to their calendar and the requests contains any 
+    of the following phrases: {AVOID_CONFLICTS_PHRASES} or the user does not specify a start time,
+    call the "insert_event_while_avoiding_conflicts" function
     and follow the "ASSUMPTIONS FOR CREATING EVENTS" specified above.
 
-    
     3. If the user says something like {VARIANTS_CREATE_EVENT} and the user specified the date, 
     start time, and duration of the event, make a call to the "insert_event" function
     and follow the "ASSUMPTIONS FOR CREATING EVENTS" specified above.

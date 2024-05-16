@@ -38,7 +38,6 @@ GET_EVENTS = [
     "What do I have going on",
 ]
 
-
 # ------------
 # HELPERS
 # ------------
@@ -65,13 +64,13 @@ def get_variants_of_create_event_with_date_only():
 
 
 def get_variants_of_create_event_with_date_and_time():
-    return get_prompt_variants(verbs=CREATE, nouns=EVENT, tail=WITH_DATE_AND_TIME)
+    return get_prompt_variants(verbs=['Add'], nouns=['event'], tail=WITH_DATE_AND_TIME)
 
 
 def get_variants_of_create_event_while_avoiding_conflicts():
-    create_events = get_variants_of_create_event_with_date_only()  
+    create_events = [f'Add an event {WITH_DATE}'] 
     avoid_after = get_prompt_variants(verbs=create_events, nouns=AVOID_AFTER, middle=' and ')
-    avoid_before = get_prompt_variants(verbs=AVOID_BEFORE, nouns=EVENT, tail=WITH_DATE)
+    avoid_before = get_prompt_variants(verbs=AVOID_BEFORE, nouns=['event'], tail=WITH_DATE)
     return [*create_events, *avoid_after, *avoid_before]
 
 
@@ -83,4 +82,3 @@ def get_variants_of_read_events():
 VARIANTS_CREATE_EVENT = get_variants_of_create_event_with_date_and_time() 
 VARIANTS_CREATE_EVENT_WITH_CONFLICT_AVOIDANCE = get_variants_of_create_event_while_avoiding_conflicts()
 VARIANTS_READ_EVENTS = get_variants_of_read_events()
-
