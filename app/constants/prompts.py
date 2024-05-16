@@ -11,10 +11,11 @@ WITH_DATE_AND_TIME = f"called {SUMMARY} for {DURATION} at {TIME} {DAY}"
 WITH_DATE = f"called {SUMMARY} for {DURATION} {DAY}"
 
 # Weekdays
-SOME_DAYS = ["today", "tomorrow", "Tuesday", "this Tuesday", "on the 15th"]
 RELATIVE_WORDS = ["this", "next", "last"]
 WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-# RECENT_DAYS = ["Today", "Tomorrow", "Yesterday"]
+
+# TODO - add function for dateutil parser to interpret these, for now, we rely on the LLM to convert these words to datetimes 
+# RECENT_DAYS = ["Today", "Tomorrow", "Yesterday"] 
 
 # Meeting Conflict Avoidance
 AVOID_AFTER = [
@@ -38,6 +39,27 @@ GET_EVENTS = [
 ]
 
 
+# ------------
+# HELPERS
+# ------------
+def get_prompt_variants(verbs, nouns, middle=' ', tail=' '):
+    result = []
+    for i in range(len(verbs)):
+        for j in range(len(nouns)):
+            result.append(f"{verbs[i]}{middle}{nouns[j]} {tail}")
+    return result
+
+def get_variants_of_non_numeric_date_strings():
+    RELATIVE_WEEKDAYS = get_prompt_variants(verbs=RELATIVE_WORDS, nouns=WEEKDAYS)
+    return [*WEEKDAYS, *RELATIVE_WEEKDAYS]
+
+# For Interpreting Date Strings in User's Prompt
+NON_NUMERIC_DATE_STRINGS = get_variants_of_non_numeric_date_strings()
+
+
+# ----------------
+# PROMPT VARIANTS
+# ----------------
 def get_variants_of_create_event_with_date_only():
     return get_prompt_variants(verbs=CREATE, nouns=EVENT, tail=WITH_DATE)
 
@@ -54,22 +76,7 @@ def get_variants_of_create_event_while_avoiding_conflicts():
 
 
 def get_variants_of_read_events():
-    return get_prompt_variants(verbs=GET_EVENTS, nouns=SOME_DAYS)
-
-
-def get_variants_of_non_numeric_date_strings():
-    RELATIVE_WEEKDAYS = get_prompt_variants(verbs=RELATIVE_WORDS, nouns=WEEKDAYS)
-    return [*WEEKDAYS, *RELATIVE_WEEKDAYS]
-
-# ------------
-# HELPERS
-# ------------
-def get_prompt_variants(verbs, nouns, middle=' ', tail=' '):
-    result = []
-    for i in range(len(verbs)):
-        for j in range(len(nouns)):
-            result.append(f"{verbs[i]}{middle}{nouns[j]} {tail}")
-    return result
+    return get_prompt_variants(verbs=GET_EVENTS, nouns=NON_NUMERIC_DATE_STRINGS)
 
 
 # Prompt Variants to be provided to LLM to help determine when to call functions
@@ -77,6 +84,3 @@ VARIANTS_CREATE_EVENT = get_variants_of_create_event_with_date_and_time()
 VARIANTS_CREATE_EVENT_WITH_CONFLICT_AVOIDANCE = get_variants_of_create_event_while_avoiding_conflicts()
 VARIANTS_READ_EVENTS = get_variants_of_read_events()
 
-
-# For Interpreting Date Strings in User's Prompt
-NON_NUMERIC_DATE_STRINGS = get_variants_of_non_numeric_date_strings()
