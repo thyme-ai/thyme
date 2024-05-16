@@ -56,7 +56,7 @@ def chat_completion_request(messages, tools=None, tool_choice=None, model=GPT_MO
             messages=messages,
             tools=tools,
             tool_choice=tool_choice,
-            temperature=0
+            temperature=0.5
         )
         return response
     except Exception as error:
