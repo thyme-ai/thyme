@@ -2,7 +2,7 @@ from app.constants.general import APOLOGY, CALENDAR_ID
 from app.constants.responses import (
     CREATE_FAIL, 
     CREATE_AND_AVOID_CONFLICTS_FAIL, 
-    READ_FAIL, 
+    READ_NO_EVENTS_FOUND, 
     get_create_sucess_message, 
     get_create_and_avoid_conflicts_sucess_message
 )
@@ -51,20 +51,22 @@ def insert_event_while_avoiding_conflicts(args):
 
 def list_events(args):
     service = build_google_api_service()
-    params = {"calendarId": CALENDAR_ID}
+    params = {"calendarId": CALENDAR_ID, "showDeleted": False, "singleEvents": True}
     
     for key in args.keys():
         params[key] = args.get(key)
     events = service.events().list(**params).execute()['items']
 
+    print('EVENTS', events)
+
     if events:
         event_strings = []
         for event in events: 
-            if event['status'] == 'confirmed':
+            if event['status'] != 'cancelled':
                 event_strings.append(f"{event['summary']} at { get_easy_read_time(event['start']['dateTime']) }")
         
         return f"Here are the events on your calendar: {(", ").join(event_strings)}"
-    return READ_FAIL
+    return READ_NO_EVENTS_FOUND
 
 
 # ------------------------

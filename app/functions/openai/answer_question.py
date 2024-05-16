@@ -1,5 +1,6 @@
 from app.constants.general import GPT_MODEL, MAX_ATTEMPTS, MAX_WAIT, TOOLS
 from app.functions.gcal.utils.execute_gcal_function import execute_gcal_function
+from app.functions.gcal.helpers.datetime import get_prompt_with_non_numeric_dates_converted_to_datetime
 from app.functions.openai.utils.pretty_print_chat import pretty_print_chat
 from app.functions.openai.utils.get_openai_prompt_header import get_openai_prompt_header
 from openai import OpenAI
@@ -9,7 +10,13 @@ client = OpenAI()
 
 def answer_question(prompt, user):
     openai_prompt_header = get_openai_prompt_header(user)
-    messages = [{"content": openai_prompt_header, "role": "system"}, {"content": prompt, "role": "user"}]
+
+    # Check if user used any non-numeric dates in their request (e.g. "Tomorrow" or "Friday")
+    # If so, convert them to datetime and update the messages array 
+    new_prompt = get_prompt_with_non_numeric_dates_converted_to_datetime(prompt)
+    messages = [{"content": openai_prompt_header, "role": "system"}, {"content": new_prompt, "role": "user"}]
+
+    # Get response from OpenAI API
     chat_response = chat_completion_request(messages, TOOLS)
     assistant_message = chat_response.choices[0].message
 
@@ -63,6 +70,3 @@ def chat_completion_request(messages, tools=None, tool_choice=None, model=GPT_MO
         print("Unable to generate ChatCompletion response")
         print(f"Exception: {error}")
         return error
-
-
-

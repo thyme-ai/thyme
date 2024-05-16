@@ -1,6 +1,8 @@
 from app.constants.general import DATETIME_FORMAT
+from app.constants.prompts import NON_NUMERIC_DATE_STRINGS
 from google.auth.transport.requests import AuthorizedSession
 from datetime import timezone, timedelta
+from dateutil import parser
 import pytz
 from datetime import datetime
 
@@ -46,3 +48,35 @@ def get_easy_read_time(dt):
     if type(dt) is str:
         dt = datetime.strptime(dt, DATETIME_FORMAT)
     return  datetime.strftime(dt, "%I:%M %p on %m/%d").lstrip("0")
+
+
+# -----------
+# HELPERS 
+# ___________
+def get_first_non_numeric_date_string_in_prompt(prompt):
+    prompt = prompt.lower()
+
+    for i, string in enumerate(NON_NUMERIC_DATE_STRINGS):
+        string = string.lower()
+        if string in prompt:
+            print('✅ Found a Non-Numeric Date String', string)
+            return string
+    return None
+
+
+def get_prompt_with_non_numeric_dates_converted_to_datetime(prompt):
+    non_numeric_date_string = get_first_non_numeric_date_string_in_prompt(prompt)
+
+    if non_numeric_date_string:
+        datetime_string_wrong_format = parser.parse(non_numeric_date_string)
+        # datetime_obj = datetime.strftime(str(datetime_string_wrong_format), "%Y-%m-%d %H:%M:%S")
+        datetime_string = datetime.strftime(datetime_string_wrong_format, "%Y-%m-%d")
+
+        print('non numeric', non_numeric_date_string, type(non_numeric_date_string))
+        print('numeric', datetime_string, type(datetime_string))
+
+        print('PROMPT BEFORE', prompt)
+        new_prompt = prompt.replace(non_numeric_date_string, datetime_string)
+        print('NEW PROMPT', new_prompt)
+        return new_prompt
+    return prompt

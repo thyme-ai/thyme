@@ -1,27 +1,18 @@
 from app.constants.general import APOLOGY, DATETIME_FORMAT, DEFAULT_EVENT_DURATION
+from app.constants.prompts import VARIANTS_CREATE_EVENT, VARIANTS_READ_EVENTS
 from app.functions.gcal.helpers.datetime import get_users_current_timestamp_and_timezone
-from app.constants.prompts import (
-   get_variants_of_create_event_with_date_and_time,
-   # get_variants_of_create_event_while_avoiding_conflicts,
-   get_variants_of_read_events)
+
 
 def get_openai_prompt_header(user):
-    now = get_users_current_timestamp_and_timezone(user)
-    CREATE_EVENT_PHRASES = get_variants_of_create_event_with_date_and_time()
-    LIST_EVENTS_PHRASES = get_variants_of_read_events()
-   
-   # Note:
-   # Not including these phrases in the prompt seems to help increase change of conflict avoidance
-   # being used when the user does not specify the time for a meeting
-   # CREATE_EVENT_WHILE_AVOIDING_CONFLICTS_PHRASES = get_variants_of_create_event_while_avoiding_conflicts()
+   now = get_users_current_timestamp_and_timezone(user)
 
-    UNSUPPORTED_FEATURES_PHRASES = """
-    update or move an the event,
-    add or invite new people or attendees to event,
-    delete an event or events
-    """
+   UNSUPPORTED_FEATURES_PHRASES = """
+   update or move an the event,
+   add or invite new people or attendees to event,
+   delete an event or events
+   """
 
-    ASSUMPTIONS_FOR_CREATING_EVENTS = f"""
+   ASSUMPTIONS_FOR_CREATING_EVENTS = f"""
     Assumptions:
     1. Format the properties "start.dateTime" and "end.dateTime" in the following format: {DATETIME_FORMAT}
 
@@ -54,7 +45,7 @@ def get_openai_prompt_header(user):
    # --------------------
    # PROMPT HEADER
    # --------------------
-    header = f"""
+   header = f"""
     You are a helpful personal assistant named Thyme who can answer general questions 
     as well as interace with the user's Google Calendar by doing tasks like: 
     - finding free time on your calendar to schedule an event
@@ -80,15 +71,15 @@ def get_openai_prompt_header(user):
     and follow the "ASSUMPTIONS FOR CREATING EVENTS" specified above.
 
     
-    3. If the user says something like {CREATE_EVENT_PHRASES} and the user specified the date, 
+    3. If the user says something like {VARIANTS_CREATE_EVENT} and the user specified the date, 
     start time, and duration of the event, make a call to the "insert_event" function
     and follow the "ASSUMPTIONS FOR CREATING EVENTS" specified above.
 
-    4. If the prompt contains any phrases similar to the following phrases: {LIST_EVENTS_PHRASES}, 
+    4. If the prompt contains any phrases similar to the following phrases: {VARIANTS_READ_EVENTS}, 
     respond by calling the list_events function.
 
     5. If no functions are called and the user asks a general question not related to their calendar, 
     just answer the question normally in an easy to read format. 
     """
 
-    return header
+   return header
