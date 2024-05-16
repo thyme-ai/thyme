@@ -1,19 +1,22 @@
-from app.constants.testing import SUMMARY, DURATION, TIME, DAY
+# Example Event 
+SUMMARY = "Brainstorm"
+DURATION = "2 hours"
+DAY = "today"
+TIME = "1 pm"
+EVENT = ["an event", "a meeting", "a block", "a meeting block"]
+CREATE = ["create", "add", "book", "insert", "schedule"]
 
+# With/Without Time Specified
 WITH_DATE_AND_TIME = f"called {SUMMARY} for {DURATION} at {TIME} {DAY}"
 WITH_DATE = f"called {SUMMARY} for {DURATION} {DAY}"
 
-# --------------------------------------------------------------------------------
-# Uncomment the shorter versions of EVENT & CREATE to run new tests more quickly
-# --------------------------------------------------------------------------------
-EVENT = ["an event"]
-CREATE = ["Create"]
-# EVENT = ["an event", "a meeting", "a block", "a meeting block"]
-# CREATE = ["create", "add", "book", "insert", "schedule"]
+# Weekdays
+SOME_DAYS = ["today", "tomorrow", "Tuesday", "this Tuesday", "on the 15th"]
+RELATIVE_WORDS = ["this", "next", "last"]
+WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+# RECENT_DAYS = ["Today", "Tomorrow", "Yesterday"]
 
-SOME_DAY = ["today", "tomorrow", "Tuesday", "this Tuesday", "on the 15th"]
-# ----------------------------------------------------
-
+# Meeting Conflict Avoidance
 AVOID_AFTER = [
     "avoid conflicts",
     "avoid existing events",
@@ -38,8 +41,10 @@ GET_EVENTS = [
 def get_variants_of_create_event_with_date_only():
     return get_prompt_variants(verbs=CREATE, nouns=EVENT, tail=WITH_DATE)
 
+
 def get_variants_of_create_event_with_date_and_time():
     return get_prompt_variants(verbs=CREATE, nouns=EVENT, tail=WITH_DATE_AND_TIME)
+
 
 def get_variants_of_create_event_while_avoiding_conflicts():
     create_events = get_variants_of_create_event_with_date_only()  
@@ -47,9 +52,14 @@ def get_variants_of_create_event_while_avoiding_conflicts():
     avoid_before = get_prompt_variants(verbs=AVOID_BEFORE, nouns=EVENT, tail=WITH_DATE)
     return [*create_events, *avoid_after, *avoid_before]
 
-def get_variants_of_read_events():
-    return get_prompt_variants(verbs=GET_EVENTS, nouns=SOME_DAY)
 
+def get_variants_of_read_events():
+    return get_prompt_variants(verbs=GET_EVENTS, nouns=SOME_DAYS)
+
+
+def get_variants_of_non_numeric_date_strings():
+    RELATIVE_WEEKDAYS = get_prompt_variants(verbs=RELATIVE_WORDS, nouns=WEEKDAYS)
+    return [*WEEKDAYS, *RELATIVE_WEEKDAYS]
 
 # ------------
 # HELPERS
@@ -60,3 +70,13 @@ def get_prompt_variants(verbs, nouns, middle=' ', tail=' '):
         for j in range(len(nouns)):
             result.append(f"{verbs[i]}{middle}{nouns[j]} {tail}")
     return result
+
+
+# Prompt Variants to be provided to LLM to help determine when to call functions
+VARIANTS_CREATE_EVENT = get_variants_of_create_event_with_date_and_time() 
+VARIANTS_CREATE_EVENT_WITH_CONFLICT_AVOIDANCE = get_variants_of_create_event_while_avoiding_conflicts()
+VARIANTS_READ_EVENTS = get_variants_of_read_events()
+
+
+# For Interpreting Date Strings in User's Prompt
+NON_NUMERIC_DATE_STRINGS = get_variants_of_non_numeric_date_strings()

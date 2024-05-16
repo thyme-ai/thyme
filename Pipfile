@@ -24,6 +24,7 @@ wtforms = "*"
 pytz = "*"
 uuid = "*"
 pytest = "*"
+python-dateutil = "*"
 
 [dev-packages]
 

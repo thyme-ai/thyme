@@ -14,6 +14,7 @@ CREATE_AND_AVOID_CONFLICTS_FAIL = f"""
 
 READ_FAIL = f"""{APOLOGY} Try saying: "What's on my calendar today?" """
 
+READ_NO_EVENTS_FOUND = f"""There are no events on your calendar that day."""
 
 # -----------
 # SUCCESS 
