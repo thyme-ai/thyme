@@ -8,6 +8,12 @@ from app.functions.openai.utils.get_openai_prompt_header import get_openai_promp
 import pytest
 
 
+# --------------------------------------------
+# Uncomment the following for Quick Testing
+# --------------------------------------------
+VARIANTS_READ_EVENTS = VARIANTS_READ_EVENTS[0:2]
+# --------------------------------------------
+
 # @pytest.mark.skip
 @mark.parametrize("variant", [*VARIANTS_READ_EVENTS])
 def test_get_event(variant):

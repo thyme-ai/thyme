@@ -22,7 +22,7 @@ def get_suggested_start_time(ideal_start, ideal_end, awake_range, busy_ranges):
         for i in range(len(starts)):
             start = starts[i]
             end = ends[i]
-            print(f'Checking to see if {get_easy_read_time(start)} works...')
+            # print(f'Checking to see if {get_easy_read_time(start)} works...')
 
             range_in_awake_range = start_or_end_in_range(start, end, awake_range['start'], awake_range['end'])
             range_in_busy_ranges = start_or_end_in_ranges(start, end, busy_ranges)
@@ -36,9 +36,9 @@ def get_suggested_start_time(ideal_start, ideal_end, awake_range, busy_ranges):
 
             if range_in_awake_range and not range_in_busy_ranges and not at_least_one_busy_range_in_target_range: 
                 best_start_time = start
-                print('🎉 Found a free time within awake hours\n')  
+                # print('🎉 Found a free time within awake hours\n')  
                 return best_start_time
-            print('❌ Busy\n')  
+            # print('❌ Busy\n')  
         delta += INCREMENT
     return None
 
@@ -83,7 +83,7 @@ def get_awake_range(dt):
 
     # if day is today, adjust the awake_range start to be the current time 
     if now.date() == day:
-        print('🌤️ User scheduling event today, adjusting wake time \n')
+        # print('🌤️ User scheduling event today, adjusting wake time \n')
         time_wake_string = now.time().strftime("%H:%M:%S")
         time_wake = datetime.strptime(time_wake_string, "%H:%M:%S").time()
 

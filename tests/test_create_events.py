@@ -7,6 +7,11 @@ from app.functions.openai.utils.get_function_name_from_chat_response import get_
 from app.functions.openai.utils.get_openai_prompt_header import get_openai_prompt_header
 import pytest
 
+# --------------------------------------------
+# Uncomment the following for Quick Testing
+# --------------------------------------------
+VARIANTS_CREATE_EVENT_WITH_CONFLICT_AVOIDANCE = VARIANTS_CREATE_EVENT_WITH_CONFLICT_AVOIDANCE[0:2]
+# --------------------------------------------
 
 # @pytest.mark.skip
 @mark.parametrize("variant", [*get_variants_of_create_event_with_date_and_time()])
