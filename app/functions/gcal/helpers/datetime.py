@@ -57,8 +57,7 @@ def get_first_non_numeric_date_string_in_prompt(prompt):
     prompt = prompt.lower()
 
     for i, string in enumerate(NON_NUMERIC_DATE_STRINGS):
-        string = string.lower()
-        if string in prompt:
+        if string.lower() in prompt.lower():
             print('✅ Found a Non-Numeric Date String', string)
             return string
     return None
