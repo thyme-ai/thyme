@@ -1,32 +1,46 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.schema import ForeignKey
-import uuid
+from datetime import datetime, UTC
+from uuid import uuid4
+
+UUID_TYPE = UUID(as_uuid=True)
+CURRENT_TIMESTAMP = datetime.now(UTC)
 
 db = SQLAlchemy()
-uuid_type = UUID(as_uuid=True)
 
 habits_per_user = db.Table(
     "habits_per_user",
     db.Model.metadata,
-    db.Column("habit_id", uuid_type, db.ForeignKey("habits.id", ondelete="CASCADE"), primary_key=True),
-    db.Column("user_id", uuid_type, db.ForeignKey("users.id", ondelete="CASCADE"), primary_key=True),
+    db.Column("habit_id", UUID_TYPE, db.ForeignKey("habits.id", ondelete="CASCADE"), primary_key=True),
+    db.Column("user_id", UUID_TYPE, db.ForeignKey("users.id", ondelete="CASCADE"), primary_key=True),
 )
 
 messages_per_chat = db.Table(
     "messages_per_chat",
     db.Model.metadata,
-    db.Column("message_id", uuid_type, db.ForeignKey("messages.id", ondelete="CASCADE"), primary_key=True),
-    db.Column("chat_id", uuid_type, db.ForeignKey("chats.id", ondelete="CASCADE"), primary_key=True),
+    db.Column("message_id", UUID_TYPE, db.ForeignKey("messages.id", ondelete="CASCADE"), primary_key=True),
+    db.Column("chat_id", UUID_TYPE, db.ForeignKey("chats.id", ondelete="CASCADE"), primary_key=True),
 )
 
 
-class User(db.Model):
+class BaseModel(db.Model):
+    __abstract__ = True
+
+    id = db.Column(UUID_TYPE, primary_key=True, default=uuid4)
+    created = db.Column(db.DateTime, default=CURRENT_TIMESTAMP, nullable=False)
+    updated = db.Column(db.DateTime, default=CURRENT_TIMESTAMP, onupdate=CURRENT_TIMESTAMP, nullable=True)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if not self.created:
+            self.created = CURRENT_TIMESTAMP
+
+
+class User(BaseModel):
     __tablename__ = "users"
 
-    id = db.Column(uuid_type, primary_key=True, default=uuid.uuid4)
     email = db.Column(db.String(100), unique=True)
-
     first_name = db.Column(db.String(100), nullable=False)
     last_name = db.Column(db.String(100), nullable=False)
 
@@ -39,38 +53,35 @@ class User(db.Model):
     habits = db.relationship("Habit", secondary=habits_per_user, back_populates="user", cascade="all, delete")
 
 
-class Habit(db.Model):
+class Habit(BaseModel):
     __tablename__ = "habits"
 
-    id = db.Column(uuid_type, primary_key=True, default=uuid.uuid4)
     name = db.Column(db.String(100), nullable=False)
     duration_min = db.Column(db.Integer, nullable=True)
     ideal_start = db.Column(db.Time, nullable=True)
     personal = db.Column(db.Boolean, nullable=False)
 
-    user_id = db.Column(uuid_type, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    user_id = db.Column(UUID_TYPE, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     user = db.relationship("User")
 
 
-class Chat(db.Model):
+class Chat(BaseModel):
     __tablename__ = "chats"
 
-    id = db.Column(uuid_type, primary_key=True, default=uuid.uuid4)
     messages = db.relationship("Message", secondary=messages_per_chat, back_populates="chat", cascade="all, delete")
 
-    user_id = db.Column(uuid_type, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    user_id = db.Column(UUID_TYPE, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     user = db.relationship("User")
 
 
-class Message(db.Model):
+class Message(BaseModel):
     __tablename__ = "messages"
 
-    id = db.Column(uuid_type, primary_key=True, default=uuid.uuid4)
     role = db.Column(db.String(100), nullable=False)
     content = db.Column(db.String(5000), nullable=True)
     function_name = db.Column(db.String(100), nullable=True)
     function_call = db.Column(db.String(5000), nullable=True)
 
-    chat_id = db.Column(uuid_type, ForeignKey("chats.id", ondelete="CASCADE"), nullable=False)
+    chat_id = db.Column(UUID_TYPE, ForeignKey("chats.id", ondelete="CASCADE"), nullable=False)
     chat = db.relationship("Chat")
 
