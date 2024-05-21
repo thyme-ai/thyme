@@ -2,8 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Google Calendar API",
-    "version": "1.0.0",
-    "description": "Custom GPT Agent API Specification for Google Calendar"
+    "description": "API for managing Google Calendar events",
+    "version": "1.0.0"
   },
   "servers": [
     {
@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/{eventId}": {
+    "/events/{eventId}": {
       "delete": {
         "summary": "Delete Event",
         "operationId": "delete_event",
@@ -20,7 +20,6 @@
             "name": "eventId",
             "in": "path",
             "required": true,
-            "description": "ID of the event to delete",
             "schema": {
               "type": "string"
             }
@@ -41,223 +40,60 @@
       "get": {
         "summary": "Get Event",
         "operationId": "get_event",
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "htmlLink": {
-                      "type": "string"
-                    },
-                    "summary": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "start": {
-                      "type": "object",
-                      "properties": {
-                        "dateTime": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "timeZone": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "end": {
-                      "type": "object",
-                      "properties": {
-                        "dateTime": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "timeZone": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "timezone": {
-                      "type": "string"
-                    },
-                    "recurrence": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "location": {
-                      "type": "string"
-                    },
-                    "organizer": {
-                      "type": "object",
-                      "properties": {
-                        "email": {
-                          "type": "string"
-                        },
-                        "displayName": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "attendees": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "email": {
-                            "type": "string"
-                          },
-                          "displayName": {
-                            "type": "string"
-                          },
-                          "organizer": {
-                            "type": "boolean"
-                          },
-                          "self": {
-                            "type": "boolean"
-                          },
-                          "responseStatus": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/Event"
                 }
               }
             }
           }
         }
       },
-      "patch": {
-        "summary": "Update an Event",
+      "put": {
+        "summary": "Update Event",
         "operationId": "update_event",
-        "description": "Updates an event. This method supports patch semantics.",
+        "description": "Updates an existing event.",
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
-          "description": "An update to an event",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "summary": {
-                    "type": "string",
-                    "description": "Title of the event"
-                  },
-                  "description": {
-                    "type": "string",
-                    "description": "Description of the event"
-                  },
-                  "start": {
-                    "type": "object",
-                    "properties": {
-                      "dateTime": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The starting date and time of the event"
-                      },
-                      "timeZone": {
-                        "type": "string",
-                        "description": "The time zone of the event start"
-                      }
-                    }
-                  },
-                  "end": {
-                    "type": "object",
-                    "properties": {
-                      "dateTime": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The ending date and time of the event"
-                      },
-                      "timeZone": {
-                        "type": "string",
-                        "description": "The time zone of the event end"
-                      }
-                    }
-                  },
-                  "timeZone": {
-                    "type": "string",
-                    "description": "The time zone of the event"
-                  },
-                  "recurrence": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "List of RRULE, RDATE and EXDATE lines for a recurring event"
-                  },
-                  "location": {
-                    "type": "string",
-                    "description": "Location of the event"
-                  },
-                  "organizer": {
-                    "type": "object",
-                    "properties": {
-                      "email": {
-                        "type": "string"
-                      },
-                      "displayName": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "The organizer of the event"
-                  },
-                  "attendees": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "email": {
-                          "type": "string"
-                        },
-                        "displayName": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "description": "Attendees of the event"
-                  }
-                }
+                "$ref": "#/components/schemas/Event"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Successful response. Returns the updated event.",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "kind": {
-                      "type": "string",
-                      "description": "Type of the resource. This is always 'calendar#event'."
-                    },
-                    "etag": {
-                      "type": "string",
-                      "description": "ETag of the resource."
-                    },
-                    "id": {
-                      "type": "string",
-                      "description": "ID of the event."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "Status of the event. Possible values are 'confirmed', 'tentative', and 'cancelled'."
-                    }
-                  }
+                  "$ref": "#/components/schemas/Event"
                 }
               }
             }
@@ -267,7 +103,7 @@
     },
     "/events": {
       "get": {
-        "summary": "List events",
+        "summary": "List Events",
         "operationId": "list_events",
         "description": "Returns events on the user's primary calendar.",
         "parameters": [
@@ -314,8 +150,7 @@
             "description": "Minimum start time of events to return (exclusive).",
             "required": false,
             "schema": {
-              "type": "string",
-              "format": "date-time"
+              "$ref": "#/components/schemas/DateTime"
             }
           },
           {
@@ -324,8 +159,7 @@
             "description": "Maximum end time of events to return (exclusive).",
             "required": false,
             "schema": {
-              "type": "string",
-              "format": "date-time"
+              "$ref": "#/components/schemas/DateTime"
             }
           }
         ],
@@ -335,99 +169,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "items": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "htmlLink": {
-                            "type": "string"
-                          },
-                          "summary": {
-                            "type": "string"
-                          },
-                          "description": {
-                            "type": "string"
-                          },
-                          "start": {
-                            "type": "object",
-                            "properties": {
-                              "dateTime": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "timeZone": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "end": {
-                            "type": "object",
-                            "properties": {
-                              "dateTime": {
-                                "type": "string",
-                                "format": "date-time"
-                              },
-                              "timeZone": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "timezone": {
-                            "type": "string"
-                          },
-                          "recurrence": {
-                            "type": "array",
-                            "items": {
-                              "type": "string"
-                            }
-                          },
-                          "location": {
-                            "type": "string"
-                          },
-                          "organizer": {
-                            "type": "object",
-                            "properties": {
-                              "email": {
-                                "type": "string"
-                              },
-                              "displayName": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "attendees": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "email": {
-                                  "type": "string"
-                                },
-                                "displayName": {
-                                  "type": "string"
-                                },
-                                "organizer": {
-                                  "type": "boolean"
-                                },
-                                "self": {
-                                  "type": "boolean"
-                                },
-                                "responseStatus": {
-                                  "type": "string"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/Event"
                 }
               }
             }
@@ -467,6 +209,33 @@
   },
   "components": {
     "schemas": {
+      "DateTime": {
+        "type": "object",
+        "properties": {
+          "dateTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date and time of the event."
+          },
+          "timeZone": {
+            "type": "string",
+            "description": "The time zone of the event."
+          }
+        }
+      },
+      "Person": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email address of the person."
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Display name of the person."
+          }
+        }
+      },
       "Event": {
         "type": "object",
         "properties": {
@@ -519,45 +288,6 @@
               "$ref": "#/components/schemas/Person"
             },
             "description": "List of attendees for the event."
-          }
-        }
-      },
-      "DateTime": {
-        "type": "object",
-        "properties": {
-          "dateTime": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The date and time of the event."
-          },
-          "timeZone": {
-            "type": "string",
-            "description": "The time zone of the event."
-          }
-        }
-      },
-      "Person": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "description": "Email address of the person."
-          },
-          "displayName": {
-            "type": "string",
-            "description": "Display name of the person."
-          },
-          "organizer": {
-            "type": "boolean",
-            "description": "Indicates if the person is the organizer of the event."
-          },
-          "self": {
-            "type": "boolean",
-            "description": "Indicates if the person is the authenticated user."
-          },
-          "responseStatus": {
-            "type": "string",
-            "description": "Status of the person's participation in the event."
           }
         }
       }

@@ -37,6 +37,6 @@ Remove any comments.
 Add a property called {operationId} to each endpoint equal to the {summary} of the endpoint in snake case. 
 Shorten the {operationId} to be as short as possible while still being descriptive, 
 Remove the {calendarId} url and pass "primary" directly in the endpoint url.
-Please output the result in the JSON OpenAPI 3 format, and provide the whole output JSON.  
+Please output the result in the JSON OpenAPI 3 format, and provide the whole output JSON. If you need to split across messages, you can leave the JSON incomplete with "...". I will say "CONTINUE" and you can proceed in the next message.
 
 

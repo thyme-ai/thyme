@@ -5,8 +5,7 @@ import json
 function_name_to_function = {
    "insert_event": insert_event,
    "insert_event_while_avoiding_conflicts": insert_event_while_avoiding_conflicts,
-    "list_events": list_events,
-
+    "list_events": list_events
 }
 
 

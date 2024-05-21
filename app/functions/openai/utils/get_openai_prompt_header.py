@@ -7,8 +7,6 @@ def get_openai_prompt_header(user):
    now = get_users_current_timestamp_and_timezone(user)
 
    UNSUPPORTED_FEATURES_PHRASES = """
-   update or move an the event,
-   add or invite new people or attendees to event,
    delete an event or events
    """
 
