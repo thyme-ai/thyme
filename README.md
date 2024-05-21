@@ -66,7 +66,7 @@
 
 ### Running the App Locally
 1) Create the PostgreSQL database:
-cd into the 'thyme' directory
+cd into the 'thyme' directory   
 ```psql```    
 ```DROP DATABASE thyme;```    
 ```DROP USER thyme;```    
