@@ -63,7 +63,12 @@ def list_events(args):
         event_strings = []
         for event in events: 
             if event['status'] != 'cancelled':
-                event_strings.append(f"{event['summary']} at { get_easy_read_time(event['start']['dateTime']) }")
+                start = None
+                if event.get('start').get('dateTime'):
+                    start = event['start']['dateTime']
+                else:
+                    start = event['start']['date']
+                event_strings.append(f"{event['summary']} at {get_easy_read_time(start)}")
         
         return f"Here are the events on your calendar: {(", ").join(event_strings)}"
     return READ_NO_EVENTS_FOUND
