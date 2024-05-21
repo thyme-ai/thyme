@@ -26,6 +26,10 @@ a {
     text-decoration: none;
 }
 
+strong {
+    font-weight: 600;
+}
+
 
 html, 
 .centered-in-x-and-y {
@@ -292,7 +296,7 @@ header {
     border-radius: 30px;
     padding: 20px;
     margin: 40px;
-    margin-top: 40px;
+    margin: 60px;
 }
 
 .invite-to-beta-testing {
@@ -300,7 +304,6 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 80px;
 }
 
 .invite-to-beta-testing > p {
@@ -313,6 +316,18 @@ header {
     margin: 10px;
     padding: 10px;
     padding-left: 100px;
+}
+
+
+
+.privacy-and-terms-links {
+    font-size: var(--thyme-font-smallest);
+    color: var(--thyme-lighter-grey);
+}
+
+.privacy-and-terms {
+    padding: 60px;
+    padding-top: 0px;
 }
 
 #content {

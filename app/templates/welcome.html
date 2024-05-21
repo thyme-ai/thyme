@@ -8,9 +8,15 @@
         <div class="invite-to-beta-testing">
                 <p>Thyme is currently in beta testing!</p>
                 <p>Want access? Email 
-                    <a target="_blank" href="https://mail.google.com/mail/u/0/?fs=1&to=hello@thyme.company&tf=cm">hello@thyme.company</a>
+                    {% include "components/email_us.html"%}
                 </p>
-           
+        </div>
+        <div>
+            <p class="privacy-and-terms-links">
+            <a class="privacy-and-terms-links" method="get" href="{{ url_for('home.privacy') }}">Privacy</a>
+            &
+            <a class="privacy-and-terms-links" method="get" href="{{ url_for('home.terms') }}">Terms</a>
+            </p>
         </div>
     </div>
     
