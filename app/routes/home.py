@@ -58,6 +58,18 @@ def updatePreferences():
 
 
 # --------------------
+# PRIVACY & TERMS
+# --------------------
+@bp.route("/privacy", methods=["GET"])
+def privacy():
+    return render_template("/privacy.html")
+
+@bp.route("/terms", methods=["GET"])
+def terms():
+    return render_template("/terms.html")
+
+
+# --------------------
 # EVENT HANDLERS
 # --------------------
 def handleAnswerQuestion(form):
