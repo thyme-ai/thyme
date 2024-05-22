@@ -2,8 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Google Calendar API",
-    "description": "API for managing Google Calendar events",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "description": "Custom GPT Agent API Specification for Google Calendar"
   },
   "servers": [
     {
@@ -11,89 +11,101 @@
     }
   ],
   "paths": {
-    "/events/{eventId}": {
-      "delete": {
-        "summary": "Delete Event",
-        "operationId": "delete_event",
-        "parameters": [
-          {
-            "name": "eventId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Event deleted successfully"
-          },
-          "404": {
-            "description": "Event not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
+    "/{eventId}": {
       "get": {
         "summary": "Get Event",
         "operationId": "get_event",
-        "parameters": [
-          {
-            "name": "eventId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Successful response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Event"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "summary": "Update Event",
-        "operationId": "update_event",
-        "description": "Updates an existing event.",
-        "parameters": [
-          {
-            "name": "eventId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Event"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Event"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "htmlLink": {
+                      "type": "string"
+                    },
+                    "summary": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "start": {
+                      "type": "object",
+                      "properties": {
+                        "dateTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "timeZone": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "end": {
+                      "type": "object",
+                      "properties": {
+                        "dateTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "timeZone": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "timezone": {
+                      "type": "string"
+                    },
+                    "recurrence": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "location": {
+                      "type": "string"
+                    },
+                    "organizer": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string"
+                        },
+                        "displayName": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "attendees": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "email": {
+                            "type": "string"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          },
+                          "organizer": {
+                            "type": "boolean"
+                          },
+                          "self": {
+                            "type": "boolean"
+                          },
+                          "responseStatus": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -103,7 +115,7 @@
     },
     "/events": {
       "get": {
-        "summary": "List Events",
+        "summary": "List events",
         "operationId": "list_events",
         "description": "Returns events on the user's primary calendar.",
         "parameters": [
@@ -150,7 +162,8 @@
             "description": "Minimum start time of events to return (exclusive).",
             "required": false,
             "schema": {
-              "$ref": "#/components/schemas/DateTime"
+              "type": "string",
+              "format": "date-time"
             }
           },
           {
@@ -159,7 +172,8 @@
             "description": "Maximum end time of events to return (exclusive).",
             "required": false,
             "schema": {
-              "$ref": "#/components/schemas/DateTime"
+              "type": "string",
+              "format": "date-time"
             }
           }
         ],
@@ -169,7 +183,99 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Event"
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "htmlLink": {
+                            "type": "string"
+                          },
+                          "summary": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "start": {
+                            "type": "object",
+                            "properties": {
+                              "dateTime": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "timeZone": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "end": {
+                            "type": "object",
+                            "properties": {
+                              "dateTime": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "timeZone": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "timezone": {
+                            "type": "string"
+                          },
+                          "recurrence": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "location": {
+                            "type": "string"
+                          },
+                          "organizer": {
+                            "type": "object",
+                            "properties": {
+                              "email": {
+                                "type": "string"
+                              },
+                              "displayName": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "attendees": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "email": {
+                                  "type": "string"
+                                },
+                                "displayName": {
+                                  "type": "string"
+                                },
+                                "organizer": {
+                                  "type": "boolean"
+                                },
+                                "self": {
+                                  "type": "boolean"
+                                },
+                                "responseStatus": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -209,33 +315,6 @@
   },
   "components": {
     "schemas": {
-      "DateTime": {
-        "type": "object",
-        "properties": {
-          "dateTime": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The date and time of the event."
-          },
-          "timeZone": {
-            "type": "string",
-            "description": "The time zone of the event."
-          }
-        }
-      },
-      "Person": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "description": "Email address of the person."
-          },
-          "displayName": {
-            "type": "string",
-            "description": "Display name of the person."
-          }
-        }
-      },
       "Event": {
         "type": "object",
         "properties": {
@@ -288,6 +367,45 @@
               "$ref": "#/components/schemas/Person"
             },
             "description": "List of attendees for the event."
+          }
+        }
+      },
+      "DateTime": {
+        "type": "object",
+        "properties": {
+          "dateTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date and time of the event."
+          },
+          "timeZone": {
+            "type": "string",
+            "description": "The time zone of the event."
+          }
+        }
+      },
+      "Person": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email address of the person."
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Display name of the person."
+          },
+          "organizer": {
+            "type": "boolean",
+            "description": "Indicates if the person is the organizer of the event."
+          },
+          "self": {
+            "type": "boolean",
+            "description": "Indicates if the person is the authenticated user."
+          },
+          "responseStatus": {
+            "type": "string",
+            "description": "Status of the person's participation in the event."
           }
         }
       }

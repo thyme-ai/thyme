@@ -51,11 +51,13 @@ def insert_event_while_avoiding_conflicts(args):
 
 def list_events(args):
     service = build_google_api_service()
-    params = {"calendarId": CALENDAR_ID, "showDeleted": False, "singleEvents": True}
+    params = {"calendarId": CALENDAR_ID}
     
     for key in args.keys():
         params[key] = args.get(key)
-    events = service.events().list(**params).execute()['items']
+        print('-------------')
+        print('PARAMS', params)
+    events = service.events().list(**params).execute().get('items')
 
     print('EVENTS', events)
 
