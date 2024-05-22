@@ -19,7 +19,8 @@ def get_openai_prompt_header(user):
     2. If the user did not specify a duration, assume the event is {DEFAULT_EVENT_DURATION} long 
 
     3. If you create an event, make the "summary" property of the event
-       start with an emogee that describes the event 
+       start with an emogee that describes the event. Avoid emogees with people or skin 
+       colors in them. 
 
     4. If you create an event and only if the users asks you to suggests ideas for the location, 
        or asks for "best places or locations for something, make the "description" of the event 
