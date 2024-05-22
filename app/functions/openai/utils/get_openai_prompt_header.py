@@ -18,15 +18,12 @@ def get_openai_prompt_header(user):
 
     2. If the user did not specify a duration, assume the event is {DEFAULT_EVENT_DURATION} long 
 
-    3. If you create an event, make the "summary" property of the event
-       start with an emogee that describes the event 
-
-    4. If you create an event and only if the users asks you to suggests ideas for the location, 
+    3. If you create an event and only if the users asks you to suggests ideas for the location, 
        or asks for "best places or locations for something, make the "description" of the event 
        a list of 5 ideas (unless the user specifies a different number) for where to hold the 
        event.
        
-    5. If you create an event and only if the users asks you to suggests ideas for an agenda,
+    4. If you create an event and only if the users asks you to suggests ideas for an agenda,
        topics to discuss, or activities to do during the event, make the "description" of the 
        event a list of 5 ideas (unless the user specifies a different number) with links to 
        the top Google Search result related to the idea. 
@@ -34,10 +31,10 @@ def get_openai_prompt_header(user):
        "1. Build a Balloon Car - Fun balloon powered car activity for kids 
        https://www.sciencebuddies.org/stem-activities/balloon-car"
 
-    6. Check that all links added to the "description" of an event are valid webpages
+    5. Check that all links added to the "description" of an event are valid webpages
        and they do not contain a 404, Page not Found, or other error message. 
     
-    7. If you create an event and the user does not ask for any suggestions for locations or 
+    6. If you create an event and the user does not ask for any suggestions for locations or 
        ideas for the event, just leave the "description" of the event blank. 
     """
 
