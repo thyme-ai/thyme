@@ -276,6 +276,7 @@ header {
     color: var(--thyme-lighter-grey);
     font-size: var(--thyme-font-largest);
     margin-top: 140px;
+    margin-bottom: 20px;
 }
 
 .home-secondary-title,
@@ -289,6 +290,21 @@ header {
 .home-secondary-title-italicized{
     color: var(--thyme-lighter-grey);
     font-weight: 250;
+}
+
+.home-secondary-title,
+.home-secondary-title-italicized, 
+.home-main-text,
+.invite-to-beta-testing, 
+.icon-button {
+    margin-inline: 20px;
+    margin-block: 15px;
+}
+
+.home-main-text {
+    color: var(--thyme-lighter-grey);
+    width: 80%;
+    text-align: center;
 }
 
 .icon-button {
@@ -318,11 +334,9 @@ header {
     padding-left: 100px;
 }
 
-
-
 .privacy-and-terms-links {
     font-size: var(--thyme-font-smallest);
-    color: var(--thyme-lighter-grey);
+    color: var(--thyme-white);
 }
 
 .privacy-and-terms {
@@ -432,15 +446,17 @@ a:hover,
         flex-direction: column;
         margin-block: 50px;
         margin-inline: 5px;
+        justify-content: left;
     }
 
-    .home-main-title, 
-    .home-secondary-title,
-    .home-secondary-title-italicized, 
-    .invite-to-beta-testing, 
-    .icon-button {
-        margin-inline: 20px;
-        margin-block: 15px;
+    .home-main-title{
+    margin-inline: 20px;
+    margin-block: 15px;
+    }
+
+    .home-main-text {
+        text-align: left;
+        width: 90%;
     }
 
     .home-secondary-title, 
