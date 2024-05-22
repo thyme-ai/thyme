@@ -302,6 +302,8 @@ header {
 }
 
 .home-main-text {
+    margin-top: 10px;
+    font-size: var(--thyme-font-smallest);
     color: var(--thyme-lighter-grey);
     width: 80%;
     text-align: center;
@@ -309,9 +311,8 @@ header {
 
 .icon-button {
     font-size: 20px;
-    border-radius: 30px;
+    border-radius: 40px;
     padding: 20px;
-    margin: 40px;
     margin: 60px;
 }
 
@@ -455,6 +456,7 @@ a:hover,
     }
 
     .home-main-text {
+        margin: 20px;
         text-align: left;
         width: 90%;
     }
@@ -470,9 +472,10 @@ a:hover,
         padding: 10px;
         padding-inline: 15px;
     }
+
     .icon-button {
-        margin: 20px;
-        padding: 15px;
+        margin: 0px;
+        margin-block: 40px;
     }
 
     .transparent-icon-button {
@@ -498,6 +501,7 @@ a:hover,
         align-items: center;
         align-content: center;
         align-self: center;
+        text-align: center;
     }
 
     .invite-to-beta-testing > p, a {
