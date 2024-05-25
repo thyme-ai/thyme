@@ -221,6 +221,9 @@ iframe {
     width: 70vw;
     height: 39.375vw;
     padding: 20px;
+    border-radius: 40px;
+    background-color: var(--thyme-charcoal);
+    color: var(--thyme-charcoal);
 }
 
 .justified-left {
