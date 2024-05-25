@@ -474,16 +474,16 @@ a:hover,
         font-size: var(--thyme-font-medium); 
     }
 
+    .icon-button {
+        padding: 20px;
+        margin: 30px;
+    }
+
     button,
     #submit {
         margin: 10px;
         padding: 10px;
         padding-inline: 15px;
-    }
-
-    .icon-button {
-        margin: 0px;
-        margin-block: 20px;
     }
 
     .transparent-icon-button {
