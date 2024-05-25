@@ -15,12 +15,14 @@
         </iframe>
         <div class="invite-to-beta-testing">
             <p>Thyme is currently in private beta testing!</p>
-            <p>Want access? Email {% include "components/email_us.html"%} from a Gmail account.</p>
+            <p>Want access? Email 
+                <a target="_blank" href="https://mail.google.com/mail/u/0/?fs=1&to=hello@thyme.company&tf=cm">hello@thyme.company</a>
+                from a Gmail account.</p>
             <div>
-                <p class="privacy-and-terms-links">
-                <a class="privacy-and-terms-links" method="get" href="{{ url_for('home.privacy') }}">Privacy</a>
+                <p>
+                <a method="get" target="_blank" href="{{ url_for('home.privacy') }}">Privacy</a>
                 &
-                <a class="privacy-and-terms-links" method="get" href="{{ url_for('home.terms') }}">Terms</a>
+                <a method="get" target="_blank" href="{{ url_for('home.terms') }}">Terms</a>
                 </p>
             </div>
         </div>
