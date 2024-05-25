@@ -217,6 +217,12 @@ header {
     justify-content: end;
 }
 
+iframe {
+    width: 70vw;
+    height: 39.375vw;
+    padding: 20px;
+}
+
 .justified-left {
     display: flex;
     flex-direction: row;
@@ -298,7 +304,7 @@ header {
 .invite-to-beta-testing, 
 .icon-button {
     margin-inline: 20px;
-    margin-block: 15px;
+    margin-block: 5px;
 }
 
 .home-main-text {
@@ -313,7 +319,7 @@ header {
     font-size: 20px;
     border-radius: 40px;
     padding: 20px;
-    margin: 60px;
+    margin: 40px;
 }
 
 .invite-to-beta-testing {
@@ -321,6 +327,7 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 40px;
 }
 
 .invite-to-beta-testing > p {
@@ -476,7 +483,7 @@ a:hover,
 
     .icon-button {
         margin: 0px;
-        margin-block: 40px;
+        margin-block: 20px;
     }
 
     .transparent-icon-button {
