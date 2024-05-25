@@ -5,6 +5,7 @@
     --thyme-text-area: #40414F;
     --thyme-lighter-grey: #ABABAB;
     --thyme-white: #FFFFFF;
+    --thyme-links: #97bdbd;
 
     --thyme-font-largest: 80;
     --thyme-font-placeholder-text: 70;
@@ -218,10 +219,10 @@ header {
 }
 
 iframe {
-    width: 70vw;
-    height: 39.375vw;
-    padding: 20px;
-    border-radius: 40px;
+    width: 600px;
+    height: 337.5px;
+    padding: 10px;
+    border-radius: 30px;
     background-color: var(--thyme-charcoal);
     color: var(--thyme-charcoal);
 }
@@ -278,7 +279,7 @@ iframe {
 
 .home-titles {
     width: 100vw;
-    margin: 100px;
+    margin: 20px;
 }
 
 .home-main-title {
@@ -346,8 +347,9 @@ iframe {
 }
 
 .privacy-and-terms-links {
+    text-decoration: underline;
     font-size: var(--thyme-font-smallest);
-    color: var(--thyme-white);
+    color: var(--thyme-links);
 }
 
 .privacy-and-terms {
@@ -384,6 +386,7 @@ iframe {
 
 button:hover, 
 a:hover,
+.privacy-and-terms-links:hover,
 #submit:hover {
     font-weight: 500;
 }
@@ -480,6 +483,11 @@ a:hover,
     .icon-button {
         padding: 20px;
         margin: 30px;
+    }
+
+    iframe {
+        width: 300px;
+        height: 168.75px;
     }
 
     button,

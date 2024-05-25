@@ -4,12 +4,15 @@
     <div class="left-justified privacy-and-terms">
         {% include "/components/headers/privacy_and_terms.html" %}
         <h1>Terms of Service</h1>
-        <p><strong>Last Updated: </strong>5/22/2024</p>
+        <p><strong>Last Updated: </strong>5/25/2024</p>
 
         <p>Welcome to Thyme! These Terms of Service ("Terms") govern your use of the Thyme web app, which helps users create and read events from their Google Calendars through an AI-powered chat interface. By accessing or using Thyme, you agree to be bound by these Terms.</p>
 
         <h2>1. Acceptance of Terms</h2>
-        <p>By accessing or using Thyme, you agree to comply with and be bound by these Terms and our Privacy Policy. If you do not agree to these Terms, you may not use the app.</p>
+        <p>By accessing or using Thyme, you agree to comply with and be bound by these Terms and our 
+            <a class="privacy-and-terms-links" target="_blank" href="{{ url_for('home.privacy') }}">Privacy Policy</a>. 
+            If you do not agree to these Terms, you may not use the app.
+        </p>
 
         <h2>2. Description of Service</h2>
         <p>Thyme provides a web-based application that allows users to create and read events from their Google Calendars using an AI-powered chat interface. The app uses the OpenAI API for natural language processing, Google OAuth 2.0 Authentication for secure login, and the Google Calendar API to access calendar data. The app is hosted by Heroku and uses Porkbun for domain management.</p>
