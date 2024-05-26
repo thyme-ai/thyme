@@ -3,7 +3,7 @@
     {% if title != "Home" %}
     <h1>{{ title }}</h1>
     {% endif %}
-    <form method="post" action={{ path }}>
+    <form method="post" action={{ path }} autocomplete="off">
         {{ form.hidden_tag() }}
         <table>
             <tbody class="{{ form_type if form_type }}">
