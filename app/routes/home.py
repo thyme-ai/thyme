@@ -62,11 +62,12 @@ def updatePreferences():
 # --------------------
 @bp.route("/privacy", methods=["GET"])
 def privacy():
-    return render_template("/privacy.html")
+    return render_template("privacy.html")
+
 
 @bp.route("/terms", methods=["GET"])
 def terms():
-    return render_template("/terms.html")
+    return render_template("terms.html")
 
 
 # --------------------
