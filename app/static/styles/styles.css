@@ -102,16 +102,19 @@ section {
 }
 
 textarea {
+    z-index: 1;
     width: 500px;
     color: var(--thyme-white);
     background-color: var(--thyme-text-area);
     padding-inline: 15px;
-    padding-block: 10px;
+    padding-block: 20px;
     border-radius: 15px;   
     justify-content: center;
     align-content: center;
+    /* text-align: center; */
+    vertical-align: middle;
+    scrollbar-color: var(--thyme-lighter-grey) transparent;
 }
-
 
 /*---------------------*/
 /* Classes
