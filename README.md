@@ -27,35 +27,8 @@ Thyme is an AI research company dedicated to building the most personal, useful,
 - "Schedule an event called Team Building this Thursday from 10am to 4pm, in the description add a few ideas of places to host a team building event in [insert your city here]"
 <br></br>
 
-## Running Thyme Locally 
-### Installation
-1) Download PostgreSQL (for macs, download the PostgreSQL app - [HERE](https://postgresapp.com/))
-2) Download Python
-3) Download Pipenv ```pip install pipenv```    
-4) Create a Virtual Environment `pipenv install --python "$PYENV_ROOT/versions/<<version_name>>/bin/python"` (replace <<version_name>>)
-5) Install all the dependencies for the Python App `pipenv install`
-8) Create a `.env` file and copy & paste the contents of `.env.example`
-- for the `DATABASE_URL` variable - use `.env.example`, replace all of the text in `<arrow-brackets>`
-- for the `GOOGLE_CLIENT_CONFIG` variable - update this with your Google credentials, follow these instructions - [HERE](https://developers.google.com/calendar/api/quickstart/python)
-
-### Running Thyme Locally
-1) Create the database:
-```sql
-cd thyme
-psql    
-DROP DATABASE thyme;
-DROP USER thyme;  
-CREATE USER thyme WITH PASSWORD '<insert-password-here>';    
-CREATE DATABASE thyme WITH OWNER thyme;
-```
-2) Seed the database `python database.py`
-3) Check that the data is in the database:
-```sql
-psql
-SELECT * FROM habits;
-\q
-```
-5) Start the local server `pipenv run flask run`
+## Contact
+👋🏽 Have questions or feedback? We'd love to hear them! Send us an email at hello@thyme.company.
 <br></br>
 
 ## Tutorials 
@@ -67,5 +40,30 @@ Want to learn more about building apps that use generative AI? Check out these a
 - Guide to Prompt Engineering - [HERE](https://platform.openai.com/docs/guides/prompt-engineering)
 <br></br>
 
-## Contact
-👋🏽 Have questions or feedback? We'd love to hear them! Send us an email at hello@thyme.company.
+## For Developers
+### Running Thyme Locally
+1) Download PostgreSQL (for macs, download the PostgreSQL app - [HERE](https://postgresapp.com/))
+2) Download Python
+3) Download Pipenv ```pip install pipenv```    
+4) Create a Virtual Environment `pipenv install --python "$PYENV_ROOT/versions/<<version_name>>/bin/python"` (replace <<version_name>>)
+5) Install all the dependencies for the Python App `pipenv install`
+6) Create a `.env` file and copy & paste the contents of `.env.example`
+- for the `DATABASE_URL` variable - use `.env.example`, replace all of the text in `<arrow-brackets>`
+- for the `GOOGLE_CLIENT_CONFIG` variable - update this with your Google credentials, follow these instructions - [HERE](https://developers.google.com/calendar/api/quickstart/python)
+7) Create the database:
+```sql
+cd thyme
+psql    
+DROP DATABASE thyme;
+DROP USER thyme;  
+CREATE USER thyme WITH PASSWORD '<insert-password-here>';    
+CREATE DATABASE thyme WITH OWNER thyme;
+```
+8) Seed the database `python database.py`
+9) Check that the data is in the database:
+```sql
+psql
+SELECT * FROM habits;
+\q
+```
+10) Start the local server `pipenv run flask run`
