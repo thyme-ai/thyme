@@ -116,6 +116,11 @@ textarea {
     scrollbar-color: var(--thyme-lighter-grey) transparent;
 }
 
+video {
+    width: 40%;
+    border-radius: 25px;
+}
+
 /*---------------------*/
 /* Classes
 /*---------------------*/
@@ -463,19 +468,21 @@ a:hover,
         width: 80%;
         display: flex;
         flex-direction: column;
-        margin-block: 50px;
+        margin-block: 35px;
         margin-inline: 5px;
-        justify-content: left;
+        justify-content: center;
+        text-align: center;
     }
 
     .home-main-title{
     margin-inline: 20px;
     margin-block: 15px;
+    margin-top: 0px;
     }
 
     .home-main-text {
         margin: 20px;
-        text-align: left;
+        text-align: center;
         width: 90%;
     }
 
@@ -517,6 +524,11 @@ a:hover,
         margin-right: 10px;
     }
 
+    .invite-to-beta-testing{
+        margin: 20x;
+        margin-bottom: 40px;
+    }
+
     .invite-to-beta-testing,
     .invite-to-beta-testing > p{
         display: flex;
@@ -544,6 +556,10 @@ a:hover,
     .textareafield {
         padding: 5px;
         margin: 10px;
+    }
+
+    video {
+        width: 80vw;
     }
 
 }

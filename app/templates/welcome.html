@@ -5,22 +5,21 @@
         <h1 class="home-main-title">Meet Thyme</h1>
         <h2 class="home-secondary-title">Your personal AI assistant.</h2> 
         {% include "/components/buttons/continue_with_google.html" %}
-        <iframe 
-        showinfo="0"
-        src="https://www.youtube.com/embed/8H4GNelhmnw?si=3a9i0WIy49kuJrVH&rel=0" 
-        title="YouTube video player" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-        referrerpolicy="strict-origin-when-cross-origin" 
-        rel="0"
-        modestbranding="1"
-        allowfullscreen>
-        </iframe>
+        <video 
+            controls 
+            poster="https://storage.googleapis.com/frankie-esparza-portfolio/thumbnails/thyme-website.png">
+                <source 
+                src="https://storage.googleapis.com/frankie-esparza-portfolio/videos/thyme-website.mp4" 
+                type="video/mp4"
+                >
+                Your browser does not support the video tag.
+        </video>
+        </div>
         <div class="invite-to-beta-testing">
-            <p>Thyme is currently in private beta testing!</p>
-            <p>Want access? Email 
+            <p>Thyme is currently in private beta testing! Want access? Email 
                 <a target="_blank" href="https://mail.google.com/mail/u/0/?fs=1&to=hello@thyme.company&tf=cm">hello@thyme.company</a>
-                from a Gmail account.</p>
+                from a Gmail account.
+            </p>
             <div>
                 <p>
                 <a method="get" target="_blank" href="{{ url_for('home.privacy') }}">Privacy</a>
