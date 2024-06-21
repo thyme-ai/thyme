@@ -362,8 +362,9 @@ iframe {
 }
 
 .privacy-and-terms {
-    padding: 60px;
-    padding-top: 0px;
+    margin: 0px;
+    padding: 0px;
+    margin-top: 40px
 }
 
 #content {
@@ -525,7 +526,8 @@ a:hover,
     }
 
     .invite-to-beta-testing{
-        margin: 20x;
+        padding: 0px;
+        margin: 0x;
         margin-bottom: 40px;
     }
 
