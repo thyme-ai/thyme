@@ -1,10 +1,11 @@
 # Thyme
-Your personal AI assistant. Built with the OpenAI API, Google Calendar API, and Google Authentication.
+Meet Thyme, your personal AI assistant, built with the OpenAI API, Google Calendar API, & Google Authentication. Thyme can schedule meetings, help you brainstorm, anticipate your needs, and more. Try out the beta at [thyme.company](https://thyme.company)
+
 
 <img src="https://storage.googleapis.com/frankie-esparza-portfolio/thumbnails/thyme.png" width="500">
 
-## About
-Thyme is an AI research company dedicated to building the most personal, useful, and private AI. Our personal AI assistant, Thyme, can schedule meetings, help you brainstorm, anticipate your needs, and more. Try the beta at [thyme.company](https://thyme.company)!
+## Demo Video
+🎬 Watch the demo video at [frankie.engineer/highlights](https://frankie.engineer/highlights)
 <br></br>
 
 ## Features 
@@ -16,19 +17,14 @@ Thyme is an AI research company dedicated to building the most personal, useful,
 
 ### 💭 Ask Thyme questions about your week
 <img src="https://storage.googleapis.com/frankie-esparza-portfolio/gifs/thyme-3.gif" width="500">
-<br></br>
 
 ## Getting Started 
-1. 💻 Go to [thyme.company](https://thyme.company) on a laptop or phone 
-2. ✅ Login with Google to give Thyme acess to your Google Calendar (read our [Privacy Policy](https://thyme.company/privacy) & [Terms of Service](https://thyme.company/terms)) 
-3. 🎉 You're all set to start using Thyme! Try saying:
+1. Go to [thyme.company](https://thyme.company) on a 💻 laptop or 📱 phone 
+2. Login with Google to give Thyme acess to your Google Calendar
+3. You're all set to start using Thyme! Try saying:
 - "Schedule a Coffee Chat with hello@thyme.company tomorrow at 10am"
 - "What's on my calendar Friday?"
 - "Schedule an event called Team Building this Thursday from 10am to 4pm, in the description add a few ideas of places to host a team building event in [insert your city here]"
-<br></br>
-
-## Contact
-👋🏽 Have questions or feedback? We'd love to hear them! Send us an email at hello@thyme.company.
 <br></br>
 
 ## Tutorials 
@@ -67,3 +63,8 @@ SELECT * FROM habits;
 \q
 ```
 10) Start the local server `pipenv run flask run`
+<br></br>
+
+## Contact
+We'd love to hear what you think! Send us an email at hello@thyme.company.
+<br></br>
