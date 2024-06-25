@@ -1,12 +1,10 @@
 # Thyme
 Meet Thyme, your personal AI assistant, built with the OpenAI API, Google Calendar API, & Google Authentication. Thyme can schedule meetings, help you brainstorm, anticipate your needs, and more. Try out the beta at [thyme.company](https://thyme.company)
 
-
-<img src="https://storage.googleapis.com/frankie-esparza-portfolio/thumbnails/thyme.png" width="500">
-
-## Demo Video
 🎬 Watch the demo video at [frankie.engineer/highlights](https://frankie.engineer/highlights)
 <br></br>
+
+<img src="https://storage.googleapis.com/frankie-esparza-portfolio/thumbnails/thyme.png" width="500">
 
 ## Features 
 ### ✨ Schedule events in seconds 
