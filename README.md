@@ -1,7 +1,9 @@
 # Thyme
-Meet Thyme, your personal AI assistant, built with the OpenAI API, Google Calendar API, & Google Authentication. Thyme can schedule meetings, help you brainstorm, anticipate your needs, and more. Try out the beta at [thyme.company](https://thyme.company)
+Meet Thyme, your personal AI assistant, built with the OpenAI API, Google Calendar API, & Google Authentication. Thyme can schedule meetings, help you brainstorm, anticipate your needs, and more. 
 
-🎬 Watch the demo video at [frankie.engineer/highlights](https://frankie.engineer/highlights)
+- ✨ Try the beta at [thyme.company](https://thyme.company)
+- 🎬 Watch the Demo Video - [HERE](https://frankie.engineer/highlights)
+- 🎬 Watch the "Resource Guide & Lessons Learned from Building Thyme" video - [HERE](https://www.youtube.com/watch?v=HDznguxTmtQ)
 <br></br>
 
 <img src="https://storage.googleapis.com/frankie-esparza-portfolio/thumbnails/thyme.png" width="500">
@@ -15,6 +17,7 @@ Meet Thyme, your personal AI assistant, built with the OpenAI API, Google Calend
 
 ### 💭 Ask Thyme questions about your week
 <img src="https://storage.googleapis.com/frankie-esparza-portfolio/gifs/thyme-3.gif" width="500">
+<br></br>
 
 ## Getting Started 
 1. Go to [thyme.company](https://thyme.company) on a 💻 laptop or 📱 phone 
@@ -23,15 +26,6 @@ Meet Thyme, your personal AI assistant, built with the OpenAI API, Google Calend
 - "Schedule a Coffee Chat with hello@thyme.company tomorrow at 10am"
 - "What's on my calendar Friday?"
 - "Schedule an event called Team Building this Thursday from 10am to 4pm, in the description add a few ideas of places to host a team building event in [insert your city here]"
-<br></br>
-
-## Tutorials 
-Want to learn more about building apps that use generative AI? Check out these articles!
-- Getting started with the Google Calendar API - [HERE](https://developers.google.com/calendar/api/quickstart/python)
-- Getting started with the Open AI API - [HERE](https://platform.openai.com/docs/quickstart)
-- How to Call Functions with an OpenAPI Specification - [HERE](https://cookbook.openai.com/examples/function_calling_with_an_openapi_spec)
-- How to Call Functions with Chat Models - [HERE](https://cookbook.openai.com/examples/how_to_call_functions_with_chat_models)
-- Guide to Prompt Engineering - [HERE](https://platform.openai.com/docs/guides/prompt-engineering)
 <br></br>
 
 ## For Developers
@@ -64,5 +58,4 @@ SELECT * FROM habits;
 <br></br>
 
 ## Contact
-We'd love to hear what you think! Send us an email at hello@thyme.company.
-<br></br>
+Questions or feedback? We'd love to hear what you think! Email [hello@thyme.company](https://mail.google.com/mail/u/0/?fs=1&to=fwesparza@gmail.com&tf=cm).
